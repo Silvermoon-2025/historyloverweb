@@ -1,0 +1,779 @@
+<html lang="zh-CN"><head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>历史爱好者服务专设网站</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+            <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <script>
+                tailwind.config = {
+                    darkMode: 'class', // 使用class-based dark mode
+        theme: {
+    extend: {
+        colors: {
+            primary: '#165DFF',
+            secondary: '#FFD700',
+            accent: '#FF7D00',
+            dark: '#1E293B',
+            light: '#F8FAFC',
+            // 添加夜间模式下的颜色
+            darkBg: '#1a1a2e', // 暗色调但不至于太暗的背景
+            darkCard: '#2d2d44', // 卡片背景色
+            darkText: '#e2e8f0' // 文字颜色
+        },
+        fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Merriweather', 'Georgia', 'serif']
+        },
+        animation: {
+            'fade-in': 'fadeIn 0.8s ease-in-out',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'pulse-slow': 'pulse 3s infinite'
+        },
+        keyframes: {
+            fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' }
+            },
+            slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' }
+            }
+        }
+    }
+}
+                }
+            </script>
+            <style type="text/tailwindcss">
+                @layer utilities {
+    .content-auto {
+        content-visibility: auto;
+    }
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    }
+    .card-hover {
+        transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .gradient-overlay {
+        background: linear-gradient(to bottom, rgba(22, 93, 255, 0.9), rgba(22, 93, 255, 0.7));
+    }
+    .glass-effect {
+        /* 取消透明效果，改为纯色背景 */
+        background-color: #6f99fc; 
+        backdrop-filter: none;
+    }
+    /* 删除 dark 模式下的 glass-effect 样式 */
+
+    /* 夜间模式样式 */
+    .dark {
+        background-color: #1a1a2e;
+        color: #e2e8f0;
+    }
+    .dark .bg-white {
+        background-color: #2d2d44;
+    }
+    .dark .text-gray-800,
+    .dark .text-gray-700,
+    .dark .text-gray-600,
+    .dark .text-gray-900 {
+        color: #e2e8f0;
+    }
+    .dark .bg-gray-50 {
+        background-color: #2d2d44; /* 社区规则底框颜色不变 */
+    }
+    .dark [class*="bg-primary/10"] {
+    background-color: rgba(22, 93, 255, 0.1);
+}
+    .dark .glass-effect {
+        background-color: #3a4a6b;
+    }
+}
+            </style>
+        </head>
+
+        <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
+            <!-- 导航栏 -->
+            <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
+                <div class="container mx-auto px-4 py-3 flex justify-between items-center glass-effect">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
+                        <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
+                    </div>
+
+                    <!-- 桌面导航 -->
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#home" class="text-white hover:text-secondary transition-colors">首页</a>
+                        <a href="#files" class="text-white hover:text-secondary transition-colors">文件置放</a>
+                        <a href="#websites" class="text-white hover:text-secondary transition-colors">优质网站</a>
+                        <a href="#community" class="text-white hover:text-secondary transition-colors">相关社区</a>
+                        <a href="#work" class="text-white hover:text-secondary transition-colors">工作专区</a>
+                        <a href="#embedded-platform" class="text-white hover:text-secondary transition-colors">内嵌平台</a>
+                    </div>
+
+                    <button id="dark-mode-toggle" class="text-white hover:text-secondary transition-colors flex items-center space-x-2">
+                        <i class="fa fa-moon-o"></i>
+                        <span>夜间模式</span>
+                        <i class="fa fa-sun-o hidden"></i>
+                        <span class="hidden">日间模式</span>
+                    </button>
+                </div>
+
+                <!-- 移动端导航菜单 -->
+                <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 invisible" id="mobile-menu">
+    <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#home" class="text-gray-800 hover:text-primary transition-colors py-2">首页</a>
+        <a href="#files" class="text-gray-800 hover:text-primary transition-colors py-2">文件置放</a>
+        <a href="#websites" class="text-gray-800 hover:text-primary transition-colors py-2">优质网站</a>
+        <a href="#community" class="text-gray-800 hover:text-primary transition-colors py-2">相关社区</a>
+        <a href="#work" class="text-gray-800 hover:text-primary transition-colors py-2">工作专区</a>
+        <a href="#embedded-platform" class="text-gray-800 hover:text-primary transition-colors py-2">内嵌平台</a>
+
+                <!-- 移动端夜间模式按钮 -->
+    <button id="dark-mode-toggle-mobile" class="text-gray-800 dark:text-white hover:text-primary dark:hover:text-secondary transition-colors py-2 flex items-center space-x-2">
+        <i class="fa fa-moon-o mr-2"></i>
+        <span>夜间模式</span>
+        <i class="fa fa-sun-o mr-2 hidden"></i>
+        <span class="hidden">日间模式</span>
+    </button>
+    </div>
+
+
+    <!-- 移动端菜单按钮 -->
+                    <button class="md:hidden text-white text-2xl" id="menu-toggle">
+    <i class="fa fa-bars"></i>
+</button>
+</div>
+            </nav>
+
+            <!-- 英雄区域 -->
+            <header class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
+                </div>
+
+                <div class="container mx-auto px-4 relative z-10">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white leading-tight text-shadow-lg animate-fade-in">
+                            历史爱好者服务专设网站
+                        </h1>
+                        <p class="mt-6 text-[clamp(1rem,2vw,1.25rem)] text-white/90 animate-slide-up delay-100">
+                            为历史爱好者提供文献下载、史料整理、社区交流以及文件转置服务
+                        </p>
+                        <div class="mt-10 flex flex-wrap justify-center gap-4 animate-slide-up delay-200">
+                            <a href="#websites" class="px-6 py-3 bg-secondary text-primary font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                                浏览优质网站
+                            </a>
+                            <a href="#work" class="px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 hover:bg-white/30">
+                                访问工作专区
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 波浪分隔符 -->
+                <div class="absolute bottom-0 left-0 w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" class="w-full h-auto">
+                        <path fill="#F8FAFC" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z">
+                        </path>
+                    </svg>
+                </div>
+            </header>
+
+            <!-- 主要内容 -->
+            <main class="container mx-auto px-4 py-12">
+                <!-- 公告栏 -->
+                <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
+                    <div class="flex items-start">
+                        <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                            <!-- 更换为叹号图标 -->
+                            <i class="fa fa-exclamation-circle text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-primary">访问注意</h3>
+                            <p class="mt-2 text-gray-700">
+                                最好使用PC端进行访问，移动端暂且没做完美适配屏幕尺寸
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
+                    <div class="flex items-start">
+                        <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                            <i class="fa fa-bullhorn text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-primary">更新内容</h3>
+                            <p class="mt-2 text-gray-700">
+                                【网站仍处于内部测试阶段 目前版本为0.8】<br>
+                                上方透明框取消透明显示；撤销网站名大字下的背景图；文章平台今后添加关联现代国家/地区信息在最上方；游戏咖厅上方加入限定时间
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 首页说明 -->
+                <section id="home" class="mb-16 scroll-mt-20 animate-fade-in">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-6">
+                            首页说明
+                        </h2>
+                        <p class="text-lg text-gray-700 mb-8">
+                            欢迎来到历史爱好者服务专设网站。这里是为历史爱好者提供文献下载、史料下载、社区进入、优质网页访问以及文件转置服务的平台。
+                        </p>
+                        <div class="grid md:grid-cols-3 gap-6 mt-10">
+                            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow card-hover">
+                                <div class="text-primary text-3xl mb-4">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">资料下载</h3>
+                                <p class="text-gray-600">
+                                    丰富的历史文献和史料资源，助您深入研究历史。
+                                </p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow card-hover">
+                                <div class="text-primary text-3xl mb-4">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">社区交流</h3>
+                                <p class="text-gray-600">
+                                    与志同道合的历史爱好者交流，分享见解和发现。
+                                </p>
+                            </div>
+                            <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow card-hover">
+                                <div class="text-primary text-3xl mb-4">
+                                    <i class="fa fa-cogs"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">专业服务</h3>
+                                <p class="text-gray-600">
+                                    提供文件转置、翻译等专业服务，满足您的研究需求。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 文件置放 -->
+                <section id="files" class="mb-16 scroll-mt-20 animate-fade-in">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                        文件置放
+                    </h2>
+                    <div class="bg-white rounded-xl p-8 shadow-lg">
+                        <div class="flex flex-col md:flex-row items-center">
+                            <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                                <h3 class="text-2xl font-semibold mb-4">云盘式文件存储匣</h3>
+                                <p class="text-gray-600 mb-6">
+                                    用户需访问下方链接才可看到已上传的文件，我们已做好详细的分区，方便您查找和下载所需资料。
+                                </p>
+                                <a href="https://www.123865.com/s/d484jv-kkIXv" target="_blank" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                                    <i class="fa fa-cloud-download mr-2"></i> 访问文件存储匣
+                                </a>
+                            </div>
+                            <div class="md:w-1/2 relative">
+    <div class="bg-[#f3f4f6] rounded-lg p-6 shadow-inner" id="files-content">
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4">
+                <i class="fa fa-folder text-primary text-2xl"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-[#374151]">历史文献</h4>
+                <p class="text-sm text-[#6b7280]">10个文件</p>
+            </div>
+        </div>
+        <div class="flex items-center mb-4">
+            <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mr-4">
+                <i class="fa fa-file-text text-secondary text-2xl"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-[#374151]">万字文章</h4>
+                <p class="text-sm text-[#6b7280]">0个文件</p>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mr-4">
+                <i class="fa fa-picture-o text-accent text-2xl"></i>
+            </div>
+            <div>
+                <h4 class="font-semibold text-[#374151]">历史图片</h4>
+                <p class="text-sm text-[#6b7280]">0个文件</p>
+            </div>
+        </div>
+        <div class="absolute -top-4 -right-4 bg-[#FFD700] text-[#165DFF] font-bold px-4 py-2 rounded-lg shadow-lg transform rotate-3">
+            内容总量
+        </div>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 优质网站 -->
+                <section id="websites" class="mb-16 scroll-mt-20 animate-fade-in">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                        优质网站
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 网站卡片 -->
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://picsum.photos/id/20/800/400" alt="学术资源网站" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Academia</h3>
+                                <p class="text-gray-600 mb-4">
+                                    该网站由群友推荐，网站内有很多公开的论文和书籍，国内访问不需要梯子。
+                                </p>
+                                <a href="https://www.academia.edu/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://p3-search.byteimg.com/obj/tos-cn-i-qvj2lq49k0/dece43c5bfde4296ac5e0cd09b92019a" alt="AI辅助工具" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">ima</h3>
+                                <p class="text-gray-600 mb-4">
+                                    腾讯智能工作台，人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。
+                                </p>
+                                <a href="https://ima.qq.com/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://p3-search.byteimg.com/obj/tos-cn-i-qvj2lq49k0/fda390b1942d4eccaf15a34c78150060" alt="浏览器工具" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">iTab</h3>
+                                <p class="text-gray-600 mb-4">
+                                    简洁美观的浏览器起始页工具。
+                                </p>
+                                <a href="https://go.itab.link/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://p3-search.byteimg.com/obj/labis/3ac0358603ec379ba36f989b88850d9a" alt="数字图书馆" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">书格</h3>
+                                <p class="text-gray-600 mb-4">
+                                    完全开放的数字图书馆。
+                                </p>
+                                <a href="https://www.shuge.org/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://p3-search.byteimg.com/obj/labis/4eef46ac9f98ebffc5ff987bd166411f" alt="历史研究网站" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Wahlplakate in der Weimarer Republik</h3>
+                                <p class="text-gray-600 mb-4">
+                                    魏玛政党网站，因是德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。
+                                </p>
+                                <a href="https://www.wahlplakate-archiv.de/wahlen/reichstagswahl-1930/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                            <div class="h-48 overflow-hidden">
+                                <img src="https://p3-search.byteimg.com/obj/labis/05df035114ce69ac200978085cbf4f24" alt="AI聊天平台" class="w-full h-full object-cover transition-transform hover:scale-110">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">DeepSeek Chat</h3>
+                                <p class="text-gray-600 mb-4">
+                                    DeepSeek官网的聊天页面，是春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。
+                                </p>
+                                <a href="https://chat.deepseek.com/" target="_blank" class="inline-block text-primary hover:text-primary/80 font-medium">
+                                    访问网站 <i class="fa fa-external-link ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 网站内容区域 -->
+                    <div class="mt-12 grid gap-8" id="website-content-container">
+                        <div id="website-content-1" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">Academia</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    Academia是一个由群友推荐的学术资源网站，网站内有很多公开的论文和书籍，国内访问不需要梯子。
+                                    该平台汇集了来自全球学者的研究成果，涵盖历史、文学、科学等多个领域，是历史爱好者进行学术研究的重要资源。
+                                </p>
+                                <p class="mt-4">
+                                    在Academia上，您可以：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>浏览和下载各类学术论文</li>
+                                    <li>关注感兴趣的学者和研究领域</li>
+                                    <li>与其他研究者建立联系和交流</li>
+                                    <li>分享自己的研究成果和见解</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="website-content-2" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">DeepSeek Chat</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    DeepSeek Chat是DeepSeek官网的聊天页面，是春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。
+                                    该平台基于先进的人工智能技术，能够理解和生成自然语言，为用户提供智能对话服务。
+                                </p>
+                                <p class="mt-4">
+                                    在DeepSeek Chat上，您可以：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>进行自然流畅的对话交流</li>
+                                    <li>获取历史问题的解答和分析</li>
+                                    <li>进行文献摘要和内容理解</li>
+                                    <li>获得个性化的学习和研究建议</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="website-content-3" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">ima</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    腾讯智能工作台ima是一款人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。
+                                    该工具结合了自然语言处理和机器学习技术，能够帮助用户高效处理和理解大量信息。
+                                </p>
+                                <p class="mt-4">
+                                    ima的主要功能包括：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>文档内容提取和摘要</li>
+                                    <li>网页信息快速理解和总结</li>
+                                    <li>自建知识库和知识管理</li>
+                                    <li>智能问答和信息检索</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="website-content-4" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">iTab</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    iTab是一款简洁美观的浏览器起始页工具，它不仅提供了个性化的浏览器主页，还集成了多种实用功能，帮助用户提高浏览效率。
+                                </p>
+                                <p class="mt-4">
+                                    iTab的主要特点：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>简洁美观的界面设计</li>
+                                    <li>自定义主题和背景</li>
+                                    <li>快速访问常用网站</li>
+                                    <li>集成天气、日历等实用功能</li>
+                                    <li>支持待办事项和笔记功能</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="website-content-5" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">书格</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    书格是一个完全开放的数字图书馆，致力于传播中国传统文化典籍和开放获取的古籍善本。
+                                    该平台提供高清扫描的古籍文献，涵盖经、史、子、集等多个类别，是历史研究的重要资源。
+                                </p>
+                                <p class="mt-4">
+                                    在书格上，您可以：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>浏览和下载各类古籍文献</li>
+                                    <li>搜索特定主题的历史资料</li>
+                                    <li>参与古籍整理和校对工作</li>
+                                    <li>了解中国传统文化和历史</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="website-content-6" class="bg-white rounded-xl p-8 shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-4">Wahlplakate in der Weimarer Republik</h3>
+                            <div class="prose max-w-none">
+                                <p>
+                                    Wahlplakate in der Weimarer Republik是一个关于魏玛共和国的历史研究网站，由德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。
+                                    该网站主要展示了魏玛共和国时期的选举海报和政治宣传材料，为研究魏玛时期的政治和社会提供了丰富的视觉资料。
+                                </p>
+                                <p class="mt-4">
+                                    网站内容包括：
+                                </p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>魏玛共和国时期的选举海报高清图片</li>
+                                    <li>各政党的政治宣传材料和口号</li>
+                                    <li>选举历史和政治背景介绍</li>
+                                    <li>专家分析和研究文章</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 相关社区 -->
+                <section id="community" class="mb-16 scroll-mt-20 animate-fade-in">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                        相关社区
+                    </h2>
+                    <div class="bg-gradient-to-r from-primary/10 to-primary/20 rounded-2xl p-8 md:p-12">
+                        <div class="max-w-3xl mx-auto text-center">
+                            <div class="inline-block p-4 bg-white rounded-full mb-6 shadow-lg">
+                                <span class="text-5xl text-secondary">🐧</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">国子监★"诸朝府记"-腾讯频道</h3>
+                            <p class="text-lg text-gray-700 mb-8">
+                                加入我们的社区，与众多历史爱好者一起探讨历史，分享研究成果，共同进步。
+                            </p>
+                            <a href="https://pd.qq.com/g/4y6vjc5db2?_wv=3&amp;_wwv=128&amp;appChannel=share&amp;inviteCode=2oZR45pbAJA&amp;businessType=9" target="_blank" class="inline-flex items-center px-8 py-4 bg-secondary text-primary font-bold rounded-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                                <i class="fa fa-user-plus mr-2"></i> 加入社区
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 社区内容区域 -->
+                    <div id="community-content" class="mt-12 bg-white rounded-xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-semibold mb-6">社区介绍</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3">社区特色</h4>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                        <span>专业的历史讨论氛围，避免无关话题干扰</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                        <span>定期举办历史主题讲座和线上研讨会</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                        <span>丰富的历史资料共享和交流</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fa fa-check-circle text-primary mt-1 mr-2"></i>
+                                        <span>友好的历史爱好者社区，共同进步</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-3">社区规则</h4>
+                                <div class="bg-gray-50 rounded-lg p-6">
+                                    <ol class="list-decimal pl-5 space-y-3">
+                                        <li>尊重历史事实，避免传播未经证实的信息</li>
+                                        <li>保持友好和尊重，避免人身攻击和争吵</li>
+                                        <li>讨论内容需与历史相关，避免无关话题</li>
+                                        <li>禁止发布广告、垃圾信息和恶意链接</li>
+                                        <li>保护个人隐私，不随意泄露他人信息</li>
+                                        <li>鼓励分享原创研究和见解，注明资料来源</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 工作专区 -->
+        <section id="work" class="mb-16 scroll-mt-20 animate-fade-in">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                工作专区
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-primary/10 dark:bg-primary/20 rounded-bl-3xl"></div>
+                    <h3 class="text-2xl font-semibold mb-4 relative z-10">电子文件转置专区</h3>
+                    <p class="text-gray-600 mb-6 relative z-10">
+                        在工作填表，选择你要放置在电子文件总置区的文件，填写归类类型，即可完成文件置放，目前默认支持存储时间为半年，且文件上传后不会立即在云盘中展示。
+                    </p>
+                    <p class="font-medium text-gray-700 mb-4 relative z-10">
+                        负责人员：Silvermoon2025
+                    </p>
+                    <a href="https://docs.qq.com/form/page/DRWRLVW16ZmpFaGN6" target="_blank" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors relative z-10">
+                        <i class="fa fa-file-text-o mr-2"></i> 文件转置工作填表
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-secondary/10 dark:bg-secondary/20 rounded-bl-3xl"></div>
+                    <h3 class="text-2xl font-semibold mb-4 relative z-10">文件转译工作专区</h3>
+                    <p class="text-gray-600 mb-6 relative z-10">
+                        我们提供专业的文件翻译服务，默认可翻译范围为1~50页，如需更大范围请联系我们。
+                    </p>
+                    <p class="font-medium text-gray-700 mb-4 relative z-10">
+                        负责人员：Silvermoon2025
+                    </p>
+                    <a href="https://docs.qq.com/form/page/DRVJhTEpyU2xXTXd1" target="_blank" class="inline-flex items-center px-6 py-3 bg-secondary text-primary rounded-lg hover:bg-secondary/90 transition-colors relative z-10">
+                        <i class="fa fa-language mr-2"></i> 文件转译工作单
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 内嵌平台 -->
+        <section id="embedded-platform" class="mb-16 scroll-mt-20 animate-fade-in">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                内嵌平台
+            </h2>
+            <div class="bg-white rounded-xl p-8 shadow-lg">
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
+                        <img src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800" alt="日耳曼尼亚二三事网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-4 w-full">
+                                <a href="https://deutsche-trivia-through-the-ages-web.netlify.app/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                                    访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8">
+                        <h3 class="text-2xl font-semibold mb-4">日耳曼尼亚二三事</h3>
+                        <p class="text-gray-600 mb-4">
+                            "日耳曼尼亚二三事"是一个专注于德国历史文化的特色平台，深入探讨从古代到现代的德国历史事件、人物和文化。平台提供丰富的历史资料、学术研究和文化解读，帮助历史爱好者更深入地了解德国历史和文化。
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center">
+                                <i class="fa fa-book text-primary mr-3"></i>
+                                <span>深入的历史研究</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-users text-primary mr-3"></i>
+                                <span>踊跃的文章编辑参与者</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-image text-primary mr-3"></i>
+                                <span>美观的界面阅览风格</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-comments text-primary mr-3"></i>
+                                <span>独具风格的历史探讨</span>
+                            </div>
+                        </div>
+                        <a href="https://deutsche-trivia-through-the-ages-web.netlify.app/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-external-link mr-2"></i> 快速访问
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 新增的Silvermoon Arcade区块 -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
+                        <img src="https://p3-search.byteimg.com/obj/labis/1e4e6faaf827c4d808c8440b1dc71b9b" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-4 w-full">
+                                <a href="https://silvermoon-arcade.netlify.app/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                                    访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8">
+                        <h3 class="text-2xl font-semibold mb-4">银月的游戏咖厅</h3>
+                        <p class="text-gray-600 mb-4">
+                            "银月的游戏咖厅"是一个为访问者提供消遣时间的休闲游戏平台，每隔很长一段时间平台会换一个游戏上线其中。
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center">
+                                <i class="fa fa-gamepad text-primary mr-3"></i>
+                                <span>每隔一期会有的主题游戏</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-history text-primary mr-3"></i>
+                                <span>详细的游戏规则介绍</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-users text-primary mr-3"></i>
+                                <span>受众不微的游戏玩法</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-trophy text-primary mr-3"></i>
+                                <span>可分享的游戏娱感</span>
+                            </div>
+                        </div>
+                        <a href="https://silvermoon-arcade.netlify.app/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-external-link mr-2"></i> 快速访问
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-lg font-bold">历史爱好者服务专设网站</h3>
+                    <p class="text-white/80 text-sm">为历史爱好者提供全方位服务</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm">
+                        [发布地] 中国-北京<br>
+                        [内测开始时间] 2025年5月17日<br>
+                        [网页名称] 历史爱好者服务专设网站<br>
+                        [隶属群聊] 夏洛滕堡宫传来歌声<br>
+                        [网页制作者] Silvermoon<br>
+                        [联系邮箱] Skillmoon2023@163.com<br>
+                        [主要内测者] 我不是徐某人（QQ）
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-6 pt-6 text-center text-sm text-white/70">
+                © 2025 历史爱好者服务专设网站
+            </div>
+        </div>
+    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+        const body = document.body;
+
+        // 处理按钮点击事件
+        function handleDarkModeToggle(button) {
+            const moonIcon = button.querySelector('.fa-moon-o');
+            const sunIcon = button.querySelector('.fa-sun-o');
+            const nightText = button.querySelector('span:nth-child(2)');
+            const dayText = button.querySelector('span:nth-child(4)');
+
+            if (body.classList.contains('dark')) {
+                // 切换到日间模式
+                body.classList.remove('dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+                nightText.classList.remove('hidden');
+                dayText.classList.add('hidden');
+            } else {
+                // 切换到夜间模式
+                body.classList.add('dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+                nightText.classList.add('hidden');
+                dayText.classList.remove('hidden');
+            }
+        }
+
+        // 为桌面端按钮添加点击事件监听器
+        darkModeToggle.addEventListener('click', function () {
+            handleDarkModeToggle(this);
+        });
+
+        // 为移动端按钮添加点击事件监听器
+        darkModeToggleMobile.addEventListener('click', function () {
+            handleDarkModeToggle(this);
+        });
+    });
+</script>
+</body>
+</html>
