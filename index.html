@@ -1,3 +1,4 @@
+
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -144,7 +145,6 @@
     </button>
     </div>
 
-
     <!-- 移动端菜单按钮 -->
                     <button class="md:hidden text-white text-2xl" id="menu-toggle">
     <i class="fa fa-bars"></i>
@@ -188,6 +188,16 @@
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
+                                    <!-- 版本倒计时块 -->
+<div class="countdown-block animate-fade-in mx-auto max-w-md mb-8" id="countdown-block">
+    <div id="countdown" class="text-3xl font-bold text-gray-800 mb-1 text-center"></div>
+    <div class="text-center">
+        <div class="text-xs md:text-sm text-gray-800 font-medium tracking-wider inline-block relative">
+            <span class="relative z-10 px-1">距0.9版本上线还有</span>
+            <span class="absolute bottom-0 left-0 w-full h-1 bg-secondary/30 transform -rotate-0.5"></span>
+        </div>
+    </div>
+</div>
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -774,6 +784,25 @@
             handleDarkModeToggle(this);
         });
     });
+
+        const countdownElement = document.getElementById('countdown');
+        const targetDate = new Date('July 27, 2025 00:00:00').getTime();
+
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.textContent = '已上线';
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                countdownElement.textContent = `${days} 天 ${hours} 小时 ${minutes} 分钟`;
+            }
+        }, 1000);
 </script>
 </body>
 </html>
