@@ -1,4 +1,3 @@
-
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,6 +105,8 @@
                     <div class="flex items-center space-x-2">
                         <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
                         <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
+                            <!-- 新增时段显示方块 -->
+                        <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium"></span>
                     </div>
 
                     <!-- 桌面导航 -->
@@ -117,6 +118,27 @@
                         <a href="#work" class="text-white hover:text-secondary transition-colors">工作专区</a>
                         <a href="#embedded-platform" class="text-white hover:text-secondary transition-colors">内嵌平台</a>
                     </div>
+
+  <!-- 现代风格音乐滑动开关 -->
+  <label class="music-toggle" style="position: relative; display: inline-flex; align-items: center; cursor: pointer;">
+    <!-- 文字标签（靠近按钮） -->
+    <span style="color: white; margin-right: 6px; font-size: 14px; font-family: 'Segoe UI', sans-serif;">背景音乐</span>
+    
+    <!-- 滑动开关 -->
+    <span class="toggle-track" style="position: relative; width: 46px; height: 24px; background: rgba(255,255,255,0.2); border-radius: 12px; transition: background 0.3s ease;">
+      <!-- 滑块 -->
+      <span class="toggle-thumb" style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span>
+      
+      <!-- 播放图标（隐藏状态） -->
+      <i class="fas fa-music" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: white; font-size: 12px; transition: opacity 0.3s ease;"></i>
+      
+      <!-- 暂停图标（隐藏状态） -->
+      <i class="fas fa-pause" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: white; font-size: 12px; opacity: 0; transition: opacity 0.3s ease;"></i>
+    </span>
+    
+    <!-- 隐藏的复选框 -->
+    <input type="checkbox" id="musicToggle" style="display: none;">
+  </label>
 
                     <button id="dark-mode-toggle" class="text-white hover:text-secondary transition-colors flex items-center space-x-2">
                         <i class="fa fa-moon-o"></i>
@@ -145,12 +167,17 @@
     </button>
     </div>
 
+
     <!-- 移动端菜单按钮 -->
                     <button class="md:hidden text-white text-2xl" id="menu-toggle">
     <i class="fa fa-bars"></i>
 </button>
 </div>
             </nav>
+
+<audio id="bgMusic" loop preload="auto" style="display:none">
+  <source src="" type="audio/mpeg">
+</audio>
 
             <!-- 英雄区域 -->
             <header class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
@@ -188,16 +215,6 @@
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
-                                    <!-- 版本倒计时块 -->
-<div class="countdown-block animate-fade-in mx-auto max-w-md mb-8" id="countdown-block">
-    <div id="countdown" class="text-3xl font-bold text-gray-800 mb-1 text-center"></div>
-    <div class="text-center">
-        <div class="text-xs md:text-sm text-gray-800 font-medium tracking-wider inline-block relative">
-            <span class="relative z-10 px-1">距0.9版本上线还有</span>
-            <span class="absolute bottom-0 left-0 w-full h-1 bg-secondary/30 transform -rotate-0.5"></span>
-        </div>
-    </div>
-</div>
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -221,12 +238,30 @@
                         <div>
                             <h3 class="text-xl font-bold text-primary">更新内容</h3>
                             <p class="mt-2 text-gray-700">
-                                【网站仍处于内部测试阶段 目前版本为0.8】<br>
-                                夜间模式回归，按钮做了不同区不同样式（主网站和内嵌平台）；上方透明框取消透明显示；撤销网站名大字下的背景图；文章平台今后添加关联现代国家/地区信息在最上方；游戏咖厅上方加入限定时间
+                                【网站仍处于内部测试阶段 目前版本为0.9】<br>
+                                加入主网页背景音频，三时段音乐各不相同；加入内嵌平台对应背景音乐；置顶栏网站名旁边加入时段块；新增内嵌平台“赤县神州古今漫谈”；新增版本更新日志在公告显示区；对关联性不强的跳转超链接显示图片进行了替换
                             </p>
                         </div>
                     </div>
                 </div>
+
+<div class="rounded-xl p-6 mb-12 animate-fade-in border border-gray-200 dark:border-gray-700">
+    <div class="flex items-start">
+        <div class="bg-secondary text-black p-3 rounded-lg mr-4 border-2 border-white shadow-md">
+            TIME
+        </div>
+        <div class="flex-1">
+            <a href="https://www.mubu.com/doc/5ec6ndg5PDR" target="_blank" class="block">
+                <div class="flex-1 h-8 bg-secondary/20 rounded-lg flex items-center justify-center hover:bg-secondary/40 transition-all duration-300">
+                    <span class="font-bold text-black dark:text-white">更新日志</span>
+                </div>
+            </a>
+            <p class="text-gray-600 dark:text-white text-sm text-center mt-2">
+                查阅自建立以来网站所有更新内容，访问上方链接块即可跳转而至。
+            </p>
+        </div>
+    </div>
+</div>
 
                 <!-- 首页说明 -->
                 <section id="home" class="mb-16 scroll-mt-20 animate-fade-in">
@@ -332,7 +367,7 @@
                         <!-- 网站卡片 -->
                         <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
                             <div class="h-48 overflow-hidden">
-                                <img src="https://picsum.photos/id/20/800/400" alt="学术资源网站" class="w-full h-full object-cover transition-transform hover:scale-110">
+                                <img src="论文.jpeg" alt="学术资源网站" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-2">Academia</h3>
@@ -346,7 +381,7 @@
                         </div>
                         <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
                             <div class="h-48 overflow-hidden">
-                                <img src="https://p3-search.byteimg.com/obj/tos-cn-i-qvj2lq49k0/dece43c5bfde4296ac5e0cd09b92019a" alt="AI辅助工具" class="w-full h-full object-cover transition-transform hover:scale-110">
+                                <img src="IMA.png" alt="AI辅助工具" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-2">ima</h3>
@@ -402,7 +437,7 @@
                         </div>
                         <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
                             <div class="h-48 overflow-hidden">
-                                <img src="https://p3-search.byteimg.com/obj/labis/05df035114ce69ac200978085cbf4f24" alt="AI聊天平台" class="w-full h-full object-cover transition-transform hover:scale-110">
+                                <img src="deepseek.png" alt="AI聊天平台" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
                             <div class="p-6">
                                 <h3 class="text-xl font-semibold mb-2">DeepSeek Chat</h3>
@@ -635,7 +670,7 @@
             <div class="bg-white rounded-xl p-8 shadow-lg">
                 <div class="grid md:grid-cols-12 gap-8 items-center">
                     <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800" alt="日耳曼尼亚二三事网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <img src="德意志帝国.jpg" alt="日耳曼尼亚二三事网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-4 w-full">
                                 <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
@@ -673,12 +708,54 @@
                     </div>
                 </div>
             </div>
+
+    <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
+        <div class="grid md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
+                <img src="长安.jpg" alt="赤县神州古今漫谈网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div class="p-4 w-full">
+                        <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            访问网站
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-8">
+                <h3 class="text-2xl font-semibold mb-4">赤县神州古今漫谈</h3>
+                <p class="text-gray-600 mb-4">
+                    "赤县神州古今漫谈"是一个专注于中国古今历史文化的特色平台，深入探讨中国的经济、人文、地理等方面资讯与知识。在这里，丰富的关联性文章有助于帮你了解我国多方面进展及传统艺术等丰富的多元内容。
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fa fa-book text-primary mr-3"></i>
+                        <span>深入的历史研究</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-users text-primary mr-3"></i>
+                        <span>踊跃的文章编辑参与者</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-image text-primary mr-3"></i>
+                        <span>美观的界面阅览风格</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fa fa-comments text-primary mr-3"></i>
+                        <span>独具风格的历史探讨</span>
+                    </div>
+                </div>
+                <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                    <i class="fa fa-external-link mr-2"></i> 快速访问
+                </a>
+            </div>
+        </div>
+    </div>
             
             <!-- 新增的Silvermoon Arcade区块 -->
             <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
                 <div class="grid md:grid-cols-12 gap-8 items-center">
                     <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="https://p3-search.byteimg.com/obj/labis/1e4e6faaf827c4d808c8440b1dc71b9b" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <img src="围棋对弈.jpg" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-4 w-full">
                                 <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
@@ -784,25 +861,90 @@
             handleDarkModeToggle(this);
         });
     });
-
-        const countdownElement = document.getElementById('countdown');
-        const targetDate = new Date('July 26, 2025 00:00:00').getTime();
-
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                countdownElement.textContent = '已上线';
-            } else {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                countdownElement.textContent = `${days} 天 ${hours} 小时 ${minutes} 分钟`;
-            }
-        }, 1000);
 </script>
+
+<script>
+// 确保引入Font Awesome图标库
+if (!document.querySelector('link[href*="font-awesome"]')) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+  document.head.appendChild(link);
+}
+
+// 时段判断函数
+function getTimePeriod() {
+  const hour = new Date().getHours();
+  return hour >=6 && hour <12 ? "上午" : 
+         hour >=12 && hour <14 ? "中午" : 
+         hour >=14 && hour <17 ? "下午" :"晚间" ;
+}
+
+// 获取元素
+const toggle = document.getElementById('musicToggle');
+const audio = document.getElementById('bgMusic');
+const track = document.querySelector('.toggle-track');
+const thumb = document.querySelector('.toggle-thumb');
+const playIcon = document.querySelector('.fa-music');
+const pauseIcon = document.querySelector('.fa-pause');
+
+// 初始化音频源
+audio.src = getTimePeriod() + ".mp3";
+
+// 滑动开关事件处理
+toggle.addEventListener('change', function() {
+  if (this.checked) {
+    // 播放状态
+    audio.play().then(() => {
+      track.style.background = "#4CD964"; // 清新绿色
+      thumb.style.transform = "translateX(22px)";
+      playIcon.style.opacity = "0";
+      pauseIcon.style.opacity = "1";
+    }).catch(err => {
+      console.log("播放失败:", err);
+      this.checked = false; // 恢复未选中状态
+    });
+  } else {
+    // 暂停状态
+    audio.pause();
+    track.style.background = "rgba(255,255,255,0.2)"; // 半透明白色
+    thumb.style.transform = "translateX(0)";
+    playIcon.style.opacity = "1";
+    pauseIcon.style.opacity = "0";
+  }
+});
+
+// 更新时段显示的函数
+function updateTimePeriod() {
+    const now = new Date();
+    const hour = now.getHours();
+    const periodEl = document.getElementById('time-period');
+    let period, color;
+
+    // 判断时段
+    if (hour >= 6 && hour < 12) {
+        period = '早上';
+        color = 'bg-amber-200 text-amber-800'; // 淡黄色
+    } else if (hour >= 12 && hour < 14) {
+        period = '中午';
+        color = 'bg-yellow-400 text-yellow-800'; // 黄色
+    } else if (hour >= 14 && hour < 17) {
+        period = '下午';
+        color = 'bg-orange-200 text-orange-800'; // 淡橙色
+    } else {
+    period = '晚间';
+    color = 'bg-purple-600 text-white'; // 紫色背景，白色文字
+    }
+
+    // 更新显示
+    periodEl.textContent = period;
+    periodEl.className = `ml-4 px-3 py-1 rounded text-sm font-medium ${color}`;
+}
+
+// 初始化显示并设置每分钟更新一次
+updateTimePeriod();
+setInterval(updateTimePeriod, 60000); // 60000毫秒 = 1分钟
+</script>
+
 </body>
 </html>
