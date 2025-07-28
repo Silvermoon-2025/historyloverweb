@@ -95,6 +95,91 @@
         background-color: #3a4a6b;
     }
 }
+
+    /* 倒计时数字样式 */
+    .countdown-number {
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+        border-radius: 12px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #2d3748;
+        box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
+                   -3px -3px 6px rgba(255,255,255,0.8);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* 数字内部光效 */
+    .countdown-number::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: rgba(255,255,255,0.2);
+    }
+    
+    /* 标签容器样式 - 采用更可靠的对齐方式 */
+    #countdown-labels {
+        /* 与数字容器保持相同的宽度 */
+        width: calc(4rem * 3 + 1rem * 2);
+        margin: 0.5rem auto 0;
+    }
+    
+    .label-item {
+        flex: 1;
+        text-align: center;
+    }
+    
+    /* 上线状态样式 */
+    .released {
+        font-size: 1.5rem;
+        color: #48bb78;
+        font-weight: 600;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    /* 动画效果 */
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+    
+    .countdown-number:hover {
+        animation: pulse 0.6s ease-in-out;
+    }
+    
+    /* 响应式调整 - 使用标准CSS语法 */
+    @media (max-width: 768px) {
+        .countdown-number {
+            width: 3.5rem;
+            height: 3.5rem;
+            font-size: 1.5rem;
+        }
+        
+        #countdown-labels {
+            width: calc(3.5rem * 3 + 0.75rem * 2);
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .countdown-number {
+            width: 3rem;
+            height: 3rem;
+            font-size: 1.2rem;
+        }
+        
+        #countdown-labels {
+            width: calc(3rem * 3 + 0.5rem * 2);
+        }
+    }
             </style>
         </head>
 
@@ -216,6 +301,30 @@
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
                 <!-- 公告栏 -->
+                 <!-- 版本倒计时块 -->
+<div class="countdown-block animate-fade-in mx-auto max-w-md mb-8" id="countdown-block">
+    <div class="bg-white rounded-2xl shadow-lg shadow-primary/10 p-6 border border-gray-100">
+        <div class="text-center mb-4">
+            <div class="text-xs md:text-sm font-medium tracking-wider inline-block relative">
+                <span class="relative z-10 px-2 py-0.5">距公测版本上线还有</span>
+                <span class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full transform -rotate-0.5"></span>
+            </div>
+        </div>
+        
+        <!-- 倒计时数字容器 - 保持横向排列 -->
+        <div id="countdown-numbers" class="flex justify-center gap-4 md:gap-6 my-2">
+            <!-- 数字将通过JS动态生成 -->
+        </div>
+        
+        <!-- 时间单位标签 - 与数字块一一纵向对应 -->
+        <div id="countdown-labels" class="flex justify-center text-xs text-gray-500 font-medium mt-1">
+            <!-- 使用内部间距容器确保对齐 -->
+            <div class="label-item">天</div>
+            <div class="label-item">时</div>
+            <div class="label-item">分</div>
+        </div>
+    </div>
+</div>
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
                         <div class="bg-primary text-white p-3 rounded-lg mr-4">
@@ -239,7 +348,7 @@
                             <h3 class="text-xl font-bold text-primary">更新内容</h3>
                             <p class="mt-2 text-gray-700">
                                 【网站仍处于内部测试阶段 目前版本为0.9】<br>
-                                加入主网页背景音频，四时段音乐各不相同；加入内嵌平台对应背景音乐；置顶栏网站名旁边加入时段块；新增内嵌平台“赤县神州古今漫谈”；新增版本更新日志在公告显示区；对关联性不强的跳转超链接显示图片进行了替换
+                                加入主网页背景音频，三时段音乐各不相同；加入内嵌平台对应背景音乐；置顶栏网站名旁边加入时段块；新增内嵌平台“赤县神州古今漫谈”；新增版本更新日志在公告显示区；对关联性不强的跳转超链接显示图片进行了替换
                             </p>
                         </div>
                     </div>
@@ -944,6 +1053,43 @@ function updateTimePeriod() {
 // 初始化显示并设置每分钟更新一次
 updateTimePeriod();
 setInterval(updateTimePeriod, 60000); // 60000毫秒 = 1分钟
+
+    //倒计时功能
+    const numbersContainer = document.getElementById('countdown-numbers');
+    const labelsContainer = document.getElementById('countdown-labels');
+    const targetDate = new Date('August 1, 2025 00:00:00').getTime();
+
+    // 创建数字显示元素
+    function createNumberElement(value) {
+        const div = document.createElement('div');
+        div.className = 'countdown-number';
+        div.textContent = value.toString().padStart(2, '0');
+        return div;
+    }
+
+    const countdownInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            numbersContainer.innerHTML = '<div class="released">待创建者更换底层代码</div>';
+            labelsContainer.style.display = 'none'; // 隐藏标签
+        } else {
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            
+            // 清空并重新生成数字元素
+            numbersContainer.innerHTML = '';
+            numbersContainer.appendChild(createNumberElement(days));
+            numbersContainer.appendChild(createNumberElement(hours));
+            numbersContainer.appendChild(createNumberElement(minutes));
+            
+            // 确保标签可见
+            labelsContainer.style.display = 'flex';
+        }
+    }, 1000);
 </script>
 
 </body>
