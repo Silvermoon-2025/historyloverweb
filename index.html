@@ -2,6 +2,8 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>历史爱好者服务专设网站</title>
+            <link rel="icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
+            <link rel="shortcut icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
             <script src="https://cdn.tailwindcss.com"></script>
             <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
             <script>
@@ -96,94 +98,44 @@
     }
 }
 
-    /* 倒计时数字样式 */
-    .countdown-number {
-        width: 4rem;
-        height: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-        border-radius: 12px;
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #2d3748;
-        box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
-                   -3px -3px 6px rgba(255,255,255,0.8);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    /* 数字内部光效 */
-    .countdown-number::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        background: rgba(255,255,255,0.2);
-    }
-    
-    /* 标签容器样式 - 采用更可靠的对齐方式 */
-    #countdown-labels {
-        /* 与数字容器保持相同的宽度 */
-        width: calc(4rem * 3 + 1rem * 2);
-        margin: 0.5rem auto 0;
-    }
-    
-    .label-item {
-        flex: 1;
-        text-align: center;
-    }
-    
-    /* 上线状态样式 */
-    .released {
-        font-size: 1.5rem;
-        color: #48bb78;
-        font-weight: 600;
-        text-align: center;
-        padding: 1rem;
-    }
-    
-    /* 动画效果 */
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.02); }
-    }
-    
-    .countdown-number:hover {
-        animation: pulse 0.6s ease-in-out;
-    }
-    
-    /* 响应式调整 - 使用标准CSS语法 */
-    @media (max-width: 768px) {
-        .countdown-number {
-            width: 3.5rem;
-            height: 3.5rem;
-            font-size: 1.5rem;
-        }
-        
-        #countdown-labels {
-            width: calc(3.5rem * 3 + 0.75rem * 2);
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .countdown-number {
-            width: 3rem;
-            height: 3rem;
-            font-size: 1.2rem;
-        }
-        
-        #countdown-labels {
-            width: calc(3rem * 3 + 0.5rem * 2);
-        }
-    }
+/* 弹窗样式与动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
             </style>
         </head>
 
         <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
+            <!-- 内测参与者鸣谢弹窗 -->
+<div id="thankyou-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 9999; animation: fadeIn 0.4s ease-out;">
+    <div style="background: linear-gradient(145deg, #f8f9fa, #e9ecef); padding: 30px; border-radius: 16px; max-width: 550px; width: 92%; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.8); transform: translateY(0); transition: transform 0.3s ease;">
+        <!-- 关闭按钮 -->
+        <button onclick="document.getElementById('thankyou-modal').style.display='none'" style="position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.8); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">×</button>
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; background: #4a90e2; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">✦</div>
+            <h3 style="text-align: center; color: #2c3e50; font-size: 26px; margin: 0; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.5px;">【鸣谢致言】</h3>
+        </div>
+        
+        <p style="color: #495057; margin: 15px 0 25px; line-height: 1.6; font-size: 15px; text-align: justify;">网站从2025年5月17日以来直到2025年7月31日最后时段，这几位内测参与者为网站的发展提供了关注与建言的帮助，没有建言的成员也无需过多在意，此前创建者有说“参与即是最大助力”，如今网站已经公测，那么让我们来鸣谢这些内测时期的参与者吧！</p>
+        
+        <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 10px; border-left: 4px solid #4a90e2;">
+            <h4 style="color: #2c3e50; margin: 0 0 10px; font-size: 16px; display: flex; align-items: center;">
+                <span style="margin-right: 8px; color: #4a90e2;">★</span>鸣谢人员：
+            </h4>
+            <p style="color: #34495e; margin: 0; line-height: 1.5; font-size: 15px;">111111、南威斯特、塞法尔迪的月光、我不是徐某人、Friedrich</p>
+        </div>
+        
+        <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 10px; border-left: 4px solid #5cb85c;">
+            <h4 style="color: #2c3e50; margin: 0 0 10px; font-size: 16px; display: flex; align-items: center;">
+                <span style="margin-right: 8px; color: #5cb85c;">✧</span>长期内测参与人员：
+            </h4>
+            <p style="color: #34495e; margin: 0; line-height: 1.5; font-size: 15px;">我不是徐某人</p>
+        </div>
+    </div>
+</div>
+
             <!-- 导航栏 -->
             <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
                 <div class="container mx-auto px-4 py-3 flex justify-between items-center glass-effect">
@@ -191,8 +143,33 @@
                         <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
                         <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
                             <!-- 新增时段显示方块 -->
-                        <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium"></span>
+                        <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer" style="position: relative; display: inline-block;">
+<!-- 时段显示对应 -->
+<div id="time-period-dropdown" class="absolute z-50 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 invisible opacity-0 transform -translate-y-2 transition-all duration-300">
+    <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">时段划分</div>
+    <ul class="space-y-2 text-sm">
+        <li class="flex justify-between">
+            <span>早上</span>
+            <span class="text-gray-500 dark:text-gray-400">5:00~11:59</span>
+        </li>
+        <li class="flex justify-between">
+            <span>中午</span>
+            <span class="text-gray-500 dark:text-gray-400">12:00~13:59</span>
+        </li>
+        <li class="flex justify-between">
+            <span>下午</span>
+            <span class="text-gray-500 dark:text-gray-400">14:00~16:59</span>
+        </li>
+        <li class="flex justify-between">
+            <span>晚间</span>
+            <span class="text-gray-500 dark:text-gray-400">17:00~4:59</span>
+        </li>
+    </ul>
+    <div class="absolute -top-2 left-6 w-4 h-4 bg-white dark:bg-gray-800 transform rotate-45"></div>
+</div>
                     </div>
+
+
 
                     <!-- 桌面导航 -->
                     <div class="hidden md:flex items-center space-x-8">
@@ -301,30 +278,6 @@
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
                 <!-- 公告栏 -->
-                 <!-- 版本倒计时块 -->
-<div class="countdown-block animate-fade-in mx-auto max-w-md mb-8" id="countdown-block">
-    <div class="bg-white rounded-2xl shadow-lg shadow-primary/10 p-6 border border-gray-100">
-        <div class="text-center mb-4">
-            <div class="text-xs md:text-sm font-medium tracking-wider inline-block relative">
-                <span class="relative z-10 px-2 py-0.5">距公测版本上线还有</span>
-                <span class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full transform -rotate-0.5"></span>
-            </div>
-        </div>
-        
-        <!-- 倒计时数字容器 - 保持横向排列 -->
-        <div id="countdown-numbers" class="flex justify-center gap-4 md:gap-6 my-2">
-            <!-- 数字将通过JS动态生成 -->
-        </div>
-        
-        <!-- 时间单位标签 - 与数字块一一纵向对应 -->
-        <div id="countdown-labels" class="flex justify-center text-xs text-gray-500 font-medium mt-1">
-            <!-- 使用内部间距容器确保对齐 -->
-            <div class="label-item">天</div>
-            <div class="label-item">时</div>
-            <div class="label-item">分</div>
-        </div>
-    </div>
-</div>
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
                         <div class="bg-primary text-white p-3 rounded-lg mr-4">
@@ -347,8 +300,8 @@
                         <div>
                             <h3 class="text-xl font-bold text-primary">更新内容</h3>
                             <p class="mt-2 text-gray-700">
-                                【网站仍处于内部测试阶段 目前版本为0.9】<br>
-                                加入主网页背景音频，三时段音乐各不相同；加入内嵌平台对应背景音乐；置顶栏网站名旁边加入时段块；新增内嵌平台“赤县神州古今漫谈”；新增版本更新日志在公告显示区；对关联性不强的跳转超链接显示图片进行了替换
+                                【网站现已进入公测阶段，当前处于1.0版本】<br>
+                                内嵌平台主题音乐调整（为 “赤县神州古今漫谈” 选取符合我国现代包容开放特色的新 BGM）；在主网站首页说明及内嵌平台（以块形式）加入音乐选取及续播信息展示区（含音乐制作者信息、续播截止时间，声明音乐非商用）；优化触碰性功能，触碰时段块后下方将展示各时段时间范围信息（未来可能调整或新增时段）；加入新内嵌平台“赛博纪元倒计时”；新增非长期性的内测参与者鸣谢信息（访问时在界面中央展示，点击空白处取消，用于答谢内测成员）
                             </p>
                         </div>
                     </div>
@@ -409,6 +362,36 @@
                                     提供文件转置、翻译等专业服务，满足您的研究需求。
                                 </p>
                             </div>
+                        </div>
+                                                <!-- 新增背景音乐信息表格 -->
+                        <h3 class="text-xl font-semibold mt-12 mb-6 text-gray-900">[背景音乐信息]</h3>
+                        <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+                            <table class="w-full text-left">
+                                <thead class="bg-primary/10">
+                                    <tr>
+                                        <th class="px-6 py-3 font-semibold">时段</th>
+                                        <th class="px-6 py-3 font-semibold">音乐名称</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="px-6 py-4">早上</td>
+                                        <td class="px-6 py-4">Milan - Ilan Eshkeri</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">中午</td>
+                                        <td class="px-6 py-4">Beatrix - Ilan Eshkeri</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">下午</td>
+                                        <td class="px-6 py-4">Circle - Ilan Eshkeri</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">晚间</td>
+                                        <td class="px-6 py-4">The Notebooks - Yann van der Cruyssen</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -902,6 +885,49 @@
                     </div>
                 </div>
             </div>
+
+                <!-- 新增的赛博纪元倒计时区块 -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
+                        <img src="赛博朋克2077.jpg" alt="赛博纪元倒计时网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-4 w-full">
+                                <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                                    访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8">
+                        <h3 class="text-2xl font-semibold mb-4">赛博纪元倒计时</h3>
+                        <p class="text-gray-600 mb-4">
+                            《赛博朋克2077》的游玩、熟悉这款游戏的人们，通过这个内嵌平台可以查看当前距离2077年还剩余的时光，同作为消遣网站，它也有着自身特色 该内嵌平台是迄今为止在内部设计上相对独立的一个，虽然有夜间模式按钮和音乐播放按钮，但其他方面是区别于前三个的，访问者亲自体验便知。
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center">
+                                <i class="fa fa-clock-o text-primary mr-3"></i>
+                                <span>精准的时间倒计时</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-rocket text-primary mr-3"></i>
+                                <span>前沿的科技预测</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-paint-brush text-primary mr-3"></i>
+                                <span>独特的赛博朋克艺术</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa fa-lightbulb-o text-primary mr-3"></i>
+                                <span>创新的交互体验</span>
+                            </div>
+                        </div>
+                        <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-external-link mr-2"></i> 快速访问
+                        </a>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -916,12 +942,13 @@
                 <div class="text-right">
                     <p class="text-sm">
                         [发布地] 中国-北京<br>
-                        [内测开始时间] 2025年5月17日<br>
+                        [内测时间] 2025年5月17日~2025年7月31日<br>
+                        [公测时间] 2025年8月1日<br>
                         [网页名称] 历史爱好者服务专设网站<br>
                         [隶属群聊] 夏洛滕堡宫传来歌声<br>
                         [网页制作者] Silvermoon<br>
                         [联系邮箱] Skillmoon2023@163.com<br>
-                        [主要内测者] 我不是徐某人（QQ）
+                        [特别鸣谢] 我不是徐某人（QQ）
                     </p>
                 </div>
             </div>
@@ -1023,73 +1050,125 @@ toggle.addEventListener('change', function() {
   }
 });
 
-// 更新时段显示的函数
-function updateTimePeriod() {
-    const now = new Date();
-    const hour = now.getHours();
-    const periodEl = document.getElementById('time-period');
-    let period, color;
+// 先获取元素引用
+const timePeriod = document.getElementById('time-period');
+const timeDropdown = document.getElementById('time-period-dropdown');
 
-    // 判断时段
-    if (hour >= 5 && hour < 12) {
-        period = '早上';
-        color = 'bg-amber-200 text-amber-800'; // 淡黄色
-    } else if (hour >= 12 && hour < 14) {
-        period = '中午';
-        color = 'bg-yellow-400 text-yellow-800'; // 黄色
-    } else if (hour >= 14 && hour < 17) {
-        period = '下午';
-        color = 'bg-orange-200 text-orange-800'; // 淡橙色
-    } else {
-    period = '晚间';
-    color = 'bg-purple-600 text-white'; // 紫色背景，白色文字
+// 修复弹出功能的JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取元素引用
+    const timePeriod = document.getElementById('time-period');
+    const timeDropdown = document.getElementById('time-period-dropdown');
+    
+    // 检查元素是否存在
+    if (!timePeriod || !timeDropdown) {
+        console.error('时段块或下拉框元素未找到');
+        return;
     }
-
-    // 更新显示
-    periodEl.textContent = period;
-    periodEl.className = `ml-4 px-3 py-1 rounded text-sm font-medium ${color}`;
-}
-
-// 初始化显示并设置每分钟更新一次
-updateTimePeriod();
-setInterval(updateTimePeriod, 60000); // 60000毫秒 = 1分钟
-
-    //倒计时功能
-    const numbersContainer = document.getElementById('countdown-numbers');
-    const labelsContainer = document.getElementById('countdown-labels');
-    const targetDate = new Date('August 1, 2025 11:30:00').getTime();
-
-    // 创建数字显示元素
-    function createNumberElement(value) {
-        const div = document.createElement('div');
-        div.className = 'countdown-number';
-        div.textContent = value.toString().padStart(2, '0');
-        return div;
-    }
-
-    const countdownInterval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
-
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            numbersContainer.innerHTML = '<div class="released">待创建者更换底层代码</div>';
-            labelsContainer.style.display = 'none'; // 隐藏标签
+    
+    // 设置定位容器
+    const container = document.createElement('div');
+    container.style.position = 'relative';
+    container.style.display = 'inline-block';
+    
+    // 将元素移动到容器中
+    timePeriod.parentNode.insertBefore(container, timePeriod);
+    container.appendChild(timePeriod);
+    container.appendChild(timeDropdown);
+    
+    // 强制设置下拉框初始位置
+    timeDropdown.style.top = '100%';
+    timeDropdown.style.left = '0';
+    timeDropdown.style.marginTop = '4px';
+    
+    // 更新时段显示
+    function updateTimePeriod() {
+        const hour = new Date().getHours();
+        let period, color;
+        
+        if (hour >= 5 && hour < 12) {
+            period = '早上';
+            color = 'bg-green-500 text-white';
+        } else if (hour >= 12 && hour < 14) {
+            period = '中午';
+            color = 'bg-yellow-500 text-white';
+        } else if (hour >= 14 && hour < 17) {
+            period = '下午';
+            color = 'bg-orange-500 text-white';
         } else {
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            
-            // 清空并重新生成数字元素
-            numbersContainer.innerHTML = '';
-            numbersContainer.appendChild(createNumberElement(days));
-            numbersContainer.appendChild(createNumberElement(hours));
-            numbersContainer.appendChild(createNumberElement(minutes));
-            
-            // 确保标签可见
-            labelsContainer.style.display = 'flex';
+            period = '晚间';
+            color = 'bg-purple-500 text-white';
         }
-    }, 1000);
+        
+        timePeriod.textContent = period;
+        timePeriod.className = `ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer ${color}`;
+    }
+    
+    // 绑定悬停事件（确保能弹出）
+    timePeriod.addEventListener('mouseenter', () => {
+        timeDropdown.classList.remove('invisible', 'opacity-0', '-translate-y-2');
+    });
+    
+    timePeriod.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+            if (!timeDropdown.matches(':hover')) {
+                timeDropdown.classList.add('invisible', 'opacity-0', '-translate-y-2');
+            }
+        }, 200);
+    });
+    
+    timeDropdown.addEventListener('mouseleave', () => {
+        timeDropdown.classList.add('invisible', 'opacity-0', '-translate-y-2');
+    });
+    
+    // 初始化
+    updateTimePeriod();
+    setInterval(updateTimePeriod, 3600000);
+});
+
+// 初始化显示当前时段
+updateTimePeriod();
+// 每小时更新一次时段显示
+setInterval(updateTimePeriod, 3600000);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('thankyou-modal');
+    const modalContent = document.getElementById('modal-content');
+    const closeButton = document.getElementById('close-modal');
+    
+    // 检查是否已显示过
+    if(!localStorage.getItem('thankyouModalShown')) {
+        modal.classList.remove('hidden');
+        localStorage.setItem('thankyouModalShown', 'true');
+    } else {
+        modal.classList.add('hidden');
+    }
+    
+    // 关闭弹窗的函数
+    function closeModal() {
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+    
+    // 点击关闭按钮关闭
+    closeButton.addEventListener('click', closeModal);
+    
+    // 点击空白区域关闭
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // ESC键关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+});
 </script>
 
 </body>
