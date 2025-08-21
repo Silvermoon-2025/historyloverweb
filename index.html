@@ -1,4 +1,3 @@
-
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1233,90 +1232,25 @@ setInterval(updateTimePeriod, 3600000);
 </script>
 
     <!-- 触碰显示倒计时模块 -->
-    <div id="countdown-trigger" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer shadow-lg z-50 hover:bg-primary/90 transition-all duration-300">
-        <i class="fa fa-clock-o text-xl"></i>
-    </div>
+<div id="countdown-trigger" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-br from-primary to-primary/80 text-white w-14 h-14 rounded-full flex items-center justify-center cursor cursor-pointer shadow-lg shadow-lg shadow-primary/20 z-50 hover:scale-110 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 ease-out">
+    <i class="fa fa-clock-o text-2xl"></i>
+</div>
 
-    <div id="countdown-popup" class="fixed left-20 top-1/2 transform -translate-y-1/2 bg-white dark:bg-darkCard rounded-xl shadow-2xl p-6 w-80 invisible opacity-0 transition-all duration-300 z-50">
-        <div class="text-center mb-4">
-            <h3 class="text-lg font-bold text-gray-800 dark:text-white">距离1.2版本更新还剩</h3>
-        </div>
-        <div id="countdown-numbers" class="flex justify-center gap-3 mb-2">
-            <div class="countdown-number" id="days-container">
-                <span id="days">00</span>
-            </div>
-            <div class="countdown-number" id="hours-container">
-                <span id="hours">00</span>
-            </div>
-            <div class="countdown-number" id="minutes-container">
-                <span id="minutes">00</span>
-            </div>
-        </div>
-        <div id="countdown-labels" class="flex justify-center gap-6 text-sm text-gray-500 dark:text-gray-400 font-medium">
-            <div>天</div>
-            <div>时</div>
-            <div>分</div>
-        </div>
-        <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white dark:bg-darkCard rotate-45"></div>
+<div id="countdown-popup" class="fixed left-24 top-1/2 transform -translate-y-1/2 bg-white/95 dark:bg-darkCard/95 backdrop-blur-sm rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-gray-900/30 p-6 w-88 invisible opacity-0 translate-x-[-10px] transition-all duration-400 cubic-bezier(0.4,0,0.2,1) z-50 border border-gray-100 dark:border-gray-800">
+    <div class="text-center mb-4">
+        <h3 class="text-xl font-bold text-gray-800 dark:text-white tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">1.2版本更新日已至</h3>
     </div>
+    <div class="text-center py-6">
+        <span class="text-2xl font-semibold text-gray-700 dark:text-gray-300 leading-relaxed">待制作者更换底层代码</span>
+    </div>
+    <div class="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-white/95 dark:bg-darkCard/95 backdrop-blur-sm rotate-45 border-l border-t border-gray-100 dark:border-gray-800"></div>
+</div>
 
     <style>
-        /* 倒计时数字样式 */
-        .countdown-number {
-            width: 3.5rem;
-            height: 3.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-            border-radius: 12px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2d3748;
-            box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
-                       -3px -3px 6px rgba(255,255,255,0.8);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 夜间模式适配 */
-        .dark .countdown-number {
-            background: linear-gradient(145deg, #3a4a6b, #2d2d44);
-            color: #e2e8f0;
-            box-shadow: 3px 3px 6px rgba(0,0,0,0.2),
-                       -3px -3px 6px rgba(45,45,68,0.5);
-        }
-
-        /* 数字内部光效 */
-        .countdown-number::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            background: rgba(255,255,255,0.2);
-        }
-
-        /* 动画效果 */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .countdown-number:hover {
-            animation: pulse 0.6s ease-in-out;
-        }
-
         /* 响应式调整 */
         @media (max-width: 768px) {
             #countdown-popup {
                 width: 240px;
-            }
-            .countdown-number {
-                width: 3rem;
-                height: 3rem;
-                font-size: 1.25rem;
             }
         }
     </style>
@@ -1326,9 +1260,6 @@ setInterval(updateTimePeriod, 3600000);
         document.addEventListener('DOMContentLoaded', function() {
             const trigger = document.getElementById('countdown-trigger');
             const popup = document.getElementById('countdown-popup');
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
 
             // 显示弹窗
             trigger.addEventListener('click', function() {
@@ -1342,47 +1273,8 @@ setInterval(updateTimePeriod, 3600000);
                     popup.classList.add('invisible', 'opacity-0');
                 }
             });
-
-            // 更新目标日期
-            const targetDate = new Date('August 22, 2025 00:00:00').getTime();
-
-            // 更新倒计时
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-
-                if (distance < 0) {
-                    // 获取相关元素
-                    const titleElement = document.getElementById('countdown-title');
-                    const numbersContainer = document.getElementById('countdown-numbers');
-                    const labelsContainer = document.getElementById('countdown-labels');
-                    
-                    // 更新标题
-                    titleElement.textContent = '1.2版本更新日已至';
-                    
-                    // 替换数字为文字
-                    numbersContainer.innerHTML = '<div class="text-center py-4 text-gray-700 dark:text-gray-300">待制作者更换底层代码</div>';
-                    
-                    // 隐藏标签
-                    labelsContainer.style.display = 'none';
-                } else {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                    daysElement.textContent = days.toString().padStart(2, '0');
-                    hoursElement.textContent = hours.toString().padStart(2, '0');
-                    minutesElement.textContent = minutes.toString().padStart(2, '0');
-                }
-            }
-
-            // 初始更新
-            updateCountdown();
-            // 每分钟更新一次
-            setInterval(updateCountdown, 60000);
         });
     </script>
 
 </body>
 </html>
-
