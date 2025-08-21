@@ -1352,9 +1352,19 @@ setInterval(updateTimePeriod, 3600000);
                 const distance = targetDate - now;
 
                 if (distance < 0) {
-                    daysElement.textContent = '00';
-                    hoursElement.textContent = '00';
-                    minutesElement.textContent = '00';
+                    // 获取相关元素
+                    const titleElement = document.getElementById('countdown-title');
+                    const numbersContainer = document.getElementById('countdown-numbers');
+                    const labelsContainer = document.getElementById('countdown-labels');
+                    
+                    // 更新标题
+                    titleElement.textContent = '1.2版本更新日已至';
+                    
+                    // 替换数字为文字
+                    numbersContainer.innerHTML = '<div class="text-center py-4 text-gray-700 dark:text-gray-300">待制作者更换底层代码</div>';
+                    
+                    // 隐藏标签
+                    labelsContainer.style.display = 'none';
                 } else {
                     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
