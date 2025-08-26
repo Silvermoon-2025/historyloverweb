@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史爱好者服务专设网站·免责声明</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind主题 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FFC107',
+                        light: '#F8FAFC',
+                        dark: '#1E293B'
+                    },
+                    fontFamily: {
+                        song: ['SimSun', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-all-300 {
+                transition: all 300ms ease-in-out;
+            }
+        }
+    </style>
+    
+    <style>
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #165DFF;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0E42CC;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #2D3748;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #60A5FA;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #3B82F6;
+        }
+    </style>
+</head>
+
+<body class="bg-light text-gray-800 dark:bg-dark dark:text-gray-100 transition-all-300 min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark/90 backdrop-blur-md shadow-sm transition-all-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa fa-file-text-o text-primary text-2xl"></i>
+                    <h1 class="text-xl font-bold text-primary">历史爱好者服务专设网站·免责声明</h1>
+                </div>
+                <div class="mt-1">
+                    <a href="https://silvermoon-2025.github.io/historyloverweb/" class="text-sm text-primary hover:text-primary/80 hover:underline transition-colors">
+                        <i class="fa fa-arrow-left mr-1"></i>返回专设网站
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 夜间模式切换按钮 -->
+            <button id="theme-toggle" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:bg-gray-600">
+                <span class="sr-only">切换夜间模式</span>
+                <span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5">
+                    <i class="fa fa-moon-o dark:hidden text-gray-600 text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                    <i class="fa fa-sun-o hidden dark:block text-yellow-500 text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
+        <!-- 页面标题 -->
+        <div class="text-center mb-10 md:mb-16">
+            <h2 class="text-[clamp(1.8rem,5vw,2.8rem)] font-bold text-primary mb-3 text-shadow">免责声明</h2>
+            <div class="w-24 h-1 bg-secondary mx-auto rounded-full"></div>
+            <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                感谢您访问历史爱好者服务专设网站（以下以“本网站”代称）。在您使用本网站前，请仔细阅读本免责声明。一旦您使用本网站，即表示您已阅读、理解并接受以下条款的约束。
+            </p>
+        </div>
+        
+        <!-- 免责声明内容 -->
+        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 transition-all-300 transform hover:shadow-xl">
+            <!-- 使用宋体显示免责声明内容 -->
+            <div class="font-song text-gray-800 dark:text-gray-200 leading-relaxed text-lg space-y-6">
+                <!-- 版权声明部分 -->
+                <section>
+                    <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">一、版权声明</h3>
+                    
+                    <div class="pl-4 space-y-4">
+                        <div>
+                            <p class="font-bold">音乐版权</p>
+                            <p class="mt-1">本网站为呈现最佳效果，网站主体及内嵌平台会使用背景音乐。所有这些音乐、音效及其他音频作品的版权均归其原始制作人、创作者或合法权利人所有。本网站仅出于提供阅览氛围进行引用，并非该等音频内容的版权所有者。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">网站文本内容版权</p>
+                            <p class="mt-1">本网站非访问者自主创作的所有文本内容，包括但不限于网站介绍、说明文字等，其版权均归本网站制作者（Silvermoon）所有。未经本网站书面许可，任何个人不得以任何方式复制、转载、摘编、修改、链接或以其他方式使用。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">内嵌及用户生成内容版权</p>
+                            <p class="mt-1">本网站可能包含或链接至第三方平台的内容（如嵌入的社交媒体帖子、视频等），或允许访问者发布评论、文章等内容。</p>
+                            <ul class="list-disc pl-6 mt-2 space-y-1">
+                                <li>第三方平台内容：该部分内容的版权归其原始制作者和发布平台所有。</li>
+                                <li>访问者生成内容：访问者在本网站发布的任何内容，其版权归该内容的发布者（访问者）所有。访问者发布内容即表示授权本网站免费、非独占地使用、展示该内容。访问者需确保其发布的内容不侵犯任何第三方的合法权益。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 免责条款部分 -->
+                <section>
+                    <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">二、免责条款</h3>
+                    
+                    <div class="pl-4 space-y-4">
+                        <div>
+                            <p class="font-bold">信息准确性</p>
+                            <p class="mt-1">本网站所提供的信息和内容，均按"原样"提供，不包含任何形式的明示或暗示的保证。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">外部链接责任</p>
+                            <p class="mt-1">本网站可能包含指向其他第三方网站的链接。提供这些链接仅为了给您提供方便快捷的体验。对任何第三方网站的内容、隐私政策或操作，本网站不予负责，也不承担任何法律责任。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">责任限制</p>
+                            <p class="mt-1">在任何情况下，对于因使用或无法使用本网站而引起的任何直接、间接、附带、特殊、惩罚性或结果性的损害（包括但不限于数据丢失、利润损失、业务中断等），即使已被告知有可能发生此类损害，本网站及其所有者均不承担任何责任。</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 其他部分 -->
+                <section>
+                    <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">三、其他</h3>
+                    
+                    <div class="pl-4 space-y-4">
+                        <div>
+                            <p class="font-bold">声明的修改</p>
+                            <p class="mt-1">本网站有权随时修改此免责声明的条款，修改后的声明将在本页面公布后立即生效。您应定期查看本页面以了解当前条款。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">法律管辖</p>
+                            <p class="mt-1">本声明的解释、修改及效力均受中华人民共和国法律管辖。</p>
+                        </div>
+                        
+                        <div>
+                            <p class="font-bold">是否为商用网站</p>
+                            <p class="mt-1">制作者声明永久不将网站作为商用网站提供给访问者使用，而是作为常规内容浏览网站使其持之以恒地发展下去。</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 最后更新日期 -->
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-right">
+                    <p>网站声明最后更新日期：2025年8月26日</p>
+                    <p class="mt-2 text-sm">如果您对本免责声明有任何疑问，请通过<strong class="text-primary dark:text-blue-400">网站内提供的邮箱</strong>与我们联系</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 接受按钮 -->
+        <div class="text-center mt-10">
+            <button id="accept-btn" class="inline-flex items-center space-x-3 bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                <span class="flex items-center justify-center w-5 h-5 border-2 border-white rounded-full transition-all-300">
+                    <i class="fa fa-check text-xs opacity-0 transition-opacity duration-300"></i>
+                </span>
+                <span>我已阅读并理解</span>
+            </button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-50 dark:bg-gray-900 py-8 mt-16 transition-all-300">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fa fa-file-text-o text-primary text-xl mr-2"></i>
+                    <span class="font-medium">历史爱好者服务专设网站·免责声明</span>
+                </div>
+                
+                <div class="text-gray-600 dark:text-gray-400 text-sm">
+                    &copy; 2025 历史爱好者服务专设网站·免责声明 版权所有
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 夜间模式切换功能
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // 检查用户偏好或本地存储的主题设置
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            
+            // 保存用户主题偏好
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+            
+            // 添加整体页面过渡效果
+            document.body.style.transition = 'all 0.5s ease';
+            document.body.style.filter = 'brightness(0.8)';
+            setTimeout(() => {
+                document.body.style.filter = 'brightness(1)';
+            }, 250);
+        });
+        
+        // 滚动时导航栏效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('py-2', 'shadow');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.add('py-4');
+                header.classList.remove('py-2', 'shadow');
+            }
+        });
+
+        // "我已阅读并理解"按钮点击效果
+        const acceptBtn = document.getElementById('accept-btn');
+        const checkIcon = acceptBtn.querySelector('.fa-check');
+        let isAccepted = false;
+
+        acceptBtn.addEventListener('click', () => {
+            if (!isAccepted) {
+                checkIcon.style.opacity = '1';
+                acceptBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    acceptBtn.style.transform = 'scale(1)';
+                }, 150);
+                isAccepted = true;
+            } else {
+                checkIcon.style.opacity = '0';
+                isAccepted = false;
+            }
+        });
+    </script>
+</body>
+</html>
