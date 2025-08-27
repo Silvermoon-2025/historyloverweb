@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>历史爱好者服务专设网站·免责声明</title>
+    <!-- 引入网站ico图标 -->
+    <link rel="shortcut icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome -->
@@ -41,6 +43,51 @@
             }
             .transition-all-300 {
                 transition: all 300ms ease-in-out;
+            }
+            
+            /* 浮动进入动画 */
+            .float-in {
+                animation: floatIn 0.8s ease-out forwards;
+            }
+            
+            .float-in-delay-1 {
+                animation: floatIn 0.8s ease-out 0.1s forwards;
+                opacity: 0;
+            }
+            
+            .float-in-delay-2 {
+                animation: floatIn 0.8s ease-out 0.2s forwards;
+                opacity: 0;
+            }
+            
+            .float-in-delay-3 {
+                animation: floatIn 0.8s ease-out 0.3s forwards;
+                opacity: 0;
+            }
+            
+            @keyframes floatIn {
+                0% {
+                    opacity: 0;
+                    transform: translateY(50px) scale(0.9);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            
+            /* 淡入动画 */
+            .fade-in {
+                animation: fadeIn 0.6s ease-out forwards;
+            }
+            
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
             }
         }
     </style>
@@ -85,7 +132,7 @@
 
 <body class="bg-light text-gray-800 dark:bg-dark dark:text-gray-100 transition-all-300 min-h-screen flex flex-col">
     <!-- 导航栏 -->
-    <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark/90 backdrop-blur-md shadow-sm transition-all-300">
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-dark/90 backdrop-blur-md shadow-sm transition-all-300 fade-in">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div>
                 <div class="flex items-center space-x-2">
@@ -113,20 +160,20 @@
     <!-- 主要内容 -->
     <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
         <!-- 页面标题 -->
-        <div class="text-center mb-10 md:mb-16">
+        <div class="text-center mb-10 md:mb-16 float-in">
             <h2 class="text-[clamp(1.8rem,5vw,2.8rem)] font-bold text-primary mb-3 text-shadow">免责声明</h2>
             <div class="w-24 h-1 bg-secondary mx-auto rounded-full"></div>
             <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                感谢您访问历史爱好者服务专设网站（以下以“本网站”代称）。在您使用本网站前，请仔细阅读本免责声明。一旦您使用本网站，即表示您已阅读、理解并接受以下条款的约束。
+                感谢您访问历史爱好者服务专设网站（以下以"本网站"代称）。在您使用本网站前，请仔细阅读本免责声明。一旦您使用本网站，即表示您已阅读、理解并接受以下条款的约束。
             </p>
         </div>
         
         <!-- 免责声明内容 -->
-        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 transition-all-300 transform hover:shadow-xl">
+        <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 transition-all-300 transform hover:shadow-xl float-in-delay-1">
             <!-- 使用宋体显示免责声明内容 -->
             <div class="font-song text-gray-800 dark:text-gray-200 leading-relaxed text-lg space-y-6">
                 <!-- 版权声明部分 -->
-                <section>
+                <section class="float-in-delay-2">
                     <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">一、版权声明</h3>
                     
                     <div class="pl-4 space-y-4">
@@ -152,7 +199,7 @@
                 </section>
                 
                 <!-- 免责条款部分 -->
-                <section>
+                <section class="float-in-delay-3">
                     <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">二、免责条款</h3>
                     
                     <div class="pl-4 space-y-4">
@@ -165,16 +212,11 @@
                             <p class="font-bold">外部链接责任</p>
                             <p class="mt-1">本网站可能包含指向其他第三方网站的链接。提供这些链接仅为了给您提供方便快捷的体验。对任何第三方网站的内容、隐私政策或操作，本网站不予负责，也不承担任何法律责任。</p>
                         </div>
-                        
-                        <div>
-                            <p class="font-bold">责任限制</p>
-                            <p class="mt-1">在任何情况下，对于因使用或无法使用本网站而引起的任何直接、间接、附带、特殊、惩罚性或结果性的损害（包括但不限于数据丢失、利润损失、业务中断等），即使已被告知有可能发生此类损害，本网站及其所有者均不承担任何责任。</p>
-                        </div>
                     </div>
                 </section>
                 
                 <!-- 其他部分 -->
-                <section>
+                <section class="float-in-delay-3">
                     <h3 class="text-xl font-bold mb-4 text-primary dark:text-blue-400 border-b border-gray-200 dark:border-gray-700 pb-2">三、其他</h3>
                     
                     <div class="pl-4 space-y-4">
@@ -196,12 +238,13 @@
                 </section>
                 
                 <!-- 最后更新日期 -->
-                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-right">
-                    <p>网站声明最后更新日期：2025年8月26日</p>
+                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-right float-in-delay-3">
+                    <p>网站声明更新日期：2025年8月28日</p>
                     <p class="mt-2 text-sm">如果您对本免责声明有任何疑问，请通过<strong class="text-primary dark:text-blue-400">网站内提供的邮箱</strong>与我们联系</p>
                 </div>
             </div>
         </div>
+    </main>
         
         <!-- 接受按钮 -->
         <div class="text-center mt-10">
@@ -214,6 +257,14 @@
         </div>
     </main>
 
+    <script>
+        // 为接受按钮添加点击事件，点击后显示打钩图标
+        document.getElementById('accept-btn').addEventListener('click', function() {
+            const checkIcon = this.querySelector('.fa-check');
+            checkIcon.style.opacity = '1';
+        });
+    </script>
+
     <!-- 页脚 -->
     <footer class="bg-gray-50 dark:bg-gray-900 py-8 mt-16 transition-all-300">
         <div class="container mx-auto px-4">
@@ -224,7 +275,7 @@
                 </div>
                 
                 <div class="text-gray-600 dark:text-gray-400 text-sm">
-                    &copy; 2025 历史爱好者服务专设网站·免责声明 版权所有
+                    &copy; 2025 历史爱好者服务专设网站·免责声明
                 </div>
             </div>
         </div>
@@ -234,62 +285,84 @@
     <script>
         // 夜间模式切换功能
         const themeToggle = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
+        const html = document.documentElement;
         
-        // 检查用户偏好或本地存储的主题设置
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlElement.classList.add('dark');
-        } else {
-            htmlElement.classList.remove('dark');
+        // 检查本地存储中的主题偏好
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
         }
         
         // 切换主题
         themeToggle.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            
-            // 保存用户主题偏好
-            if (htmlElement.classList.contains('dark')) {
-                localStorage.theme = 'dark';
-            } else {
-                localStorage.theme = 'light';
-            }
-            
-            // 添加整体页面过渡效果
-            document.body.style.transition = 'all 0.5s ease';
-            document.body.style.filter = 'brightness(0.8)';
-            setTimeout(() => {
-                document.body.style.filter = 'brightness(1)';
-            }, 250);
+            html.classList.toggle('dark');
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
         });
         
-        // 滚动时导航栏效果
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 10) {
-                header.classList.add('py-2', 'shadow');
-                header.classList.remove('py-4');
-            } else {
-                header.classList.add('py-4');
-                header.classList.remove('py-2', 'shadow');
+        // 页面加载完成后的动画增强
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为滚动添加视差效果
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.opacity = '1';
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                section.style.transform = 'translateY(20px)';
+                section.style.opacity = '0.8';
+                section.style.transition = 'all 0.6s ease-out';
+                observer.observe(section);
+            });
+            
+            // 添加鼠标悬停效果
+            const contentBox = document.querySelector('.max-w-3xl.mx-auto.bg-white');
+            if (contentBox) {
+                contentBox.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                contentBox.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
             }
         });
-
-        // "我已阅读并理解"按钮点击效果
-        const acceptBtn = document.getElementById('accept-btn');
-        const checkIcon = acceptBtn.querySelector('.fa-check');
-        let isAccepted = false;
-
-        acceptBtn.addEventListener('click', () => {
-            if (!isAccepted) {
-                checkIcon.style.opacity = '1';
-                acceptBtn.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    acceptBtn.style.transform = 'scale(1)';
-                }, 150);
-                isAccepted = true;
+        
+        // 平滑滚动到顶部功能
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 添加返回顶部按钮
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollButton = document.getElementById('scroll-to-top');
+            if (scrollTop > 300) {
+                if (!scrollButton) {
+                    const button = document.createElement('button');
+                    button.id = 'scroll-to-top';
+                    button.innerHTML = '<i class="fa fa-arrow-up"></i>';
+                    button.className = 'fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hover:bg-primary/80 transition-all duration-300 transform hover:scale-110 z-50';
+                    button.onclick = scrollToTop;
+                    document.body.appendChild(button);
+                }
             } else {
-                checkIcon.style.opacity = '0';
-                isAccepted = false;
+                if (scrollButton) {
+                    scrollButton.remove();
+                }
             }
         });
     </script>
