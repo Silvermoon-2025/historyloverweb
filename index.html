@@ -1,4 +1,3 @@
-
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -313,8 +312,8 @@
                 <!-- 九三大阅兵倒计时（修改后） -->
                 <!-- 点击即可前去B站观看大阅兵跳转块 -->
                 <div class="flex justify-center mb-4">
-                    <a href="https://www.bilibili.com/blackboard/era/kbIzQpzlep29a5Xp.html?auto_media_playback=1&spm_id_from=333.1007.0.0" target="_blank" class="bg-primary text-white rounded-lg p-2 px-4 text-sm hover:bg-primary/90 transition-colors w-full max-w-4xl text-center">
-                        点击即可前去B站预约观看大阅兵
+                    <a href="https://www.bilibili.com/blackboard/era/zSrxeezNBnRiJtDU.html?navhide=1&bsource=market_93yuebing_channel_url&from_channel=bstation&spm_id_from=333.1007.0.0" target="_blank" class="bg-primary text-white rounded-lg p-2 px-4 text-sm hover:bg-primary/90 transition-colors w-full max-w-4xl text-center">
+                        点击即可前去B站观看大阅兵
                     </a>
                 </div>
 <div class="flex justify-center mb-8">
@@ -325,7 +324,6 @@
               text-center shadow-2xl w-full max-w-4xl 
               transition-all duration-300 overflow-hidden">
 
-        <div class="text-sm mb-4 opacity-80 tracking-wide">距九三大阅兵还剩</div>
         <div id="countdown" class="flex justify-center items-center space-x-6">
             <div class="flex flex-col items-center">
                 <div class="text-5xl font-extrabold bg-clip-text text-transparent 
@@ -513,19 +511,19 @@
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <tr>
                                         <td class="px-6 py-4">上午</td>
-                                        <td class="px-6 py-4">風待ち - 伍々慧</td>
+                                        <td class="px-6 py-4">强军战歌（伴奏版） - 王晓岭、印青 </td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">中午</td>
-                                        <td class="px-6 py-4">海の形 - 昙轩</td>
+                                        <td class="px-6 py-4">歌唱祖国 - 王莘</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">下午</td>
-                                        <td class="px-6 py-4">花吃了那女孩 - Bethybai</td>
+                                        <td class="px-6 py-4">钢铁洪流进行曲 - 李旭昊</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">晚间</td>
-                                        <td class="px-6 py-4">Differences - AixRich</td>
+                                        <td class="px-6 py-4">千年回眸 - 徐鲤</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1520,14 +1518,24 @@ document.addEventListener('DOMContentLoaded', function() {
 // 九三大阅兵倒计时功能
 function updateCountdown() {
     const targetDate = new Date('2025-09-03T00:00:00');
+    const endDate = new Date('2025-09-06T00:00:00'); // 9月6日0点作为结束时间
     const now = new Date();
     const diff = targetDate - now;
     
     const countdownElement = document.getElementById('countdown');
     
-    if (diff <= 0) {
-        // 时间已到或已过
-        countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">中国人民抗日战争胜利日已至</span>';
+    if (diff <= 0 && now < endDate) {
+        if (now.getMonth() === 8 && now.getDate() === 3) {
+            // 9月3日显示抗日战争胜利日已至
+            countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">中国人民抗日战争胜利日已至</span>';
+        } else {
+            // 9月4日~5日显示九三大阅兵进行时
+            countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">九三大阅兵进行时</span>';
+        }
+        return;
+    } else if (now >= endDate) {
+        // 9月6日及以后不显示倒计时
+        countdownElement.innerHTML = '';
         return;
     }
     
@@ -1537,7 +1545,7 @@ function updateCountdown() {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     
     // 格式化显示
-    countdownElement.innerHTML = `<span class="text-3xl font-bold">${days}</span><span class="text-xl">天</span> <span class="text-3xl font-bold">${hours}</span><span class="text-xl">时</span><span class="text-3xl font-bold">${minutes}</span><span class="text-xl">分</span>`;
+    countdownElement.innerHTML = `<span class="text-3xl font-bold">${days}</span><span class="text-xl">天</span> <span class="text-3xl font-bold">${hours}</span><span class="text-xl">时</span> <span class="text-3xl font-bold">${minutes}</span><span class="text-xl">分</span>`;
 }
 
 // 初始化倒计时
@@ -1548,5 +1556,3 @@ setInterval(updateCountdown, 60000);
 
 </body>
 </html>
-
-
