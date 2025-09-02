@@ -324,6 +324,20 @@
               text-center shadow-2xl w-full max-w-4xl 
               transition-all duration-300 overflow-hidden">
 
+        <style>
+            /* 定义放大和文字闪烁动画 */
+            @keyframes pulseAndBlink {
+                0%, 100% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                }
+                50% {
+                    transform: scale(1.1);
+                    opacity: 1;
+                }
+            }
+        </style>
+        <div class="text-sm mb-4 opacity-80 tracking-wide" style="animation: pulseAndBlink 1.5s infinite ease-in-out;">九三大阅兵进行时</div>      
         <div id="countdown" class="flex justify-center items-center space-x-6">
             <div class="flex flex-col items-center">
                 <div class="text-5xl font-extrabold bg-clip-text text-transparent 
@@ -1518,24 +1532,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // 九三大阅兵倒计时功能
 function updateCountdown() {
     const targetDate = new Date('2025-09-03T00:00:00');
-    const endDate = new Date('2025-09-06T00:00:00'); // 9月6日0点作为结束时间
     const now = new Date();
     const diff = targetDate - now;
     
     const countdownElement = document.getElementById('countdown');
     
-    if (diff <= 0 && now < endDate) {
-        if (now.getMonth() === 8 && now.getDate() === 3) {
-            // 9月3日显示抗日战争胜利日已至
-            countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">中国人民抗日战争胜利日已至</span>';
-        } else {
-            // 9月4日~5日显示九三大阅兵进行时
-            countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">九三大阅兵进行时</span>';
-        }
-        return;
-    } else if (now >= endDate) {
-        // 9月6日及以后不显示倒计时
-        countdownElement.innerHTML = '';
+    if (diff <= 0) {
+        // 时间已到或已过
+        countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">中国人民抗日战争胜利纪念日已至</span>';
         return;
     }
     
@@ -1556,4 +1560,5 @@ setInterval(updateCountdown, 60000);
 
 </body>
 </html>
+
 
