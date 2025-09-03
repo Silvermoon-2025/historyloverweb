@@ -1,3 +1,4 @@
+
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -309,42 +310,6 @@
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
-                <!-- 九三大阅兵倒计时（修改后） -->
-<div class="flex justify-center mb-8">
-    <div class="relative relative rounded              
-    bg-gradient-to-br from-rose-100 to-pink-100 
-              dark:from-rose-900/90 dark:to-pink-900/90 
-              rounded-3xl p-8 text-rose-800 dark:text-rose-100 
-              text-center shadow-2xl w-full max-w-4xl 
-              transition-all duration-300 overflow-hidden">
-  
-        <div id="countdown" class="flex justify-center items-center space-x-6">
-            <div class="flex flex-col items-center">
-                <div class="text-5xl font-extrabold bg-clip-text text-transparent 
-                          bg-gradient-to-r from-rose-500 to-pink-600 
-                          dark:from-rose-400 dark:to-pink-300">--</div>
-                <div class="text-sm uppercase opacity-70 tracking-wider">天</div>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="text-5xl font-extrabold bg-clip-text text-transparent 
-                          bg-gradient-to-r from-rose-500 to-pink-600 
-                          dark:from-rose-400 dark:to-pink-300">--</div>
-                <div class="text-sm uppercase opacity-70 tracking-wider">时</div>
-            </div>
-            <div class="flex flex-col items-center">
-                <div class="text-5xl font-extrabold bg-clip-text text-transparent 
-                          bg-gradient-to-r from-rose-500 to-pink-600 
-                          dark:from-rose-400 dark:to-pink-300">--</div>
-                <div class="text-sm uppercase opacity-70 tracking-wider">分</div>
-            </div>
-        </div>
-        <!-- 添加底部装饰线 -->
-        <div class="absolute bottom-0 left-0 right-0 h-0.5 
-                  bg-gradient-to-r from-rose-500 to-pink-600 
-                  dark:from-rose-400 dark:to-pink-300"></div>
-    </div>
-</div>
-
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -392,9 +357,7 @@
                                         animation: bounce 1s infinite;
                                     }
                                 </style>
-                                内嵌平台的音乐支持日夜时段转换（游戏咖厅除外）；新增【佳节共盼】分区，可随时查看距离节日的倒数时间；主网站最底层信息样式变更；
-                                置顶栏分区切换进行了高亮优化；新增【活动文章发表共阅云坛】内嵌平台，并进行对站嵌音乐块固定颜色调整、音乐播放按钮和夜间模式按钮区分调整；
-                                公告栏中当前版本显示处进行了优化；添加临时性倒计时功能“重点事件倒计时”；调整部分内嵌平台信息
+                                内嵌平台的音乐支持日夜时段转换（游戏咖厅除外）；新增【佳节共盼】分区，可随时查看距离节日的倒数时间；主网站最底层信息样式变更；置顶栏分区切换进行了高亮优化；新增【活动文章发表共阅云坛】内嵌平台，并对其音乐播放按钮和夜间模式按钮进行区分调整；公告栏中当前版本显示处进行了优化
                             </p>
                         </div>
                     </div>
@@ -505,19 +468,19 @@
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <tr>
                                         <td class="px-6 py-4">上午</td>
-                                        <td class="px-6 py-4">强军战歌（伴奏版） - 王晓岭、印青 </td>
+                                        <td class="px-6 py-4">風待ち - 伍々慧</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">中午</td>
-                                        <td class="px-6 py-4">歌唱祖国（伴奏版） - 王莘</td>
+                                        <td class="px-6 py-4">海の形 - 昙轩</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">下午</td>
-                                        <td class="px-6 py-4">钢铁洪流进行曲（伴奏版） - 李旭昊</td>
+                                        <td class="px-6 py-4">花吃了那女孩 - Bethybai</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">晚间</td>
-                                        <td class="px-6 py-4">千年回眸 - 徐鲤</td>
+                                        <td class="px-6 py-4">Differences - AixRich</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1303,7 +1266,6 @@
                 <a href="免责声明.html" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
             </div>
         </div>
-    </main>
     </footer>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -1389,13 +1351,7 @@ const playIcon = document.querySelector('.fa-music');
 const pauseIcon = document.querySelector('.fa-pause');
 
 // 初始化音频源和UI状态
-const periodMap = {
-  "上午": "上午",
-  "中午": "中午", 
-  "下午": "下午",
-  "晚间": "晚间"
-};
-audio.src = periodMap[getTimePeriod()] + ".mp3";
+audio.src = getTimePeriod() + ".mp3";
 
 // 滑动开关事件处理
 toggle.addEventListener('change', function() {
@@ -1421,9 +1377,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // 页面加载完成后尝试初始化播放
 window.addEventListener('load', function() {
-  // 确保音频源路径正确
-  audio.src = periodMap[getTimePeriod()] + ".mp3";
-  
   if (toggle.checked) {
     audio.play().catch(err => {
       console.log("初始化播放失败:", err);
@@ -1437,7 +1390,7 @@ window.addEventListener('load', function() {
 const timePeriod = document.getElementById('time-period');
 const timeDropdown = document.getElementById('time-period-dropdown');
 
-// 修复时段块功能的JavaScript
+// 修复弹出功能的JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     // 获取元素引用
     const timePeriod = document.getElementById('time-period');
@@ -1509,37 +1462,11 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateTimePeriod, 3600000);
 });
 
-// 九三大阅兵倒计时功能
-function updateCountdown() {
-    const targetDate = new Date('2025-09-03T00:00:00');
-    const now = new Date();
-    const diff = targetDate - now;
-    
-    const countdownElement = document.getElementById('countdown');
-    
-    if (diff <= 0) {
-        // 时间已到或已过
-        countdownElement.innerHTML = '<span class="text-red-500 font-bold text-xl text-shadow-white">中国人民抗日战争胜利纪念日已至</span>';
-        return;
-    }
-    
-    // 计算天、时、分
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
-    // 格式化显示
-    countdownElement.innerHTML = `<span class="text-3xl font-bold">${days}</span><span class="text-xl">天</span> <span class="text-3xl font-bold">${hours}</span><span class="text-xl">时</span> <span class="text-3xl font-bold">${minutes}</span><span class="text-xl">分</span>`;
-}
-
-// 初始化倒计时
-updateCountdown();
-// 每分钟更新一次倒计时
-setInterval(updateCountdown, 60000);
+// 初始化显示当前时段
+updateTimePeriod();
+// 每小时更新一次时段显示
+setInterval(updateTimePeriod, 3600000);
 </script>
 
 </body>
 </html>
-
-
-
