@@ -1,4 +1,3 @@
-
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,6 +101,57 @@
         </head>
 
         <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
+            <!-- 国庆节弹窗 -->
+            <div id="national-day-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+                <div class="bg-white dark:bg-darkCard rounded-xl shadow-2xl max-w-md w-full mx-auto overflow-hidden transform transition-all animate-fade-in">
+                    <!-- 弹窗头部 -->
+                    <div class="relative bg-gradient-to-r from-red-600 to-red-500 px-6 py-4">
+                        <h2 class="text-2xl font-bold text-white text-center">国庆节快乐！</h2>
+                        <button id="close-popup" class="absolute top-4 right-4 text-white hover:text-yellow-300 transition-colors">
+                            <i class="fa fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <!-- 弹窗内容 -->
+                    <div class="p-6">
+                        <div class="flex justify-center mb-4">
+                            <div class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                                <i class="fa fa-flag text-4xl text-red-600 dark:text-red-400"></i>
+                            </div>
+                        </div>
+                        <p class="text-center mb-4 text-gray-700 dark:text-gray-300">
+                            庆祝中华人民共和国成立 <span id="years-since-founding" class="font-bold text-red-600 dark:text-red-400"></span> 周年！
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            为迎接国庆节的到来，网站背景音乐和游戏咖厅进行了临时调整，
+                            希望能为您带来更浓厚的节日氛围。
+                        </p>
+                        <div class="flex justify-center mt-6">
+                            <span id="year-range" class="inline-block px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-sm">
+                                1949 - 
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                // 计算建国时间
+                const foundingYear = 1949;
+                const currentYear = new Date().getFullYear();
+                const yearsSinceFounding = currentYear - foundingYear;
+                document.getElementById('years-since-founding').textContent = yearsSinceFounding;
+                
+                // 设置年份范围
+                document.getElementById('year-range').textContent = '1949 - ' + currentYear;
+                
+                // 关闭弹窗
+                document.getElementById('close-popup').addEventListener('click', function() {
+                    document.getElementById('national-day-popup').classList.add('opacity-0');
+                    setTimeout(function() {
+                        document.getElementById('national-day-popup').style.display = 'none';
+                    }, 300);
+                });
+            </script>
             <!-- 导航栏 -->
             <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
                 <div class="container mx-auto px-4 py-3 flex justify-between items-center glass-effect">
@@ -310,6 +360,14 @@
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
+                <!-- 国庆特效模块 -->
+                <div class="relative bg-gradient-to-r from-red-600/10 to-yellow-500/10 rounded-xl p-4 md:p-8 mb-12 overflow-hidden animate-fade-in border-2 border-red-500/30">
+                    <h2 class="text-center text-2xl font-bold text-red-600 mb-6">庆祝中华人民共和国成立76周年</h2>
+                    <div id="national-day-effects" class="relative w-full h-[400px] bg-black/5 rounded-lg overflow-hidden">
+                        <!-- 烟花和文字效果将在这里显示 -->
+                    </div>
+                </div>
+                
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -468,19 +526,19 @@
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <tr>
                                         <td class="px-6 py-4">上午</td>
-                                        <td class="px-6 py-4">風待ち - 伍々慧</td>
+                                        <td class="px-6 py-4">歌唱祖国 - 东方红合唱队</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">中午</td>
-                                        <td class="px-6 py-4">海の形 - 昙轩</td>
+                                        <td class="px-6 py-4">骄傲的少年（cover南征北战） - 王梦辰,任帝运,泰然,刘柳,任雨桐,雷海宁,刘哲</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">下午</td>
-                                        <td class="px-6 py-4">花吃了那女孩 - Bethybai</td>
+                                        <td class="px-6 py-4">我和我的祖国 - 王菲</td>
                                     </tr>
                                     <tr>
                                         <td class="px-6 py-4">晚间</td>
-                                        <td class="px-6 py-4">Differences - AixRich</td>
+                                        <td class="px-6 py-4">且听龙吟 The Dragon's Roar (Full Re.ver) - 乘风兔兔</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1083,7 +1141,7 @@
             <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
                 <div class="grid md:grid-cols-12 gap-8 items-center">
                     <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="围棋对弈.jpg" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
+                        <img src="升国旗.jpg" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                             <div class="p-4 w-full">
                                 <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
@@ -1462,10 +1520,369 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateTimePeriod, 3600000);
 });
 
-// 初始化显示当前时段
-updateTimePeriod();
-// 每小时更新一次时段显示
-setInterval(updateTimePeriod, 3600000);
+// 添加国庆特效模块中的烟花和文字效果
+
+// 变量初始化
+let fireworksCanvas;
+let ctx;
+let effectsContainer;
+const fireworks = [];
+const anniversaryTexts = [];
+
+// 1. 初始化特效容器和Canvas
+function initEffects() {
+    // 移除可能存在的旧canvas
+    const oldCanvas = document.getElementById('fireworksCanvas');
+    if (oldCanvas) {
+        oldCanvas.remove();
+    }
+    
+    // 获取特效容器
+    effectsContainer = document.getElementById('national-day-effects');
+    if (!effectsContainer) {
+        console.error('未找到国庆特效容器');
+        return false;
+    }
+    
+    // 创建新的canvas元素
+    fireworksCanvas = document.createElement('canvas');
+    fireworksCanvas.id = 'fireworksCanvas';
+    fireworksCanvas.style.position = 'absolute';
+    fireworksCanvas.style.top = '0';
+    fireworksCanvas.style.left = '0';
+    fireworksCanvas.style.width = '100%';
+    fireworksCanvas.style.height = '100%';
+    fireworksCanvas.style.pointerEvents = 'all'; // 允许点击
+    effectsContainer.appendChild(fireworksCanvas);
+    
+    ctx = fireworksCanvas.getContext('2d');
+    
+    // 设置canvas尺寸以匹配容器
+    resizeCanvas();
+    return true;
+}
+
+// 2. 设置canvas尺寸以匹配容器
+function resizeCanvas() {
+    if (!fireworksCanvas || !effectsContainer) return;
+    
+    const rect = effectsContainer.getBoundingClientRect();
+    fireworksCanvas.width = rect.width;
+    fireworksCanvas.height = rect.height;
+}
+
+// 3. 烟花效果实现
+class Firework {
+    constructor() {
+        this.reset();
+    }
+    
+    reset() {
+        if (!fireworksCanvas) return;
+        
+        // 随机位置
+        this.x = Math.random() * fireworksCanvas.width;
+        this.y = fireworksCanvas.height;
+        this.endX = Math.random() * fireworksCanvas.width;
+        this.endY = Math.random() * (fireworksCanvas.height / 2);
+        
+        // 更多样的颜色选择（偏向红色和金色，符合国庆主题）
+        const colors = ['#FF3B30', '#FF9500', '#FFCC00', '#FF2D55', '#FF9F0A'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        this.exploded = false;
+        this.particles = [];
+        this.gravity = 0.2;
+        this.friction = 0.95;
+        
+        // 计算发射轨迹
+        this.dx = this.endX - this.x;
+        this.dy = this.endY - this.y;
+        this.distanceToEnd = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+        this.dx = this.dx / this.distanceToEnd;
+        this.dy = this.dy / this.distanceToEnd;
+        
+        this.speed = Math.random() * 5 + 5;
+        this.alpha = 1;
+        this.particleCount = Math.floor(Math.random() * 50) + 50;
+    }
+    
+    update() {
+        if (!this.exploded) {
+            this.x += this.dx * this.speed;
+            this.y += this.dy * this.speed;
+            this.speed -= 0.1;
+            
+            if (this.speed <= 1) {
+                this.explode();
+            }
+        } else {
+            this.particles.forEach(particle => {
+                particle.vx *= this.friction;
+                particle.vy *= this.friction;
+                particle.vy += this.gravity;
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.alpha -= 0.01;
+            });
+            
+            // 过滤掉透明度为0的粒子
+            this.particles = this.particles.filter(p => p.alpha > 0);
+            
+            if (this.particles.length === 0) {
+                this.reset();
+            }
+        }
+    }
+    
+    explode() {
+        this.exploded = true;
+        for (let i = 0; i < this.particleCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 5;
+            this.particles.push({
+                x: this.x,
+                y: this.y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                alpha: Math.random() * 0.5 + 0.5,
+                color: this.color
+            });
+        }
+    }
+    
+    draw() {
+        if (!ctx) return;
+        
+        if (!this.exploded) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.alpha;
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        } else {
+            this.particles.forEach(particle => {
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.globalAlpha = particle.alpha;
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+        }
+    }
+}
+
+// 4. 76周年和国庆节快乐文字效果
+class AnniversaryText {
+    constructor() {
+        this.reset();
+    }
+    
+    reset() {
+        if (!fireworksCanvas) return;
+        
+        this.x = Math.random() * fireworksCanvas.width;
+        this.y = Math.random() * fireworksCanvas.height;
+        this.size = Math.random() * 60 + 30;
+        this.opacity = 0;
+        this.maxOpacity = Math.random() * 0.5 + 0.3; // 保持淡色效果
+        this.growthSpeed = Math.random() * 0.03 + 0.01;
+        this.fadeSpeed = Math.random() * 0.01 + 0.005;
+        this.phase = 'growing';
+        
+        // 随机选择文字内容
+        this.texts = ['建国76周年快乐', '国庆节快乐'];
+        this.text = this.texts[Math.floor(Math.random() * this.texts.length)];
+        
+        // 随机旋转角度 (-45度到45度之间)
+        this.rotation = (Math.random() * 90 - 45) * Math.PI / 180;
+        
+        // 随机文字颜色（国庆主题色）
+        this.colors = [
+            `rgba(255, 215, 0, ${this.opacity})`,  // 金色
+            `rgba(255, 99, 71, ${this.opacity})`,  // 红色
+            `rgba(50, 205, 50, ${this.opacity})`,  // 绿色
+            `rgba(70, 130, 180, ${this.opacity})`  // 蓝色
+        ];
+        this.baseColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+    }
+    
+    update() {
+        if (this.phase === 'growing') {
+            this.opacity += this.growthSpeed;
+            if (this.opacity >= this.maxOpacity) {
+                this.opacity = this.maxOpacity;
+                this.phase = 'fading';
+            }
+        } else if (this.phase === 'fading') {
+            this.opacity -= this.fadeSpeed;
+            if (this.opacity <= 0) {
+                this.reset();
+            }
+        }
+    }
+    
+    draw() {
+        if (!ctx) return;
+        
+        // 设置字体和颜色
+        ctx.font = `${this.size}px 'Microsoft YaHei', sans-serif`;
+        ctx.fillStyle = this.baseColor.replace('0)', `${this.opacity})`);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowColor = `rgba(255, 255, 255, ${this.opacity * 0.5})`;
+        ctx.shadowBlur = 15;
+        
+        // 保存当前状态
+        ctx.save();
+        
+        // 移动到文字中心并应用旋转
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        // 绘制文字
+        ctx.fillText(this.text, 0, 0);
+        
+        // 恢复状态
+        ctx.restore();
+        
+        // 重置阴影效果
+        ctx.shadowBlur = 0;
+    }
+}
+
+// 5. 动画循环
+function animate() {
+    requestAnimationFrame(animate);
+    
+    // 额外的错误检查
+    if (!ctx || !fireworksCanvas || !effectsContainer) {
+        console.warn('动画循环跳过 - 缺少必要元素');
+        return;
+    }
+    
+    // 确保canvas尺寸正确
+    if (fireworksCanvas.width === 0 || fireworksCanvas.height === 0) {
+        resizeCanvas();
+        return;
+    }
+    
+    ctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+    
+    // 优化：限制同时存在的效果数量
+    const maxEffects = 30;
+    while (fireworks.length > maxEffects) {
+        fireworks.shift();
+    }
+    
+    while (anniversaryTexts.length > maxEffects) {
+        anniversaryTexts.shift();
+    }
+    
+    // 更新和绘制烟花
+    fireworks.forEach(firework => {
+        firework.update();
+        firework.draw();
+    });
+    
+    // 更新和绘制节日文字
+    anniversaryTexts.forEach(text => {
+        text.update();
+        text.draw();
+    });
+}
+
+// 6. 鼠标点击触发额外烟花
+function setupClickEvent() {
+    if (!fireworksCanvas) return;
+    
+    fireworksCanvas.addEventListener('click', function(e) {
+        const rect = fireworksCanvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        
+        const firework = new Firework();
+        firework.x = clickX;
+        firework.y = fireworksCanvas.height;
+        firework.endX = clickX;
+        firework.endY = Math.random() * (fireworksCanvas.height / 2);
+        firework.explode();
+        fireworks.push(firework);
+    });
+}
+
+// 7. 添加额外的小型烟花效果
+function setupSmallFireworks() {
+    setInterval(() => {
+        if (!fireworksCanvas) return;
+        
+        if (Math.random() > 0.3) { // 30%的概率生成小型烟花
+            const smallFirework = new Firework();
+            smallFirework.particleCount = Math.floor(Math.random() * 30) + 20;
+            fireworks.push(smallFirework);
+        }
+    }, 1000);
+}
+
+// 8. 确保DOM加载完成后再开始动画
+window.addEventListener('load', function() {
+    console.log('开始初始化国庆特效...');
+    
+    // 初始化效果容器和canvas
+    const initialized = initEffects();
+    if (!initialized) {
+        console.error('国庆特效初始化失败 - 找不到容器');
+        return;
+    }
+    
+    // 重置并重新初始化所有效果
+    fireworks.length = 0;
+    anniversaryTexts.length = 0;
+    
+    // 确保canvas可见性
+    if (fireworksCanvas) {
+        console.log(`Canvas尺寸: ${fireworksCanvas.width}x${fireworksCanvas.height}`);
+        fireworksCanvas.style.zIndex = '10';
+    }
+    
+    // 创建一些初始的、直接可见的烟花（位置更集中，便于立即看到效果）
+    for (let i = 0; i < 5; i++) {
+        const firework = new Firework();
+        firework.x = fireworksCanvas.width / 2;
+        firework.y = fireworksCanvas.height;
+        firework.endX = fireworksCanvas.width / 2 + (Math.random() * 100 - 50);
+        firework.endY = fireworksCanvas.height / 2 + (Math.random() * 50 - 25);
+        firework.explode(); // 立即爆炸，便于看到效果
+        fireworks.push(firework);
+    }
+    
+    // 再创建一些正常发射的烟花
+    for (let i = 0; i < 5; i++) {
+        fireworks.push(new Firework());
+    }
+    
+    // 重新创建节日文字
+    for (let i = 0; i < 15; i++) {
+        anniversaryTexts.push(new AnniversaryText());
+    }
+    
+    // 开始动画
+    animate();
+    
+    // 设置点击事件
+    setupClickEvent();
+    
+    // 设置小型烟花效果
+    setupSmallFireworks();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', resizeCanvas);
+    
+    console.log('国庆特效已成功初始化 - 动画已开始运行');
+});
+
 </script>
 
 </body>
