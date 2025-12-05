@@ -71,6 +71,22 @@
         background-color: #6f99fc; 
         backdrop-filter: none;
     }
+    /* 隐藏滚动条但保持滚动功能 */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    /* 平滑滚动效果 */
+    .overflow-x-auto {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        /* 硬件加速提升性能 */
+        transform: translateZ(0);
+        will-change: transform;
+    }
     /* 删除 dark 模式下的 glass-effect 样式 */
 
     /* 夜间模式样式 */
@@ -96,19 +112,53 @@
     .dark .glass-effect {
         background-color: #3a4a6b;
     }
+    /* 导航链接下划线动画效果 */
+    .nav-link {
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #FFD700;
+        transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+        width: 100%;
+    }
+    /* 导航分隔线样式 */
+    .nav-divider {
+        height: 20px;
+        width: 1px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .dark .nav-divider {
+        background-color: rgba(226, 232, 240, 0.5);
+    }
 }
             </style>
         </head>
 
         <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
+            <!-- 背景音乐元素 -->
+            <audio id="bgMusic" loop preload="auto" style="display: none;"></audio>
             <!-- 导航栏 -->
             <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
-                <div class="container mx-auto px-4 py-3 flex justify-between items-center glass-effect">
+                <div class="container mx-auto px-6 py-3 flex justify-between items-center glass-effect rounded-b-xl">
                     <div class="flex items-center space-x-2">
                         <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
                         <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
+                            <!-- 新增时间显示容器 -->
+                        <div class="flex items-center" style="position: relative; display: inline-block;">
                             <!-- 新增时段显示方块 -->
-                        <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer" style="position: relative; display: inline-block;">
+                            <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer">时段</span>
+                            <!-- 新增北京时间显示方块 -->
+                            <span id="beijing-time" class="ml-2 px-3 py-1 rounded text-sm font-medium">时间</span>
+                        </div>
 <!-- 时段显示对应 -->
 <div id="time-period-dropdown" class="absolute z-50 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 invisible opacity-0 transform -translate-y-2 transition-all duration-300">
     <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">时段划分</div>
@@ -137,141 +187,192 @@
 
 
                     <!-- 桌面导航 -->
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="#home" class="text-white hover:text-secondary transition-colors nav-link">首页</a>
-                        <a href="#files" class="text-white hover:text-secondary transition-colors nav-link">文件置放</a>
-                        <a href="#websites" class="text-white hover:text-secondary transition-colors nav-link">优质网站</a>
-                        <a href="#community" class="text-white hover:text-secondary transition-colors nav-link">相关社区</a>
-                        <a href="#holiday-countdown" class="text-white hover:text-secondary transition-colors nav-link">佳节共盼</a>
-                        <a href="#work" class="text-white hover:text-secondary transition-colors nav-link">工作专区</a>
-                        <a href="#embedded-platform" class="text-white hover:text-secondary transition-colors nav-link">内嵌平台</a>
+                    <div class="hidden md:flex items-center">
+                        <a href="#home" class="text-white hover:text-secondary transition-colors nav-link px-4">首页</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#files" class="text-white hover:text-secondary transition-colors nav-link px-4">文件置放</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#websites" class="text-white hover:text-secondary transition-colors nav-link px-4">优质网站</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#community" class="text-white hover:text-secondary transition-colors nav-link px-4">相关社区</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#holiday-countdown" class="text-white hover:text-secondary transition-colors nav-link px-4">佳节共盼</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#work" class="text-white hover:text-secondary transition-colors nav-link px-4">工作专区</a>
+                        <div class="nav-divider mx-1"></div>
+                        <a href="#embedded-platform" class="text-white hover:text-secondary transition-colors nav-link px-4">内嵌平台</a>
                     </div>
 
-  <!-- 现代风格音乐滑动开关 -->
-<label class="music-toggle" style="position: relative; display: inline-flex; align-items: center; cursor: pointer; user-select: none;">
-    <!-- 文字标签 -->
-    <span style="color: white; margin-right: 8px; font-size: 14px; font-family: 'Segoe UI', sans-serif; transition: color 0.3s ease;">背景音乐</span>
-    
-    <!-- 隐藏的复选框 -->
-    <input type="checkbox" id="musicToggle" style="display: none;">
-    
-    <!-- 滑动开关 -->
-    <span class="toggle-track" style="position: relative; width: 50px; height: 26px; background: #e2e8f0; border-radius: 13px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-">
-      <!-- 滑块 -->
-      <span class="toggle-thumb" style="position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-"></span>
-      
-      <!-- 播放图标 -->
-      <i class="fas fa-music" style="position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: white; font-size: 12px; opacity: 0; transition: opacity 0.3s ease;"></i>
-      
-      <!-- 暂停图标 -->
-      <i class="fas fa-pause" style="position: absolute; right: 9px; top: 50%; transform: translateY(-50%); color: white; font-size: 12px; opacity: 1; transition: opacity 0.3s ease;"></i>
-    </span>
-</label>
+                    <!-- 设置菜单按钮 -->
+                    <div class="relative">
+                        <button id="settings-toggle" class="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-white hover:text-secondary transition-all duration-300 flex items-center justify-center">
+                            <i class="fa fa-cog text-xl transition-transform duration-300 hover:rotate-90"></i>
+                        </button>
+                        
+                        <!-- 设置菜单下拉框 -->
+                        <div id="settings-dropdown" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-4 invisible opacity-0 transform -translate-y-2 transition-all duration-300 z-50">
+                            <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">设置选项</div>
+                            
+                            <!-- 夜间模式切换 -->
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">夜间模式</span>
+                                    <label class="relative inline-flex items-center cursor-pointer group">
+                                        <input type="checkbox" id="dark-mode-checkbox" class="sr-only">
+                                        <!-- 滑块轨道 -->
+                                        <div class="w-14 h-7 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full shadow-inner transition-all duration-500 ease-in-out group-hover:shadow-xl" id="dark-mode-track">
+                                            <!-- 滑块按钮 -->
+                                            <div class="absolute top-0.5 left-0.5 bg-white rounded-full w-6 h-6 flex items-center justify-center shadow-md transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1)" id="dark-mode-slider">
+                                                <!-- 太阳图标（左）→ 月亮图标（右） -->
+                                                <i class="fa fa-sun-o text-xs text-yellow-500 transition-opacity duration-300" id="dark-mode-sun"></i>
+                                                <i class="fa fa-moon-o text-xs text-gray-600 absolute opacity-0 transition-opacity duration-300" id="dark-mode-moon"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- 音乐切换 -->
+                            <div class="mb-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">背景音乐</span>
+                                    <label class="relative inline-flex items-center cursor-pointer group">
+                                        <input type="checkbox" id="music-toggle-switch" class="sr-only">
+                                        <!-- 滑块轨道 -->
+                                        <div class="w-14 h-7 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full shadow-inner transition-all duration-500 ease-in-out group-hover:shadow-xl" id="music-mode-track">
+                                            <!-- 滑块按钮 -->
+                                            <div class="absolute top-0.5 left-0.5 bg-white rounded-full w-6 h-6 flex items-center justify-center shadow-md transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1)" id="music-mode-slider">
+                                                <!-- 播放图标（左，关闭状态）→ 暂停图标（右，播放中状态） -->
+                                                <i class="fa fa-play text-xs text-green-600 transition-opacity duration-300" id="music-mode-play"></i>
+                                                <i class="fa fa-pause text-xs text-green-600 absolute opacity-0 transition-opacity duration-300" id="music-mode-pause"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
 
 <style>
-/* 夜间模式适配 */
-.dark .toggle-track {
-  background: #4b5563 !important;
-}
-
-/* 选中状态样式 */
-.music-toggle input:checked ~ .toggle-track {
-  background: #4CD964 !important;
-}
-
-/* 选中状态下滑块位置 */
-.music-toggle input:checked ~ .toggle-track .toggle-thumb {
-  transform: translateX(24px);
-}
-
-/* 未选中状态下滑块位置 */
-.music-toggle input:not(:checked) ~ .toggle-track .toggle-thumb {
-  transform: translateX(0);
-}
-
-/* 未选中状态下播放图标可见 */
-.music-toggle input:not(:checked) ~ .toggle-track .fa-music {
-  opacity: 1;
-}
-
-/* 未选中状态下暂停图标隐藏 */
-.music-toggle input:not(:checked) ~ .toggle-track .fa-pause {
-  opacity: 0;
-}
-
-/* 悬停效果 */
-.music-toggle:hover span:first-child {
-  color: #FFD700 !important;
-}
-
-/* 点击波纹效果 */
-.toggle-thumb::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  background: rgba(76, 217, 100, 0.5);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.5s ease-out;
-}
-
-.music-toggle:active .toggle-thumb::after {
-  transform: translate(-50%, -50%) scale(3);
+/* 设置菜单显示动画 */
+#settings-dropdown.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 </style>
-
-
-<button id="dark-mode-toggle" class="relative px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 text-white hover:text-secondary transition-all duration-300 flex items-center justify-center space-x-2 group">
-    <div class="flex items-center space-x-2 transition-all duration-300" id="night-mode-content">
-        <i class="fa fa-moon-o transition-transform duration-300 group-hover:scale-110"></i>
-        <span>夜间模式</span>
-    </div>
-    <div class="flex items-center space-x-2 transition-all duration-300 opacity-0 scale-90 absolute" id="day-mode-content">
-        <i class="fa fa-sun-o transition-transform duration-300 group-hover:scale-110"></i>
-        <span>日间模式</span>
-    </div>
-</button>
                 </div>
-
-                <!-- 移动端导航菜单 -->
-                <div class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 invisible" id="mobile-menu">
-    <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
-        <a href="#home" class="text-gray-800 hover:text-primary transition-colors py-2">首页</a>
-        <a href="#files" class="text-gray-800 hover:text-primary transition-colors py-2">文件置放</a>
-        <a href="#websites" class="text-gray-800 hover:text-primary transition-colors py-2">优质网站</a>
-        <a href="#community" class="text-gray-800 hover:text-primary transition-colors py-2">相关社区</a>
-        <a href="#work" class="text-gray-800 hover:text-primary transition-colors py-2">工作专区</a>
-        <a href="#embedded-platform" class="text-gray-800 hover:text-primary transition-colors py-2">内嵌平台</a>
-
-                <!-- 移动端夜间模式按钮 -->
-<button id="dark-mode-toggle-mobile" class="relative px-3 py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white hover:text-primary dark:hover:text-secondary transition-all duration-300 flex items-center justify-center space-x-2 group shadow-sm">
-    <div class="flex items-center space-x-2 transition-all duration-300" id="night-mode-content-mobile">
-        <i class="fa fa-moon-o mr-2 transition-transform duration-300 group-hover:scale-110"></i>
-        <span>夜间模式</span>
-    </div>
-    <div class="flex items-center space-x-2 transition-all duration-300 opacity-0 scale-90 absolute" id="day-mode-content-mobile">
-        <i class="fa fa-sun-o mr-2 transition-transform duration-300 group-hover:scale-110"></i>
-        <span>日间模式</span>
-    </div>
-</button>
-    </div>
-
-
-    <!-- 移动端菜单按钮 -->
-                    <button class="md:hidden text-white text-2xl" id="menu-toggle">
-    <i class="fa fa-bars"></i>
-</button>
-</div>
             </nav>
 
 <audio id="bgMusic" loop preload="auto" style="display:none">
   <source src="" type="audio/mpeg">
 </audio>
+
+<script>
+// 设置菜单交互逻辑
+const settingsToggle = document.getElementById('settings-toggle');
+const settingsDropdown = document.getElementById('settings-dropdown');
+const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+const musicToggleSwitch = document.getElementById('music-toggle-switch');
+
+const darkModeTrack = document.getElementById('dark-mode-track');
+const darkModeSlider = document.getElementById('dark-mode-slider');
+const darkModeSun = document.getElementById('dark-mode-sun');
+const darkModeMoon = document.getElementById('dark-mode-moon');
+
+const musicModeTrack = document.getElementById('music-mode-track');
+const musicModeSlider = document.getElementById('music-mode-slider');
+const musicModePlay = document.getElementById('music-mode-play');
+const musicModePause = document.getElementById('music-mode-pause');
+
+settingsToggle.addEventListener('click', function() {
+    settingsDropdown.classList.toggle('visible');
+});
+
+// 点击其他地方关闭设置菜单
+document.addEventListener('click', function(event) {
+    if (!settingsToggle.contains(event.target) && !settingsDropdown.contains(event.target)) {
+        settingsDropdown.classList.remove('visible');
+    }
+});
+
+// 统一的页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始化夜间模式状态
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        document.body.classList.add('dark');
+        darkModeCheckbox.checked = true;
+        // 初始化夜间模式滑块位置和图标
+        darkModeSlider.style.transform = 'translateX(28px)'; // 7px * 4 = 28px
+        darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)'; // indigo-500 to purple-600
+        darkModeSun.style.opacity = '0';
+        darkModeMoon.style.opacity = '1';
+        darkModeMoon.style.color = 'white';
+    }
+    
+    // 初始化音乐开关状态
+    // 直接使用music-toggle-switch，不再依赖不存在的musicToggle
+    if (musicToggleSwitch) {
+        // 初始化音乐滑块位置和图标
+        if (musicToggleSwitch.checked) {
+            musicModeSlider.style.transform = 'translateX(28px)';
+            musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)'; // green-400 to emerald-600
+            musicModePlay.style.opacity = '0';
+            musicModePause.style.opacity = '1';
+        }
+    }
+    
+    // 夜间模式切换事件
+    if (darkModeCheckbox) {
+        darkModeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark');
+                // 滑块向右移动
+                darkModeSlider.style.transform = 'translateX(28px)';
+                // 轨道颜色变化
+                darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+                // 图标切换
+                darkModeSun.style.opacity = '0';
+                darkModeMoon.style.opacity = '1';
+                darkModeMoon.style.color = 'white';
+            } else {
+                document.body.classList.remove('dark');
+                // 滑块向左移动
+                darkModeSlider.style.transform = 'translateX(0)';
+                // 轨道颜色变化
+                darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                // 图标切换
+                darkModeSun.style.opacity = '1';
+                darkModeMoon.style.opacity = '0';
+                darkModeMoon.style.color = '#4b5563';
+            }
+            localStorage.setItem('darkMode', this.checked);
+        });
+    }
+    
+    // 音乐切换逻辑
+    if (musicToggleSwitch) {
+        // 直接给music-toggle-switch添加滑块控制
+        musicToggleSwitch.addEventListener('change', function() {
+            // 控制音乐滑块
+            if (this.checked) {
+                musicModeSlider.style.transform = 'translateX(28px)';
+                musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)';
+                musicModePlay.style.opacity = '0';
+                musicModePause.style.opacity = '1';
+            } else {
+                musicModeSlider.style.transform = 'translateX(0)';
+                musicModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                musicModePlay.style.opacity = '1';
+                musicModePause.style.opacity = '0';
+            }
+        });
+    }
+});
+</script>
 
             <!-- 英雄区域 -->
             <header class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
@@ -309,158 +410,6 @@
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
-                <!-- 1.3版本更新倒计时块 -->
-                <div id="update-countdown-container" class="bg-gradient-to-r from-primary/20 to-accent/20 dark:from-primary/10 dark:to-accent/10 rounded-xl p-6 mb-8 animate-fade-in shadow-lg border border-primary/30 dark:border-primary/20">
-                    <div class="flex flex-col md:flex-row items-center justify-between">
-                        <div class="mb-4 md:mb-0">
-                            <div class="flex items-center">
-                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
-                                    <i class="fa fa-calendar-check-o text-xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-primary">版本更新倒计时</h3>
-                                    <p id="countdown-status" class="mt-2 text-gray-700 dark:text-gray-300">
-                                        距离1.3版本更新还剩
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div id="countdown-content" class="flex flex-col items-center md:items-end">
-                            <!-- 倒计时数字 -->
-                            <div id="countdown-numbers" class="flex justify-center gap-4 mb-2">
-                                <div class="countdown-number" id="days-container">
-                                    <span id="days">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">天</div>
-                                <div class="countdown-number" id="hours-container">
-                                    <span id="hours">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">时</div>
-                                <div class="countdown-number" id="minutes-container">
-                                    <span id="minutes">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">分</div>
-                            </div>
-                            
-                            <!-- 快速查看前瞻更新内容跳转块 -->
-                            <a href="1.3版本更新前瞻.html" class="mt-3 px-6 py-2 bg-accent text-white rounded-lg shadow hover:bg-accent/90 transition-all duration-300 flex items-center">
-                                <i class="fa fa-eye mr-2"></i>
-                                <span>快速查看新版本前瞻更新内容</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- 到期后显示内容（默认隐藏） -->
-                    <div id="expired-content" class="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hidden">
-                        <p class="text-gray-600 dark:text-gray-400 italic">待制作者更换底层代码</p>
-                    </div>
-                </div>
-                
-                <style>
-                    /* 倒计时数字样式 */
-                    .countdown-number {
-                        width: 3.5rem;
-                        height: 3.5rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-                        border-radius: 12px;
-                        font-size: 1.5rem;
-                        font-weight: 700;
-                        color: #2d3748;
-                        box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
-                                  -3px -3px 6px rgba(255,255,255,0.8);
-                        position: relative;
-                        overflow: hidden;
-                    }
-
-                    /* 夜间模式适配 */
-                    .dark .countdown-number {
-                        background: linear-gradient(145deg, #3a4a6b, #2d2d44);
-                        color: #e2e8f0;
-                        box-shadow: 3px 3px 6px rgba(0,0,0,0.2),
-                                  -3px -3px 6px rgba(45,45,68,0.5);
-                    }
-
-                    /* 数字内部光效 */
-                    .countdown-number::before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 50%;
-                        background: rgba(255,255,255,0.2);
-                    }
-
-                    /* 动画效果 */
-                    @keyframes pulse {
-                        0%, 100% { transform: scale(1); }
-                        50% { transform: scale(1.05); }
-                    }
-
-                    .countdown-number:hover {
-                        animation: pulse 0.6s ease-in-out;
-                    }
-
-                    /* 响应式调整 */
-                    @media (max-width: 768px) {
-                        .countdown-number {
-                            width: 3rem;
-                            height: 3rem;
-                            font-size: 1.25rem;
-                        }
-                        #update-countdown-container {
-                            padding: 4px;
-                        }
-                    }
-                </style>
-                
-                <script>
-                    // 1.3版本更新倒计时功能
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const daysElement = document.getElementById('days');
-                        const hoursElement = document.getElementById('hours');
-                        const minutesElement = document.getElementById('minutes');
-                        const countdownStatus = document.getElementById('countdown-status');
-                        const countdownContent = document.getElementById('countdown-content');
-                        const expiredContent = document.getElementById('expired-content');
-
-                        // 更新目标日期：2025年12月5日 18:00
-                        const targetDate = new Date('December 5, 2025 18:00:00').getTime();
-
-                        // 更新倒计时
-                        function updateCountdown() {
-                            const now = new Date().getTime();
-                            const distance = targetDate - now;
-
-                            if (distance < 0) {
-                                // 倒计时结束
-                                countdownStatus.textContent = '1.3版本已发布';
-                                countdownContent.classList.add('hidden');
-                                expiredContent.classList.remove('hidden');
-                            } else {
-                                // 计算天、时、分
-                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                                // 更新显示
-                                daysElement.textContent = days.toString().padStart(2, '0');
-                                hoursElement.textContent = hours.toString().padStart(2, '0');
-                                minutesElement.textContent = minutes.toString().padStart(2, '0');
-                            }
-                        }
-
-                        // 初始更新
-                        updateCountdown();
-                        // 每分钟更新一次
-                        setInterval(updateCountdown, 60000);
-                    });
-                </script>
-                
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -486,7 +435,7 @@
                             <p class="mt-2 text-gray-700">
                                 <div class="mt-2 mb-4 p-3 bg-primary/10 rounded-lg dark:bg-gray-800 transition-colors duration-300">
                                     <span class="text-blue-400 font-semibold dark:text-blue-400">网站现已进入公测阶段，当前处于 
-                                        <span id="version-number" class="inline-block cursor-pointer">1.2</span> 版本
+                                        <span id="version-number" class="inline-block cursor-pointer">1.3</span> 版本
                                     </span>
                                 </div>
                                 <style>
@@ -508,7 +457,7 @@
                                         animation: bounce 1s infinite;
                                     }
                                 </style>
-                                内嵌平台的音乐支持日夜时段转换（游戏咖厅除外）；新增【佳节共盼】分区，可随时查看距离节日的倒数时间；主网站最底层信息样式变更；置顶栏分区切换进行了高亮优化；新增【活动文章发表共阅云坛】内嵌平台，并对其音乐播放按钮和夜间模式按钮进行区分调整；公告栏中当前版本显示处进行了优化
+                                优质网站分区改成瀑布流样式，支持横向滑动式查看；置顶栏样式调整，夜间模式与音乐播放集合到【设置】中，撤销单击跳转分区高亮显示逻辑，但重新做了触碰显示动画；新增【时间块】在时段块旁边，绑定的是北京时间，颜色与时段块同步；调整【优质网站】介绍区样式，主统一了版面，添加序号
                             </p>
                         </div>
                     </div>
@@ -698,9 +647,19 @@
                     <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
                         优质网站
                     </h2>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 dark:border-blue-400 p-4 mb-6 text-blue-700 dark:text-blue-300 text-sm">
+                        <p class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                            </svg>
+                            提示：PC端请先单击任意卡片后再按左右方向键，移动端可直接滑动屏幕查看更多优质网站哦~
+                        </p>
+                    </div>
+                    <!-- 横向滚动容器，添加流畅滚动效果 -->
+                    <div class="overflow-x-auto pb-6 scrollbar-hide">
+                        <div class="flex space-x-6 w-max min-w-full">
                         <!-- 网站卡片 -->
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
                             <div class="h-48 overflow-hidden">
                                 <img src="玻尔论文网.png" alt="学术资源网站" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
@@ -714,7 +673,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
                             <div class="h-48 overflow-hidden">
                                 <img src="IMA.png" alt="AI辅助工具" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
@@ -728,7 +687,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
                             <div class="h-48 overflow-hidden">
                                 <img src="https://p3-search.byteimg.com/obj/tos-cn-i-qvj2lq49k0/fda390b1942d4eccaf15a34c78150060" alt="浏览器工具" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
@@ -742,7 +701,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
                             <div class="h-48 overflow-hidden">
                                 <img src="https://p3-search.byteimg.com/obj/labis/3ac0358603ec379ba36f989b88850d9a" alt="数字图书馆" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
@@ -770,7 +729,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all card-hover min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
                             <div class="h-48 overflow-hidden">
                                 <img src="deepseek.png" alt="AI聊天平台" class="w-full h-full object-cover transition-transform hover:scale-110">
                             </div>
@@ -784,115 +743,149 @@
                                 </a>
                             </div>
                         </div>
+                        <!-- 可以在这里继续添加更多网站卡片 -->
+                    </div>
                     </div>
 
                     <!-- 网站内容区域 -->
-                    <div class="mt-12 grid gap-8" id="website-content-container">
-                        <div id="website-content-1" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">Bohrium论文网</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    Bohrium作为国产学术论文网站，致力于为国内科研人员提供便捷的学术资源服务，并可能在AI技术的应用、中文资源的整合、用户体验等方面具有特色。随着开放科学理念的推广和AI技术的不断发展，Bohrium有望在未来发挥更大的作用。其也能用来学学历史，AI搜索会绑定相关学术文献。
-                                </p>
-                                <p class="mt-4">
-                                    在Bohrium上，您可以：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>便捷获取各类学术资源</li>
-                                    <li>利用AI技术辅助搜索和筛选</li>
-                                    <li>访问丰富的中文文献资料</li>
-                                    <li>体验优化的用户界面和服务</li>
-                                </ul>
+                    <div class="mt-12 bg-white dark:bg-darkCard rounded-xl p-8 shadow-lg" id="website-content-container">
+                        <!-- 网站卡片列表 -->
+                        <div class="space-y-6">
+                            <!-- 网站卡片 1 -->
+                            <div id="website-content-1" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">1</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">Bohrium论文网</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            Bohrium作为国产学术论文网站，致力于为国内科研人员提供便捷的学术资源服务，并可能在AI技术的应用、中文资源的整合、用户体验等方面具有特色。随着开放科学理念的推广和AI技术的不断发展，Bohrium有望在未来发挥更大的作用。其也能用来学学历史，AI搜索会绑定相关学术文献。
+                                        </p>
+                                        <p class="mt-4">
+                                            在Bohrium上，您可以：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>便捷获取各类学术资源</li>
+                                            <li>利用AI技术辅助搜索和筛选</li>
+                                            <li>访问丰富的中文文献资料</li>
+                                            <li>体验优化的用户界面和服务</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="website-content-2" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">DeepSeek Chat</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    DeepSeek Chat是DeepSeek官网的聊天页面，是春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。
-                                    该平台基于先进的人工智能技术，能够理解和生成自然语言，为用户提供智能对话服务。
-                                </p>
-                                <p class="mt-4">
-                                    在DeepSeek Chat上，您可以：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>进行自然流畅的对话交流</li>
-                                    <li>获取历史问题的解答和分析</li>
-                                    <li>进行文献摘要和内容理解</li>
-                                    <li>获得个性化的学习和研究建议</li>
-                                </ul>
+
+                            <!-- 网站卡片 2 -->
+                            <div id="website-content-2" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">2</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">DeepSeek Chat</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            DeepSeek Chat是DeepSeek官网的聊天页面，是春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。
+                                            该平台基于先进的人工智能技术，能够理解和生成自然语言，为用户提供智能对话服务。
+                                        </p>
+                                        <p class="mt-4">
+                                            在DeepSeek Chat上，您可以：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>进行自然流畅的对话交流</li>
+                                            <li>获取历史问题的解答和分析</li>
+                                            <li>进行文献摘要和内容理解</li>
+                                            <li>获得个性化的学习和研究建议</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="website-content-3" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">ima</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    腾讯智能工作台ima是一款人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。
-                                    该工具结合了自然语言处理和机器学习技术，能够帮助用户高效处理和理解大量信息。
-                                </p>
-                                <p class="mt-4">
-                                    ima的主要功能包括：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>文档内容提取和摘要</li>
-                                    <li>网页信息快速理解和总结</li>
-                                    <li>自建知识库和知识管理</li>
-                                    <li>智能问答和信息检索</li>
-                                </ul>
+
+                            <!-- 网站卡片 3 -->
+                            <div id="website-content-3" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">3</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">ima</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            腾讯智能工作台ima是一款人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。
+                                            该工具结合了自然语言处理和机器学习技术，能够帮助用户高效处理和理解大量信息。
+                                        </p>
+                                        <p class="mt-4">
+                                            ima的主要功能包括：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>文档内容提取和摘要</li>
+                                            <li>网页信息快速理解和总结</li>
+                                            <li>自建知识库和知识管理</li>
+                                            <li>智能问答和信息检索</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="website-content-4" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">iTab</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    iTab是一款简洁美观的浏览器起始页工具，它不仅提供了个性化的浏览器主页，还集成了多种实用功能，帮助用户提高浏览效率。
-                                </p>
-                                <p class="mt-4">
-                                    iTab的主要特点：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>简洁美观的界面设计</li>
-                                    <li>自定义主题和背景</li>
-                                    <li>快速访问常用网站</li>
-                                    <li>集成天气、日历等实用功能</li>
-                                    <li>支持待办事项和笔记功能</li>
-                                </ul>
+
+                            <!-- 网站卡片 4 -->
+                            <div id="website-content-4" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">4</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">iTab</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            iTab是一款简洁美观的浏览器起始页工具，它不仅提供了个性化的浏览器主页，还集成了多种实用功能，帮助用户提高浏览效率。
+                                        </p>
+                                        <p class="mt-4">
+                                            iTab的主要特点：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>简洁美观的界面设计</li>
+                                            <li>自定义主题和背景</li>
+                                            <li>快速访问常用网站</li>
+                                            <li>集成天气、日历等实用功能</li>
+                                            <li>支持待办事项和笔记功能</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="website-content-5" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">书格</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    书格是一个完全开放的数字图书馆，致力于传播中国传统文化典籍和开放获取的古籍善本。
-                                    该平台提供高清扫描的古籍文献，涵盖经、史、子、集等多个类别，是历史研究的重要资源。
-                                </p>
-                                <p class="mt-4">
-                                    在书格上，您可以：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>浏览和下载各类古籍文献</li>
-                                    <li>搜索特定主题的历史资料</li>
-                                    <li>参与古籍整理和校对工作</li>
-                                    <li>了解中国传统文化和历史</li>
-                                </ul>
+
+                            <!-- 网站卡片 5 -->
+                            <div id="website-content-5" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">5</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">书格</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            书格是一个完全开放的数字图书馆，致力于传播中国传统文化典籍和开放获取的古籍善本。
+                                            该平台提供高清扫描的古籍文献，涵盖经、史、子、集等多个类别，是历史研究的重要资源。
+                                        </p>
+                                        <p class="mt-4">
+                                            在书格上，您可以：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>浏览和下载各类古籍文献</li>
+                                            <li>搜索特定主题的历史资料</li>
+                                            <li>参与古籍整理和校对工作</li>
+                                            <li>了解中国传统文化和历史</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="website-content-6" class="bg-white rounded-xl p-8 shadow-lg">
-                            <h3 class="text-2xl font-semibold mb-4">Wahlplakate in der Weimarer Republik</h3>
-                            <div class="prose max-w-none">
-                                <p>
-                                    Wahlplakate in der Weimarer Republik是一个关于魏玛共和国的历史研究网站，由德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。
-                                    该网站主要展示了魏玛共和国时期的选举海报和政治宣传材料，为研究魏玛时期的政治和社会提供了丰富的视觉资料。
-                                </p>
-                                <p class="mt-4">
-                                    网站内容包括：
-                                </p>
-                                <ul class="list-disc pl-5 mt-2">
-                                    <li>魏玛共和国时期的选举海报高清图片</li>
-                                    <li>各政党的政治宣传材料和口号</li>
-                                    <li>选举历史和政治背景介绍</li>
-                                    <li>专家分析和研究文章</li>
-                                </ul>
+
+                            <!-- 网站卡片 6 -->
+                            <div id="website-content-6" class="flex flex-col md:flex-row md:items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:shadow-md transition-shadow">
+                                <div class="flex-shrink-0 w-10 h-10 rounded bg-primary text-white flex items-center justify-center font-bold text-xl">6</div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold mb-3">Wahlplakate in der Weimarer Republik</h3>
+                                    <div class="prose max-w-none">
+                                        <p>
+                                            Wahlplakate in der Weimarer Republik是一个关于魏玛共和国的历史研究网站，由德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。
+                                            该网站主要展示了魏玛共和国时期的选举海报和政治宣传材料，为研究魏玛时期的政治和社会提供了丰富的视觉资料。
+                                        </p>
+                                        <p class="mt-4">
+                                            网站内容包括：
+                                        </p>
+                                        <ul class="list-disc pl-5 mt-2">
+                                            <li>魏玛共和国时期的选举海报高清图片</li>
+                                            <li>各政党的政治宣传材料和口号</li>
+                                            <li>选举历史和政治背景介绍</li>
+                                            <li>专家分析和研究文章</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -923,7 +916,7 @@
                             <div class="inline-block p-4 bg-white rounded-full mb-6 shadow-lg">
                                 <span class="text-5xl text-secondary">🐧</span>
                             </div>
-                            <h3 class="text-2xl md:text-3xl font-bold mb-4">夏腾宫服务网站新讯频道</h3>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-4">夏腾宫服务网站新讯频道-腾讯频道</h3>
                             <p class="text-lg text-gray-700 mb-8">
                                 及时获取网站最新动态、服务更新和维护通知，确保您的使用体验始终流畅。
                             </p>
@@ -1380,7 +1373,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full lg:w-auto">
                     <div>
                         <p class="text-sm text-white/70 mb-1">网站版本号</p>
-                        <p class="font-medium">1.2</p>
+                        <p class="font-medium">1.3</p>
                     </div>
                     <div>
                         <p class="text-sm text-white/70 mb-1">发布地</p>
@@ -1458,22 +1451,7 @@
             handleDarkModeToggle(this);
         });
 
-        // 导航高亮效果
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                // 移除所有链接的高亮样式
-                navLinks.forEach(navLink => {
-                    navLink.classList.remove('bg-secondary/20', 'px-3', 'py-1', 'rounded-full');
-                });
-                // 为当前点击的链接添加高亮样式
-                this.classList.add('bg-secondary/20', 'px-3', 'py-1', 'rounded-full');
-                
-                // 设置5秒后自动移除高亮样式
-                setTimeout(() => {
-                    this.classList.remove('bg-secondary/20', 'px-3', 'py-1', 'rounded-full');
-                }, 5000);
-            });
-        });
+
     });
 </script>
 
@@ -1494,29 +1472,58 @@ function getTimePeriod() {
          hour >=14 && hour <17 ? "下午" :"晚间" ;
 }
 
-// 获取元素
-const toggle = document.getElementById('musicToggle');
-const audio = document.getElementById('bgMusic');
-const track = document.querySelector('.toggle-track');
-const thumb = document.querySelector('.toggle-thumb');
-const playIcon = document.querySelector('.fa-music');
-const pauseIcon = document.querySelector('.fa-pause');
-
-// 初始化音频源和UI状态
-audio.src = getTimePeriod() + ".mp3";
-
-// 滑动开关事件处理
-toggle.addEventListener('change', function() {
-  if (this.checked) {
-    // 播放状态
-    audio.play().catch(err => {
-      console.log("播放失败:", err);
-      // 即使播放失败也保持UI状态，用户可以再次点击尝试
-    });
-  } else {
-    // 暂停状态
-    audio.pause();
+// 确保在DOM完全加载后初始化
+window.addEventListener('load', function() {
+  // 获取背景音乐元素
+  const bgMusic = document.getElementById('bgMusic');
+  // 获取设置菜单中的音乐开关
+  const musicToggleSwitch = document.getElementById('music-toggle-switch');
+  
+  // 确保元素存在
+  if (!bgMusic) {
+    console.log('哎呀，背景音乐元素没有找到呢~');
+    return;
   }
+  
+  if (!musicToggleSwitch) {
+    console.log('哎呀，音乐开关没有找到呢~');
+    return;
+  }
+  
+  // 设置音频源
+  const timePeriod = getTimePeriod();
+  bgMusic.src = timePeriod + ".mp3";
+  console.log('设置背景音乐源:', bgMusic.src);
+  
+  // 连接音乐开关事件
+  musicToggleSwitch.addEventListener('change', function() {
+    if (this.checked) {
+      console.log('尝试播放音乐...');
+      bgMusic.play().then(() => {
+        console.log('音乐开始播放啦~');
+      }).catch(err => {
+        console.log('哎呀，播放失败了:', err);
+        // 有些浏览器要求用户交互后才能播放音频
+        alert('请点击页面后再次尝试开启音乐~');
+      });
+    } else {
+      console.log('暂停音乐播放');
+      bgMusic.pause();
+    }
+  });
+  
+  // 添加一个辅助函数，让用户可以通过点击页面来启用音频
+  document.addEventListener('click', function enableAudio() {
+    // 只执行一次
+    document.removeEventListener('click', enableAudio);
+    
+    // 如果开关已选中，尝试播放
+    if (musicToggleSwitch.checked) {
+      bgMusic.play().catch(err => {
+        console.log('初始化播放需要用户交互:', err);
+      });
+    }
+  }, { once: true });
 });
 
 // 初始化UI状态
@@ -1569,7 +1576,26 @@ document.addEventListener('DOMContentLoaded', function() {
     timeDropdown.style.left = '0';
     timeDropdown.style.marginTop = '4px';
     
-    // 更新时段显示
+    // 更新北京时间显示
+    function updateBeijingTime() {
+        const now = new Date();
+        // 北京时间是UTC+8，直接获取本地时间即可
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        
+        const formattedTime = `${year}年${month}月${day}日${hours}时${minutes}分`;
+        
+        // 获取时间显示元素
+        const beijingTime = document.getElementById('beijing-time');
+        if (beijingTime) {
+            beijingTime.textContent = formattedTime;
+        }
+    }
+    
+    // 更新时段显示和时间显示
     function updateTimePeriod() {
         const hour = new Date().getHours();
         let period, color;
@@ -1590,6 +1616,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         timePeriod.textContent = period;
         timePeriod.className = `ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer ${color}`;
+        
+        // 同步时间块的样式
+        const beijingTime = document.getElementById('beijing-time');
+        if (beijingTime) {
+            beijingTime.className = `ml-2 px-3 py-1 rounded text-sm font-medium ${color}`;
+        }
+        
+        // 更新北京时间
+        updateBeijingTime();
     }
     
     // 绑定悬停事件（确保能弹出）
@@ -1611,13 +1646,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始化
     updateTimePeriod();
+    // 每小时更新一次时段显示（包含样式和时间）
     setInterval(updateTimePeriod, 3600000);
+    // 每秒更新一次时间显示
+    setInterval(updateBeijingTime, 1000);
 });
 
-// 初始化显示当前时段
-updateTimePeriod();
-// 每小时更新一次时段显示
-setInterval(updateTimePeriod, 3600000);
+// 初始化显示当前时段和时间
+window.addEventListener('DOMContentLoaded', function() {
+    const timePeriod = document.getElementById('time-period');
+    const beijingTime = document.getElementById('beijing-time');
+    
+    if (timePeriod && beijingTime) {
+        // 确保updateTimePeriod函数存在
+        if (typeof updateTimePeriod === 'function') {
+            updateTimePeriod();
+        } else {
+            console.log('哎呀，updateTimePeriod函数还没有定义呢~');
+        }
+    }
+});
 </script>
 
 </body>
