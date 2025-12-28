@@ -410,6 +410,189 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
+                <!-- 新年祝福模块 -->
+                <div id="new-year-wish" class="bg-red-100 rounded-xl p-6 mb-8 animate-fade-in shadow-lg border border-red-300 dark:border-red-200">
+                    <div class="flex items-center justify-center">
+                        <h3 class="text-xl font-bold text-red-600">祝诸位访问者新年快乐！</h3>
+                    </div>
+                </div>
+                
+                <!-- 1.4版本更新倒计时块 -->
+                <div id="update-countdown-container" class="bg-gradient-to-r from-primary/20 to-accent/20 dark:from-primary/10 dark:to-accent/10 rounded-xl p-6 mb-8 animate-fade-in shadow-lg border border-primary/30 dark:border-primary/20">
+                    <div class="flex flex-col md:flex-row items-center justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
+                                    <i class="fa fa-calendar-check-o text-xl"></i>
+                                </div>
+                                <div>
+                                <h3 class="text-xl font-bold text-primary">版本更新倒计时</h3>
+                                <p id="countdown-status" class="mt-2 text-gray-700 dark:text-gray-300">
+                                    距离1.4版本更新还剩
+                                </p>
+                                <p id="year-countdown-tip" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                    距2026年还剩
+                                </p>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <div id="countdown-content" class="flex flex-col items-center md:items-end">
+                            <!-- 倒计时数字 -->
+                            <div id="countdown-numbers" class="flex justify-center gap-4 mb-2">
+                                <div class="countdown-number" id="days-container">
+                                    <span id="days">00</span>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">天</div>
+                                <div class="countdown-number" id="hours-container">
+                                    <span id="hours">00</span>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">时</div>
+                                <div class="countdown-number" id="minutes-container">
+                                    <span id="minutes">00</span>
+                                </div>
+                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">分</div>
+                        </div>
+                        
+                        <!-- 快速查看前瞻更新内容跳转块 -->
+                            <a href="1.4版本更新前瞻.html" class="mt-3 px-6 py-2 bg-accent text-white rounded-lg shadow hover:bg-accent/90 transition-all duration-300 flex items-center">
+                                <i class="fa fa-eye mr-2"></i>
+                                <span>快速查看新版本前瞻更新内容</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 到期后显示内容（默认隐藏） -->
+                    <div id="expired-content" class="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hidden">
+                        <p class="text-gray-600 dark:text-gray-400 italic">待制作者更换底层代码</p>
+                    </div>
+                </div>
+                
+                <style>
+                    /* 倒计时数字样式 */
+                    .countdown-number {
+                        width: 3.5rem;
+                        height: 3.5rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+                        border-radius: 12px;
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        color: #2d3748;
+                        box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
+                                  -3px -3px 6px rgba(255,255,255,0.8);
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    /* 夜间模式适配 */
+                    .dark .countdown-number {
+                        background: linear-gradient(145deg, #3a4a6b, #2d2d44);
+                        color: #e2e8f0;
+                        box-shadow: 3px 3px 6px rgba(0,0,0,0.2),
+                                  -3px -3px 6px rgba(45,45,68,0.5);
+                    }
+
+                    /* 数字内部光效 */
+                    .countdown-number::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 50%;
+                        background: rgba(255,255,255,0.2);
+                    }
+
+                    /* 动画效果 */
+                    @keyframes pulse {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.05); }
+                    }
+
+                    .countdown-number:hover {
+                        animation: pulse 0.6s ease-in-out;
+                    }
+
+                    /* 响应式调整 */
+                    @media (max-width: 768px) {
+                        .countdown-number {
+                            width: 3rem;
+                            height: 3rem;
+                            font-size: 1.25rem;
+                        }
+                        #update-countdown-container {
+                            padding: 4px;
+                        }
+                    }
+                </style>
+                
+                <script>
+                    // 1.4版本更新倒计时功能
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const daysElement = document.getElementById('days');
+                        const hoursElement = document.getElementById('hours');
+                        const minutesElement = document.getElementById('minutes');
+                        const countdownStatus = document.getElementById('countdown-status');
+                        const countdownContent = document.getElementById('countdown-content');
+                        const expiredContent = document.getElementById('expired-content');
+                        const yearCountdownTip = document.getElementById('year-countdown-tip');
+                        const newYearWish = document.getElementById('new-year-wish');
+
+                        // 1.4版本更新目标日期：2026年1月1日 00:00
+                        const targetDate = new Date('January 1, 2026 00:00:00').getTime();
+                        
+                        // 新年祝福显示的时间范围：2026年1月1日当天
+                        const wishStartDate = new Date('January 1, 2026 00:00:00').getTime();
+                        const wishEndDate = new Date('January 1, 2026 23:59:59').getTime();
+
+                        // 控制新年祝福的显示
+                        function toggleNewYearWish() {
+                            const now = new Date().getTime();
+                            if (now >= wishStartDate && now <= wishEndDate) {
+                                newYearWish.classList.remove('hidden');
+                            } else {
+                                newYearWish.classList.add('hidden');
+                            }
+                        }
+
+                        // 更新倒计时
+                        function updateCountdown() {
+                            const now = new Date().getTime();
+                            const distance = targetDate - now;
+
+                            if (distance < 0) {
+                                // 倒计时结束
+                                countdownStatus.textContent = '1.4版本已发布';
+                                countdownContent.classList.add('hidden');
+                                expiredContent.classList.remove('hidden');
+                            } else {
+                                // 计算天、时、分
+                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                                // 更新显示
+                                daysElement.textContent = days.toString().padStart(2, '0');
+                                hoursElement.textContent = hours.toString().padStart(2, '0');
+                                minutesElement.textContent = minutes.toString().padStart(2, '0');
+                            }
+                        }
+
+                        // 初始更新
+                        toggleNewYearWish();
+                        updateCountdown();
+                        
+                        // 每分钟更新一次
+                        setInterval(() => {
+                            toggleNewYearWish();
+                            updateCountdown();
+                        }, 60000);
+                    });
+                </script>
+                
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
