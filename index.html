@@ -109,8 +109,87 @@
     .dark [class*="bg-primary/10"] {
     background-color: rgba(22, 93, 255, 0.1);
 }
+    .dark [class*="bg-primary/20"] {
+    background-color: rgba(22, 93, 255, 0.2);
+}
     .dark .glass-effect {
         background-color: #3a4a6b;
+    }
+    /* 夜间模式下的平台卡片样式 */
+    .dark .platform-container {
+        background: linear-gradient(135deg, #2d2d44 0%, #3a4a6b 100%);
+        border-color: #4a5568;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    }
+    .dark .platform-container:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    }
+    .dark .platform-content {
+        background-color: transparent;
+    }
+    .dark .platform-card {
+        background-color: transparent;
+    }
+    .dark .platform-card .absolute {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    }
+    .dark .toggle-platform {
+        background-color: #4a5568;
+        color: #e2e8f0;
+    }
+    .dark .toggle-platform:hover {
+        background-color: #6b7280;
+    }
+    .dark [class*="bg-primary"] {
+        background-color: rgba(22, 93, 255, 0.8);
+    }
+    .dark [class*="bg-primary/90"] {
+        background-color: rgba(22, 93, 255, 0.9);
+    }
+    .dark [class*="bg-primary/10"] {
+        background-color: rgba(22, 93, 255, 0.1);
+    }
+    .dark [class*="bg-gradient-to-r from-blue-500 to-purple-600"] {
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.8) 0%, rgba(124, 58, 237, 0.8) 100%);
+    }
+    .dark [class*="bg-gradient-to-r from-blue-500 to-purple-600"]:hover {
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
+    }
+    /* 夜间模式下卡片的文字颜色 */
+    .dark .platform-container h3 {
+        color: #e2e8f0;
+    }
+    .dark .platform-container p {
+        color: #cbd5e1;
+    }
+    /* 夜间模式下卡片图片悬停效果 */
+    .dark .platform-card img:hover {
+        transform: scale(1.1);
+    }
+    /* 夜间模式下访问网站按钮样式 */
+    .dark .platform-card .absolute a {
+        background-color: rgba(22, 93, 255, 0.9);
+    }
+    .dark .platform-card .absolute a:hover {
+        background-color: rgba(22, 93, 255, 1);
+    }
+    /* 夜间模式下灵动岛文字颜色保持不变 */
+    .dark #dynamic-island #music-title {
+        color: #1f2937; /* text-gray-800 */
+    }
+    .dark #dynamic-island #music-artist {
+        color: #4b5563; /* text-gray-600 */
+    }
+    .dark #dynamic-island #current-time,
+    .dark #dynamic-island #total-time {
+        color: #374151; /* text-gray-700 */
+    }
+    /* 夜间模式下灵动岛关闭按钮颜色保持不变 */
+    .dark #dynamic-island #close-island i {
+        color: #374151; /* text-gray-700 */
+    }
+    .dark #dynamic-island #close-island:hover {
+        background-color: #e5e7eb; /* bg-gray-200 */
     }
     /* 导航链接下划线动画效果 */
     .nav-link {
@@ -139,13 +218,48 @@
     .dark .nav-divider {
         background-color: rgba(226, 232, 240, 0.5);
     }
+    /* 表格悬停浮起效果 */
+    .table-row-hover {
+        transition: all 0.3s ease;
+    }
+    .table-row-hover:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        background-color: rgba(22, 93, 255, 0.05) !important;
+    }
+    .dark .table-row-hover:hover {
+        background-color: rgba(22, 93, 255, 0.1) !important;
+    }
+    /* 优化表格整体样式 */
+    .music-table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        background-color: transparent;
+    }
+    .music-table th,
+    .music-table td {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .dark .music-table th,
+    .dark .music-table td {
+        border-bottom-color: #4b5563;
+    }
+    .music-table th {
+        background-color: rgba(22, 93, 255, 0.1);
+    }
+    .music-table tr:last-child td {
+        border-bottom: none;
+    }
 }
             </style>
         </head>
 
         <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
             <!-- 背景音乐元素 -->
-            <audio id="bgMusic" loop preload="auto" style="display: none;"></audio>
+            <audio id="bgMusic" preload="auto" style="display: none;"></audio>
             <!-- 导航栏 -->
             <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
                 <div class="container mx-auto px-6 py-3 flex justify-between items-center glass-effect rounded-b-xl">
@@ -214,7 +328,7 @@
                             <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">设置选项</div>
                             
                             <!-- 夜间模式切换 -->
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">夜间模式</span>
                                     <label class="relative inline-flex items-center cursor-pointer group">
@@ -226,6 +340,25 @@
                                                 <!-- 太阳图标（左）→ 月亮图标（右） -->
                                                 <i class="fa fa-sun-o text-xs text-yellow-500 transition-opacity duration-300" id="dark-mode-sun"></i>
                                                 <i class="fa fa-moon-o text-xs text-gray-600 absolute opacity-0 transition-opacity duration-300" id="dark-mode-moon"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- 跟随系统切换 -->
+                            <div class="mb-4 ml-4">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400 text-xs font-normal">跟随系统</span>
+                                    <label class="relative inline-flex items-center cursor-pointer group">
+                                        <input type="checkbox" id="system-theme-checkbox" class="sr-only">
+                                        <!-- 滑块轨道 -->
+                                        <div class="w-14 h-7 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full shadow-inner transition-all duration-500 ease-in-out group-hover:shadow-xl" id="system-theme-track">
+                                            <!-- 滑块按钮 -->
+                                            <div class="absolute top-0.5 left-0.5 bg-white rounded-full w-6 h-6 flex items-center justify-center shadow-md transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1)" id="system-theme-slider">
+                                                <!-- 台式机图标（始终显示） -->
+                                                <i class="fa fa-desktop text-xs text-blue-500 transition-opacity duration-300" id="system-theme-desktop"></i>
+                                                <i class="fa fa-laptop text-xs text-blue-500 absolute opacity-0 transition-opacity duration-300" id="system-theme-laptop"></i>
                                             </div>
                                         </div>
                                     </label>
@@ -251,7 +384,17 @@
                                 </div>
                             </div>
                             
-
+                            <!-- 屏式切换 -->
+                            <div class="mb-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-gray-700 dark:text-gray-300 text-sm font-medium">屏式切换</span>
+                                    <!-- 跳转块 -->
+                                    <a href="移动端主网站页面.html" id="screen-switch-link" class="w-14 h-7 bg-primary/10 hover:bg-primary/20 rounded-full transition-all duration-300 flex items-center justify-center">
+                                        <!-- 手机/平板图标 -->
+                                        <i class="fa fa-mobile text-gray-700 dark:text-gray-300 text-sm"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -262,13 +405,46 @@
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
+
+/* 灵动岛显示动画 */
+#dynamic-island.visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 </style>
                 </div>
             </nav>
 
-<audio id="bgMusic" loop preload="auto" style="display:none">
-  <source src="" type="audio/mpeg">
-</audio>
+            <!-- 灵动岛音乐播放块 -->
+            <div id="dynamic-island" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 bg-yellow-100 backdrop-blur-lg rounded-full px-6 py-3 shadow-2xl invisible opacity-0 transition-all duration-500 ease-in-out max-w-md w-full">
+                <div class="flex items-center justify-between w-full">
+                    <div class="flex items-center space-x-4 flex-1 min-w-0">
+                        <!-- 音乐信息 -->
+                        <div class="flex-1 min-w-0">
+                            <h3 id="music-title" class="text-gray-800 font-medium text-sm truncate">音乐标题</h3>
+                            <p id="music-artist" class="text-gray-600 text-xs truncate">音乐制作人</p>
+                        </div>
+                        <!-- 进度条和时间显示 -->
+                        <div class="flex-1 mx-4">
+                            <!-- 时间显示 -->
+                            <div class="flex justify-between items-center mb-1">
+                                <span id="current-time" class="text-gray-700 text-xs">0:00</span>
+                                <span id="total-time" class="text-gray-700 text-xs">0:00</span>
+                            </div>
+                            <!-- 进度条 -->
+                            <div id="music-progress" class="w-full h-1 bg-gray-300 rounded-full overflow-hidden">
+                                <div id="music-progress-bar" class="h-full bg-secondary rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <!-- 关闭按钮 -->
+                        <button id="close-island" class="p-2 rounded-full hover:bg-gray-200 transition-colors duration-300 flex-shrink-0">
+                            <i class="fa fa-times text-gray-700 text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
 
 <script>
 // 设置菜单交互逻辑
@@ -276,6 +452,7 @@ const settingsToggle = document.getElementById('settings-toggle');
 const settingsDropdown = document.getElementById('settings-dropdown');
 const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
 const musicToggleSwitch = document.getElementById('music-toggle-switch');
+const systemThemeCheckbox = document.getElementById('system-theme-checkbox');
 
 const darkModeTrack = document.getElementById('dark-mode-track');
 const darkModeSlider = document.getElementById('dark-mode-slider');
@@ -286,6 +463,15 @@ const musicModeTrack = document.getElementById('music-mode-track');
 const musicModeSlider = document.getElementById('music-mode-slider');
 const musicModePlay = document.getElementById('music-mode-play');
 const musicModePause = document.getElementById('music-mode-pause');
+
+const systemThemeTrack = document.getElementById('system-theme-track');
+const systemThemeSlider = document.getElementById('system-theme-slider');
+const systemThemeDesktop = document.getElementById('system-theme-desktop');
+const systemThemeLaptop = document.getElementById('system-theme-laptop');
+
+// 屏式切换功能 - 提示：请在此处修改跳转链接
+// 找到HTML中的 <a href="#" id="screen-switch-link"> 标签，将 href 属性值替换为您想要跳转的文件路径
+// 例如：<a href="mobile-version.html" id="screen-switch-link">
 
 settingsToggle.addEventListener('click', function() {
     settingsDropdown.classList.toggle('visible');
@@ -371,6 +557,109 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // 系统主题功能初始化
+    const savedSystemTheme = localStorage.getItem('systemTheme') === 'true';
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedSystemTheme) {
+        systemThemeCheckbox.checked = true;
+        // 启用系统主题监听
+        if (prefersDark) {
+            document.body.classList.add('dark');
+            darkModeCheckbox.checked = true;
+            // 更新夜间模式滑块位置和图标
+            darkModeSlider.style.transform = 'translateX(28px)';
+            darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+            darkModeSun.style.opacity = '0';
+            darkModeMoon.style.opacity = '1';
+            darkModeMoon.style.color = 'white';
+        } else {
+            document.body.classList.remove('dark');
+            darkModeCheckbox.checked = false;
+            // 更新夜间模式滑块位置和图标
+            darkModeSlider.style.transform = 'translateX(0)';
+            darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+            darkModeSun.style.opacity = '1';
+            darkModeMoon.style.opacity = '0';
+            darkModeMoon.style.color = '#4b5563';
+        }
+        // 更新系统主题滑块位置和图标（保持台式机图标）
+        systemThemeSlider.style.transform = 'translateX(28px)';
+        systemThemeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+        systemThemeDesktop.style.opacity = '1';
+        systemThemeLaptop.style.opacity = '0';
+    }
+    
+    // 系统主题切换事件
+    if (systemThemeCheckbox) {
+        systemThemeCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // 启用系统主题监听
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.body.classList.add('dark');
+                    darkModeCheckbox.checked = true;
+                    // 更新夜间模式滑块位置和图标
+                    darkModeSlider.style.transform = 'translateX(28px)';
+                    darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+                    darkModeSun.style.opacity = '0';
+                    darkModeMoon.style.opacity = '1';
+                    darkModeMoon.style.color = 'white';
+                } else {
+                    document.body.classList.remove('dark');
+                    darkModeCheckbox.checked = false;
+                    // 更新夜间模式滑块位置和图标
+                    darkModeSlider.style.transform = 'translateX(0)';
+                    darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                    darkModeSun.style.opacity = '1';
+                    darkModeMoon.style.opacity = '0';
+                    darkModeMoon.style.color = '#4b5563';
+                }
+                // 更新系统主题滑块位置和图标（保持台式机图标）
+                systemThemeSlider.style.transform = 'translateX(28px)';
+                systemThemeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+                systemThemeDesktop.style.opacity = '1';
+                systemThemeLaptop.style.opacity = '0';
+            } else {
+                // 关闭系统主题监听
+                // 保持当前主题状态不变
+                // 更新系统主题滑块位置和图标（保持台式机图标）
+                systemThemeSlider.style.transform = 'translateX(0)';
+                systemThemeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                systemThemeDesktop.style.opacity = '1';
+                systemThemeLaptop.style.opacity = '0';
+            }
+            localStorage.setItem('systemTheme', this.checked);
+        });
+    }
+    
+    // 添加系统主题监听器（在页面加载时添加，但只有在系统主题功能启用时才生效）
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (systemThemeCheckbox && systemThemeCheckbox.checked) { // 确保系统主题功能启用
+            if (e.matches) {
+                // 系统切换到深色模式
+                document.body.classList.add('dark');
+                darkModeCheckbox.checked = true;
+                // 更新夜间模式滑块位置和图标
+                darkModeSlider.style.transform = 'translateX(28px)';
+                darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+                darkModeSun.style.opacity = '0';
+                darkModeMoon.style.opacity = '1';
+                darkModeMoon.style.color = 'white';
+            } else {
+                // 系统切换到浅色模式
+                document.body.classList.remove('dark');
+                darkModeCheckbox.checked = false;
+                // 更新夜间模式滑块位置和图标
+                darkModeSlider.style.transform = 'translateX(0)';
+                darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                darkModeSun.style.opacity = '1';
+                darkModeMoon.style.opacity = '0';
+                darkModeMoon.style.color = '#4b5563';
+            }
+        }
+    });
 });
 </script>
 
@@ -410,189 +699,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
-                <!-- 新年祝福模块 -->
-                <div id="new-year-wish" class="bg-red-100 rounded-xl p-6 mb-8 animate-fade-in shadow-lg border border-red-300 dark:border-red-200">
-                    <div class="flex items-center justify-center">
-                        <h3 class="text-xl font-bold text-red-600">祝诸位访问者新年快乐！</h3>
-                    </div>
-                </div>
-                
-                <!-- 1.4版本更新倒计时块 -->
-                <div id="update-countdown-container" class="bg-gradient-to-r from-primary/20 to-accent/20 dark:from-primary/10 dark:to-accent/10 rounded-xl p-6 mb-8 animate-fade-in shadow-lg border border-primary/30 dark:border-primary/20">
-                    <div class="flex flex-col md:flex-row items-center justify-between">
-                        <div class="mb-4 md:mb-0">
-                            <div class="flex items-center">
-                                <div class="bg-primary text-white p-3 rounded-lg mr-4">
-                                    <i class="fa fa-calendar-check-o text-xl"></i>
-                                </div>
-                                <div>
-                                <h3 class="text-xl font-bold text-primary">版本更新倒计时</h3>
-                                <p id="countdown-status" class="mt-2 text-gray-700 dark:text-gray-300">
-                                    距离1.4版本更新还剩
-                                </p>
-                                <p id="year-countdown-tip" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                    距2026年还剩
-                                </p>
-                            </div>
-                            </div>
-                        </div>
-                        
-                        <div id="countdown-content" class="flex flex-col items-center md:items-end">
-                            <!-- 倒计时数字 -->
-                            <div id="countdown-numbers" class="flex justify-center gap-4 mb-2">
-                                <div class="countdown-number" id="days-container">
-                                    <span id="days">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">天</div>
-                                <div class="countdown-number" id="hours-container">
-                                    <span id="hours">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">时</div>
-                                <div class="countdown-number" id="minutes-container">
-                                    <span id="minutes">00</span>
-                                </div>
-                                <div class="text-2xl font-bold text-gray-700 dark:text-gray-300">分</div>
-                        </div>
-                        
-                        <!-- 快速查看前瞻更新内容跳转块 -->
-                            <a href="1.4版本更新前瞻.html" class="mt-3 px-6 py-2 bg-accent text-white rounded-lg shadow hover:bg-accent/90 transition-all duration-300 flex items-center">
-                                <i class="fa fa-eye mr-2"></i>
-                                <span>快速查看新版本前瞻更新内容</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- 到期后显示内容（默认隐藏） -->
-                    <div id="expired-content" class="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg hidden">
-                        <p class="text-gray-600 dark:text-gray-400 italic">待制作者更换底层代码</p>
-                    </div>
-                </div>
-                
-                <style>
-                    /* 倒计时数字样式 */
-                    .countdown-number {
-                        width: 3.5rem;
-                        height: 3.5rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-                        border-radius: 12px;
-                        font-size: 1.5rem;
-                        font-weight: 700;
-                        color: #2d3748;
-                        box-shadow: 3px 3px 6px rgba(0,0,0,0.05),
-                                  -3px -3px 6px rgba(255,255,255,0.8);
-                        position: relative;
-                        overflow: hidden;
-                    }
-
-                    /* 夜间模式适配 */
-                    .dark .countdown-number {
-                        background: linear-gradient(145deg, #3a4a6b, #2d2d44);
-                        color: #e2e8f0;
-                        box-shadow: 3px 3px 6px rgba(0,0,0,0.2),
-                                  -3px -3px 6px rgba(45,45,68,0.5);
-                    }
-
-                    /* 数字内部光效 */
-                    .countdown-number::before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 50%;
-                        background: rgba(255,255,255,0.2);
-                    }
-
-                    /* 动画效果 */
-                    @keyframes pulse {
-                        0%, 100% { transform: scale(1); }
-                        50% { transform: scale(1.05); }
-                    }
-
-                    .countdown-number:hover {
-                        animation: pulse 0.6s ease-in-out;
-                    }
-
-                    /* 响应式调整 */
-                    @media (max-width: 768px) {
-                        .countdown-number {
-                            width: 3rem;
-                            height: 3rem;
-                            font-size: 1.25rem;
-                        }
-                        #update-countdown-container {
-                            padding: 4px;
-                        }
-                    }
-                </style>
-                
-                <script>
-                    // 1.4版本更新倒计时功能
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const daysElement = document.getElementById('days');
-                        const hoursElement = document.getElementById('hours');
-                        const minutesElement = document.getElementById('minutes');
-                        const countdownStatus = document.getElementById('countdown-status');
-                        const countdownContent = document.getElementById('countdown-content');
-                        const expiredContent = document.getElementById('expired-content');
-                        const yearCountdownTip = document.getElementById('year-countdown-tip');
-                        const newYearWish = document.getElementById('new-year-wish');
-
-                        // 1.4版本更新目标日期：2026年1月1日 00:00
-                        const targetDate = new Date('January 1, 2026 00:00:00').getTime();
-                        
-                        // 新年祝福显示的时间范围：2026年1月1日当天
-                        const wishStartDate = new Date('January 1, 2026 00:00:00').getTime();
-                        const wishEndDate = new Date('January 1, 2026 23:59:59').getTime();
-
-                        // 控制新年祝福的显示
-                        function toggleNewYearWish() {
-                            const now = new Date().getTime();
-                            if (now >= wishStartDate && now <= wishEndDate) {
-                                newYearWish.classList.remove('hidden');
-                            } else {
-                                newYearWish.classList.add('hidden');
-                            }
-                        }
-
-                        // 更新倒计时
-                        function updateCountdown() {
-                            const now = new Date().getTime();
-                            const distance = targetDate - now;
-
-                            if (distance < 0) {
-                                // 倒计时结束
-                                countdownStatus.textContent = '1.4版本已发布';
-                                countdownContent.classList.add('hidden');
-                                expiredContent.classList.remove('hidden');
-                            } else {
-                                // 计算天、时、分
-                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                                // 更新显示
-                                daysElement.textContent = days.toString().padStart(2, '0');
-                                hoursElement.textContent = hours.toString().padStart(2, '0');
-                                minutesElement.textContent = minutes.toString().padStart(2, '0');
-                            }
-                        }
-
-                        // 初始更新
-                        toggleNewYearWish();
-                        updateCountdown();
-                        
-                        // 每分钟更新一次
-                        setInterval(() => {
-                            toggleNewYearWish();
-                            updateCountdown();
-                        }, 60000);
-                    });
-                </script>
-                
                 <!-- 公告栏 -->
                 <div class="bg-primary/10 rounded-xl p-6 mb-12 animate-fade-in">
                     <div class="flex items-start">
@@ -603,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div>
                             <h3 class="text-xl font-bold text-primary">访问注意</h3>
                             <p class="mt-2 text-gray-700">
-                                最好使用PC端进行访问，移动端暂且没做完美适配屏幕尺寸
+                                现已支持移动端访问，通过右上角【设置】找到[屏式切换]功能即可查看移动端样式的网站
                             </p>
                         </div>
                     </div>
@@ -618,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="mt-2 text-gray-700">
                                 <div class="mt-2 mb-4 p-3 bg-primary/10 rounded-lg dark:bg-gray-800 transition-colors duration-300">
                                     <span class="text-blue-400 font-semibold dark:text-blue-400">网站现已进入公测阶段，当前处于 
-                                        <span id="version-number" class="inline-block cursor-pointer">1.3</span> 版本
+                                        <span id="version-number" class="inline-block cursor-pointer">1.4</span> 版本
                                     </span>
                                 </div>
                                 <style>
@@ -640,7 +746,35 @@ document.addEventListener('DOMContentLoaded', function() {
                                         animation: bounce 1s infinite;
                                     }
                                 </style>
-                                优质网站分区改成瀑布流样式，支持横向滑动式查看；置顶栏样式调整，夜间模式与音乐播放集合到【设置】中，撤销单击跳转分区高亮显示逻辑，但重新做了触碰显示动画；新增【时间块】在时段块旁边，绑定的是北京时间，颜色与时段块同步；调整【优质网站】介绍区样式，主统一了版面，添加序号
+                                
+                                <!-- 网页端更新 -->
+                                <div class="mb-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa fa-desktop text-primary mr-2 text-xl"></i>
+                                        <h4 class="text-lg font-semibold text-primary">网页端更新</h4>
+                                    </div>
+                                    <ul class="ml-6 list-disc space-y-1 text-gray-700 dark:text-gray-300">
+                                        <li>主网站背景音乐全换为原创音乐</li>
+                                        <li>略调整主网站底层信息</li>
+                                        <li>新增“灵动岛”式音乐播放功能块</li>
+                                        <li>背景音乐表格加入单元格互动效果</li>
+                                        <li>新增“系统跟随”功能在设置中，夜间模式的下面</li>
+                                        <li>新增“屏式切换”功能在设置中，适用于移动设备（特别是手机用户）访问</li>
+                                        <li>美化【内嵌平台】分区样式，添加折叠收纳信息功能，撤销网站性质提示内容</li>
+                                        <li>【文件置放】分区大改，描述与样式皆有替换，并将“云盘式文件存储匣”更名为“云端文件存储匣”，更方便访问者调取文件</li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- 移动端更新 -->
+                                <div class="mb-4">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa fa-mobile text-primary mr-2 text-xl"></i>
+                                        <h4 class="text-lg font-semibold text-primary">移动端更新</h4>
+                                    </div>
+                                    <ul class="ml-6 list-disc space-y-1 text-gray-700 dark:text-gray-300">
+                                        <li>移动端样式网站正式上线</li>
+                                    </ul>
+                                </div>
                             </p>
                         </div>
                     </div>
@@ -659,24 +793,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
             <p class="text-gray-600 dark:text-white text-sm text-center mt-2">
                 查阅自建立以来网站所有更新内容，访问上方链接块即可跳转而至。
-            </p>
-        </div>
-    </div>
-</div>
-
-<div class="rounded-xl p-6 mb-4 animate-fade-in border border-gray-200 dark:border-gray-700">
-    <div class="flex items-start">
-        <div class="bg-accent text-white p-3 rounded-lg mr-4 border-2 border-white shadow-md w-16 h-10 flex items-center justify-center">
-            <i class="fa fa-history text-xl"></i>
-        </div>
-        <div class="flex-1">
-            <a href="https://service-web-historical-styles-review.netlify.app/" target="_blank" class="block">
-                <div class="flex-1 h-8 bg-accent/20 rounded-lg flex items-center justify-center hover:bg-accent/40 transition-all duration-300">
-                    <span class="font-bold text-black dark:text-white">回顾旧象</span>
-                </div>
-            </a>
-            <p class="text-gray-600 dark:text-white text-sm text-center mt-2">
-                查看内测期间网站的历史版本面貌，见证网站的成长与变迁。
             </p>
         </div>
     </div>
@@ -739,31 +855,35 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                                                 <!-- 新增背景音乐信息表格 -->
-                        <h3 class="text-xl font-semibold mt-12 mb-6 text-gray-900">[背景音乐信息]</h3>
-                        <div class="overflow-x-auto bg-white rounded-xl shadow-md">
-                            <table class="w-full text-left">
-                                <thead class="bg-primary/10">
+                        <h3 class="text-xl font-semibold mt-12 mb-6 text-gray-900 dark:text-gray-200 animate-fade-in">[背景音乐信息]</h3>
+                        <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow-md">
+                            <table class="music-table w-full text-left">
+                                <thead>
                                     <tr>
-                                        <th class="px-6 py-3 font-semibold">时段</th>
-                                        <th class="px-6 py-3 font-semibold">音乐名称</th>
+                                        <th class="px-6 py-3 font-semibold text-gray-800 dark:text-gray-200">时段</th>
+                                        <th class="px-6 py-3 font-semibold text-gray-800 dark:text-gray-200">音乐名称</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr>
-                                        <td class="px-6 py-4">上午</td>
-                                        <td class="px-6 py-4">風待ち - 伍々慧</td>
+                                <tbody>
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">上午</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis - Silvermoon, AI Music Tool</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">中午</td>
-                                        <td class="px-6 py-4">海の形 - 昙轩</td>
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300"></td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">都市晨间的快节奏律动 Urban Matutinal Upbeat Groove - Silvermoon, AI Music Tool</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">下午</td>
-                                        <td class="px-6 py-4">花吃了那女孩 - Bethybai</td>
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">中午</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">稍作小憩 Just a Little Rest - Silvermoon, AI Music Tool</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">晚间</td>
-                                        <td class="px-6 py-4">24/7 - CMJ</td>
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">下午</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">来自午后的韵律 Rhythms from the Afternoon - Silvermoon, AI Music Tool</td>
+                                    </tr>
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">晚间</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night - Silvermoon, AI Music Tool</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -773,54 +893,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 <!-- 文件置放 -->
                 <section id="files" class="mb-16 scroll-mt-20 animate-fade-in">
-                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 dark:text-gray-200 mb-8">
                         文件置放
                     </h2>
-                    <div class="bg-white rounded-xl p-8 shadow-lg">
-                        <div class="flex flex-col md:flex-row items-center">
-                            <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
-                                <h3 class="text-2xl font-semibold mb-4">云盘式文件存储匣</h3>
-                                <p class="text-gray-600 mb-6">
-                                    用户需访问下方链接才可看到已上传的文件，我们已做好详细的分区，方便您查找和下载所需资料。
-                                </p>
-                                <a href="https://www.123865.com/s/d484jv-kkIXv" target="_blank" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                    <i class="fa fa-cloud-download mr-2"></i> 访问文件存储匣
-                                </a>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-1 shadow-xl">
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8">
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                                    <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                                        <i class="fa fa-cloud text-primary dark:text-blue-300 text-3xl"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">云端文件存储匣</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                                        全新的网站服务功能统一平台，于此访问，你能获得更好的文件下载体验
+                                    </p>
+                                    <a href="https://docs.qq.com/space/DUk1scGtnQmthaEp4/folder/RtwcxIGzjkPD" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-lg hover:from-primary/90 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg">
+                                        <i class="fa fa-cloud-download mr-2"></i> 访问文件存储匣
+                                    </a>
+                                </div>
+                                <div class="md:w-1/2 space-y-6">
+                                    <div class="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6 border border-blue-100 dark:border-blue-800">
+                                        <p class="text-gray-700 dark:text-gray-300 font-['STXihei']">
+                                            访问夏腾宫网站系统服务平台的文件置放域，下载你想要下载的文件，在新的文件置放功能分区，你还能直接使用系统服务平台的其他服务
+                                        </p>
+                                    </div>
+                                    <div class="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-6 border border-indigo-100 dark:border-indigo-800">
+                                        <div class="flex items-start">
+                                            <div class="bg-indigo-100 dark:bg-indigo-800/50 p-3 rounded-lg mr-4">
+                                                <i class="fa fa-robot text-indigo-600 dark:text-indigo-300 text-xl"></i>
+                                            </div>
+                                            <p class="text-gray-700 dark:text-gray-300 font-['STXihei']">
+                                                内置人工智能服务助手，助你快速调取文件了解相关信息与系统服务平台的所有信息
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="md:w-1/2 relative">
-    <div class="bg-[#f3f4f6] rounded-lg p-6 shadow-inner" id="files-content">
-        <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mr-4">
-                <i class="fa fa-folder text-primary text-2xl"></i>
-            </div>
-            <div>
-                <h4 class="font-semibold text-[#374151]">历史文献</h4>
-                <p class="text-sm text-[#6b7280]">10个文件</p>
-            </div>
-        </div>
-        <div class="flex items-center mb-4">
-            <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mr-4">
-                <i class="fa fa-file-text text-secondary text-2xl"></i>
-            </div>
-            <div>
-                <h4 class="font-semibold text-[#374151]">万字文章</h4>
-                <p class="text-sm text-[#6b7280]">0个文件</p>
-            </div>
-        </div>
-        <div class="flex items-center">
-            <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mr-4">
-                <i class="fa fa-picture-o text-accent text-2xl"></i>
-            </div>
-            <div>
-                <h4 class="font-semibold text-[#374151]">历史图片</h4>
-                <p class="text-sm text-[#6b7280]">0个文件</p>
-            </div>
-        </div>
-        <div class="absolute -top-4 -right-4 bg-[#FFD700] text-[#165DFF] font-bold px-4 py-2 rounded-lg shadow-lg transform rotate-3">
-            内容总量
-        </div>
-    </div>
-</div>
                         </div>
                     </div>
                 </section>
@@ -1157,25 +1265,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         佳节共盼
                     </h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- 元旦 -->
-                        <div class="bg-blue-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-blue-500 dark:bg-gray-800 dark:border-blue-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-blue-100 rounded-full opacity-50 dark:bg-blue-900/30"></div>
-                            <div class="relative z-10">
-                                <h3 class="text-xl font-bold text-blue-600 mb-2 dark:text-blue-400">元旦</h3>
-                                <p class="text-gray-500 mb-4 dark:text-gray-400">01月01日</p>
-                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
-                                    <div class="text-center">
-                                        <span id="new-year-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
-                                        <p class="text-gray-500 dark:text-gray-400">天</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                    <i class="fa fa-calendar-o mr-2"></i>
-                                    <span>2026年</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- 春节 -->
                         <div class="bg-yellow-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-yellow-500 dark:bg-gray-800 dark:border-yellow-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
                             <div class="absolute -right-6 -top-6 w-24 h-24 bg-yellow-100 rounded-full opacity-50 dark:bg-yellow-900/30"></div>
@@ -1208,7 +1297,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     </div>
                                 </div>
                                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                    <i class="fa fa-moon-o mr-2"></i>
+                                    <i class="fa fa-calendar-o mr-2"></i>
                                     <span>2026年3月3日</span>
                                 </div>
                             </div>
@@ -1229,6 +1318,25 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                                     <i class="fa fa-calendar-o mr-2"></i>
                                     <span>2026年</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 端午节 -->
+                        <div class="bg-red-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-red-500 dark:bg-gray-800 dark:border-red-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-red-100 rounded-full opacity-50 dark:bg-red-900/30"></div>
+                            <div class="relative z-10">
+                                <h3 class="text-xl font-bold text-red-600 mb-2 dark:text-red-400">端午节</h3>
+                                <p class="text-gray-500 mb-4 dark:text-gray-400">农历五月初五</p>
+                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
+                                    <div class="text-center">
+                                        <span id="dragon-boat-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
+                                        <p class="text-gray-500 dark:text-gray-400">天</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                    <i class="fa fa-calendar-o mr-2"></i>
+                                    <span>2026年6月19日</span>
                                 </div>
                             </div>
                         </div>
@@ -1256,10 +1364,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         const today = new Date();
                         const currentYear = today.getFullYear();
                         
-                        // 元旦（下一年的1月1日）
-                        const nextYear = currentYear + 1;
-                        document.getElementById('new-year-days').textContent = calculateDaysUntil(`${nextYear}-01-01`);
-
                         // 春节（2026年2月17日）
                         const springFestival = new Date('2026-02-17');
                         document.getElementById('spring-festival-days').textContent = calculateDaysUntil(springFestival);
@@ -1271,6 +1375,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         // 劳动节（2026年5月1日）
                         const labourDay = new Date('2026-05-01');
                         document.getElementById('labour-day-days').textContent = calculateDaysUntil(labourDay);
+                        
+                        // 端午节（2026年6月19日）
+                        const dragonBoatFestival = new Date('2026-06-19');
+                        document.getElementById('dragon-boat-days').textContent = calculateDaysUntil(dragonBoatFestival);
                     }
 
                     // 初始更新
@@ -1320,218 +1428,180 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <!-- 内嵌平台 -->
         <section id="embedded-platform" class="mb-16 scroll-mt-20 animate-fade-in">
-            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-8">
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-gray-900 mb-4">
                 内嵌平台
             </h2>
-            <div class="bg-white rounded-xl p-8 shadow-lg">
-                <div class="grid md:grid-cols-12 gap-8 items-center">
-                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="德意志帝国.jpg" alt="日耳曼尼亚二三事网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <div class="p-4 w-full">
-                                <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                    访问网站
+            <button id="toggle-aggregate" class="flex items-center justify-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors mb-6 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                <i class="fa fa-compress mr-2"></i>
+                <span>一键收纳</span>
+            </button>
+            <div class="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-xl platform-container overflow-hidden border border-gray-150 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 transform hover:-translate-y-1">
+
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
+                        <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                            <img src="德意志帝国.jpg" alt="日耳曼尼亚二三事网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="md:col-span-8">
-                        <h3 class="text-2xl font-semibold mb-4">日耳曼尼亚二三事</h3>
-                        <p class="text-gray-600 mb-4">
-                            "日耳曼尼亚二三事"是一个专注于德国历史文化的特色平台，深入探讨从古代到现代的德国历史事件、人物和文化。平台提供丰富的历史资料、学术研究和文化解读，帮助历史爱好者更深入地了解德国历史和文化。
-                        </p>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center">
-                                <i class="fa fa-book text-primary mr-3"></i>
-                                <span>深入的历史研究</span>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold text-gray-800">日耳曼尼亚二三事</h3>
                             </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-users text-primary mr-3"></i>
-                                <span>踊跃的文章编辑参与者</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-image text-primary mr-3"></i>
-                                <span>美观的界面阅览风格</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-comments text-primary mr-3"></i>
-                                <span>独具风格的历史探讨</span>
-                            </div>
+                            <button class="toggle-platform p-2 rounded-full hover:bg-gray-100 transition-colors bg-gray-50 shadow-sm">
+                                <i class="fa fa-chevron-down text-primary text-lg"></i>
+                            </button>
                         </div>
-                        <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            <i class="fa fa-external-link mr-2"></i> 快速访问
+                        <div class="platform-content">
+                            <p class="text-gray-600 mb-5 leading-relaxed">
+                                "日耳曼尼亚二三事"是一个专注于德国历史文化的特色平台，深入探讨从古代到现代的德国历史事件、人物和文化。平台提供丰富的历史资料、学术研究和文化解读，帮助历史爱好者更深入地了解德国历史和文化。
+                            </p>
+                        <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium">
+                            <i class="fa fa-rocket mr-3"></i> 快速访问
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-    <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
-        <div class="grid md:grid-cols-12 gap-8 items-center">
-            <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                <img src="长安.jpg" alt="赤县神州古今漫谈网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <div class="p-4 w-full">
-                        <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            访问网站
+    <div class="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-xl platform-container overflow-hidden border border-gray-150 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 transform hover:-translate-y-1 mt-8">
+        <div class="grid md:grid-cols-12 gap-6 items-center">
+            <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
+                <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                    <img src="长安.jpg" alt="赤县神州古今漫谈网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                    <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105">
+                            <i class="fa fa-external-link mr-2"></i> 访问网站
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="md:col-span-8">
-                <h3 class="text-2xl font-semibold mb-4">赤县神州古今漫谈</h3>
-                <p class="text-gray-600 mb-4">
+            <div class="md:col-span-8 p-6">
+                <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">赤县神州古今漫谈</h3>
+                    <button class="toggle-platform p-2 rounded-full hover:bg-gray-100 transition-colors bg-gray-50 shadow-sm">
+                        <i class="fa fa-chevron-down text-primary text-lg"></i>
+                    </button>
+                </div>
+                <div class="platform-content">
+                <p class="text-gray-600 mb-5 leading-relaxed">
                     "赤县神州古今漫谈"是一个专注于中国古今历史文化的特色平台，深入探讨中国的经济、人文、地理等方面资讯与知识。在这里，丰富的关联性文章有助于帮你了解我国多方面进展及传统艺术等丰富的多元内容。
                 </p>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="flex items-center">
-                        <i class="fa fa-book text-primary mr-3"></i>
-                        <span>深入的历史研究</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fa fa-users text-primary mr-3"></i>
-                        <span>踊跃的文章编辑参与者</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fa fa-image text-primary mr-3"></i>
-                        <span>美观的界面阅览风格</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="fa fa-comments text-primary mr-3"></i>
-                        <span>独具风格的历史探讨</span>
-                    </div>
-                </div>
-                <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                    <i class="fa fa-external-link mr-2"></i> 快速访问
+                <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium">
+                    <i class="fa fa-rocket mr-3"></i> 快速访问
                 </a>
+                </div>
             </div>
         </div>
     </div>
             
             <!-- 新增的Silvermoon Arcade区块 -->
-            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
-                <div class="grid md:grid-cols-12 gap-8 items-center">
-                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="游戏机.jpeg" alt="Silvermoon Arcade网站截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <div class="p-4 w-full">
-                                <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                    访问网站
+            <div class="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-xl platform-container overflow-hidden border border-gray-150 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 transform hover:-translate-y-1 mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
+                        <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                            <img src="游戏机.jpeg" alt="Silvermoon Arcade网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="md:col-span-8">
-                        <h3 class="text-2xl font-semibold mb-4">银月的游戏咖厅</h3>
-                        <p class="text-gray-600 mb-4">
-                            "银月的游戏咖厅"是一个为访问者提供消遣时间的休闲游戏平台，每隔很长一段时间平台会换一个游戏上线其中。
-                        </p>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center">
-                                <i class="fa fa-gamepad text-primary mr-3"></i>
-                                <span>每隔一期会有的主题游戏</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-history text-primary mr-3"></i>
-                                <span>详细的游戏规则介绍</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-users text-primary mr-3"></i>
-                                <span>受众不微的游戏玩法</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-trophy text-primary mr-3"></i>
-                                <span>可分享的游戏娱感</span>
-                            </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-800">银月的游戏咖厅</h3>
+                            <button class="toggle-platform p-2 rounded-full hover:bg-gray-100 transition-colors bg-gray-50 shadow-sm">
+                                <i class="fa fa-chevron-down text-primary text-lg"></i>
+                            </button>
                         </div>
-                        <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            <i class="fa fa-external-link mr-2"></i> 快速访问
-                        </a>
+                        <div class="platform-content">
+                            <p class="text-gray-600 mb-5 leading-relaxed">
+                                "银月的游戏咖厅"是一个为访问者提供消遣时间的休闲游戏平台，每隔很长一段时间平台会换一个游戏上线其中。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium">
+                                <i class="fa fa-rocket mr-3"></i> 快速访问
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
                 <!-- 新增的赛博纪元倒计时区块 -->
-            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
-                <div class="grid md:grid-cols-12 gap-8 items-center">
-                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="赛博朋克2077.jpg" alt="赛博纪元倒计时截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <div class="p-4 w-full">
-                                <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                    访问网站
+            <div class="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-xl platform-container overflow-hidden border border-gray-150 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 transform hover:-translate-y-1 mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
+                        <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                            <img src="赛博朋克2077.jpg" alt="赛博纪元倒计时截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="md:col-span-8">
-                        <h3 class="text-2xl font-semibold mb-4">赛博纪元倒计时</h3>
-                        <p class="text-gray-600 mb-4">
-                            《赛博朋克2077》的游玩、熟悉这款游戏的人们，通过这个内嵌平台可以查看当前距离2077年还剩余的时光，同作为消遣网站，它也有着自身特色。该内嵌平台是迄今为止在内部设计上相对独立的一个，虽然有夜间模式按钮和音乐播放按钮，但其他方面是区别于前三个的，访问者亲自体验便知。
-                        </p>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center">
-                                <i class="fa fa-clock-o text-primary mr-3"></i>
-                                <span>精确到秒的倒计时显示</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-moon-o text-primary mr-3"></i>
-                                <span>酷炫的夜间模式切换</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-music text-primary mr-3"></i>
-                                <span>赛博朋克风格背景音乐</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-share-alt text-primary mr-3"></i>
-                                <span>可分享的倒计时截图</span>
-                            </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-800">赛博纪元倒计时</h3>
+                            <button class="toggle-platform p-2 rounded-full hover:bg-gray-100 transition-colors bg-gray-50 shadow-sm">
+                                <i class="fa fa-chevron-down text-primary text-lg"></i>
+                            </button>
                         </div>
-                        <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            <i class="fa fa-external-link mr-2"></i> 快速访问
-                        </a>
+                        <div class="platform-content">
+                            <p class="text-gray-600 mb-5 leading-relaxed">
+                                《赛博朋克2077》的游玩、熟悉这款游戏的人们，通过这个内嵌平台可以查看当前距离2077年还剩余的时光，同作为消遣网站，它也有着自身特色。该内嵌平台是迄今为止在内部设计上相对独立的一个，虽然有夜间模式按钮和音乐播放按钮，但其他方面是区别于前三个的，访问者亲自体验便知。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium">
+                                    <i class="fa fa-rocket mr-3"></i> 快速访问
+                                </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- 活动文章发表共阅云坛 -->
-            <div class="bg-white rounded-xl p-8 shadow-lg mt-8">
-                <div class="grid md:grid-cols-12 gap-8 items-center">
-                    <div class="md:col-span-4 relative overflow-hidden rounded-xl shadow-lg group">
-                        <img src="电脑办公.jpg" alt="活动文章发表共阅云坛截图" class="w-full h-auto transition-transform duration-500 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <div class="p-4 w-full">
-                                <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                                    访问网站
+            <div class="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-2xl shadow-xl platform-container overflow-hidden border border-gray-150 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 transform hover:-translate-y-1 mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
+                        <div class="aspect-w-16 aspect-h-9 overflow-hidden">
+                            <img src="电脑办公.jpg" alt="活动文章发表共阅云坛截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="block w-full text-center py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="md:col-span-8">
-                        <h3 class="text-2xl font-semibold mb-4">活动文章发表共阅云坛</h3>
-                        <p class="text-gray-600 mb-4">
-                            这是一个关联群聊活动文章的平台，用户可以在此发表和阅读与群聊活动相关的文章。
-                        </p>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center">
-                                <i class="fa fa-book text-primary mr-3"></i>
-                                <span>丰富的活动文章</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-users text-primary mr-3"></i>
-                                <span>活跃的参与者</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-image text-primary mr-3"></i>
-                                <span>美观的界面设计</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fa fa-comments text-primary mr-3"></i>
-                                <span>互动交流</span>
-                            </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-800">活动文章发表共阅云坛</h3>
+                            <button class="toggle-platform p-2 rounded-full hover:bg-gray-100 transition-colors bg-gray-50 shadow-sm">
+                                <i class="fa fa-chevron-down text-primary text-lg"></i>
+                            </button>
                         </div>
-                        <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                            <i class="fa fa-external-link mr-2"></i> 快速访问
-                        </a>
+                        <div class="platform-content">
+                            <p class="text-gray-600 mb-5 leading-relaxed">
+                                这是一个关联群聊活动文章的平台，用户可以在此发表和阅读与群聊活动相关的文章。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium">
+                                <i class="fa fa-rocket mr-3"></i> 快速访问
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1556,15 +1626,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full lg:w-auto">
                     <div>
                         <p class="text-sm text-white/70 mb-1">网站版本号</p>
-                        <p class="font-medium">1.3</p>
+                        <p class="font-medium">1.4</p>
                     </div>
                     <div>
                         <p class="text-sm text-white/70 mb-1">发布地</p>
                         <p class="font-medium">中国-北京</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">网页制作者</p>
-                        <p class="font-medium">Silvermoon</p>
+                        <p class="text-sm text-white/70 mb-1">更新时间</p>
+                        <p class="font-medium">2026年1月1日</p>
                     </div>
                     <div>
                         <p class="text-sm text-white/70 mb-1">公测时间</p>
@@ -1583,14 +1653,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p class="font-medium">Skillmoon2023@163.com</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">内测时间</p>
-                        <p class="font-medium">2025年5月17日~2025年7月31日</p>
+                        <p class="text-sm text-white/70 mb-1">网页制作者</p>
+                        <p class="font-medium">Silvermoon</p>
                     </div>
                 </div>
             </div>
             
             <div class="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm text-white/70 mb-4 md:mb-0">© 2025 历史爱好者服务专设网站</p>
+                <p class="text-sm text-white/70 mb-4 md:mb-0">© 2025-2026 历史爱好者服务专设网站</p>
                 <a href="免责声明.html" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
             </div>
         </div>
@@ -1662,6 +1732,37 @@ window.addEventListener('load', function() {
   // 获取设置菜单中的音乐开关
   const musicToggleSwitch = document.getElementById('music-toggle-switch');
   
+  // 获取灵动岛元素
+  const dynamicIsland = document.getElementById('dynamic-island');
+  const musicTitle = document.getElementById('music-title');
+  const musicArtist = document.getElementById('music-artist');
+  const musicProgress = document.getElementById('music-progress-bar');
+  const closeIsland = document.getElementById('close-island');
+  const currentTime = document.getElementById('current-time');
+  const totalTime = document.getElementById('total-time');
+  
+  // 音乐信息映射 - 支持多首歌
+  const musicInfo = {
+    '上午': [
+      { title: '被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis', artist: 'Silvermoon, AI Music Tool', file: '上午.mp3' },
+      { title: '都市晨间的快节奏律动 Urban Matutinal Upbeat Groove', artist: 'Silvermoon, AI Music Tool', file: '上午2.mp3' }
+    ],
+    '中午': [
+      { title: '稍作小憩 Just a Little Rest', artist: 'Silvermoon, AI Music Tool', file: '中午.mp3' }
+    ],
+    '下午': [
+      { title: '来自午后的韵律 Rhythms from the Afternoon', artist: 'Silvermoon, AI Music Tool', file: '下午.mp3' }
+    ],
+    '晚间': [
+      { title: '于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night', artist: 'Silvermoon, AI Music Tool', file: '晚间.mp3' }
+    ]
+  };
+  
+  // 当前播放索引
+  let currentSongIndex = 0;
+  // 当前时段
+  let currentPeriod = getTimePeriod();
+  
   // 确保元素存在
   if (!bgMusic) {
     console.log('哎呀，背景音乐元素没有找到呢~');
@@ -1673,27 +1774,161 @@ window.addEventListener('load', function() {
     return;
   }
   
-  // 设置音频源
-  const timePeriod = getTimePeriod();
-  bgMusic.src = timePeriod + ".mp3";
-  console.log('设置背景音乐源:', bgMusic.src);
+  // 初始化音频源
+  function initMusic() {
+    currentPeriod = getTimePeriod();
+    currentSongIndex = 0;
+    playCurrentSong();
+  }
+  
+  // 播放当前索引的歌曲
+  function playCurrentSong() {
+    const songs = musicInfo[currentPeriod] || [];
+    if (songs.length === 0) return;
+    
+    const currentSong = songs[currentSongIndex];
+    bgMusic.src = currentSong.file;
+    console.log('设置背景音乐源:', bgMusic.src);
+    
+    // 根据音乐数量设置循环属性
+    // 如果只有一个音乐，则启用循环；如果有多个音乐，则禁用循环以允许切换
+    bgMusic.loop = songs.length === 1;
+    
+    // 更新音乐信息显示
+    musicTitle.textContent = currentSong.title;
+    musicArtist.textContent = currentSong.artist;
+    
+    // 添加错误处理
+    bgMusic.onerror = function() {
+      console.error('哎呀，音乐文件加载失败了:', currentSong.file);
+      // 尝试播放下一首
+      const songs = musicInfo[currentPeriod] || [];
+      if (songs.length > 1) {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        playCurrentSong();
+      } else {
+        alert('当前时段的音乐文件加载失败，请稍后再试~');
+      }
+    };
+  }
+  
+  // 初始化音乐
+  initMusic();
+  
+  // 更新音乐信息显示（兼容旧代码调用）
+  function updateMusicInfo(period) {
+    const songs = musicInfo[period] || [];
+    if (songs.length > 0) {
+      const currentSong = songs[currentSongIndex];
+      musicTitle.textContent = currentSong.title;
+      musicArtist.textContent = currentSong.artist;
+    } else {
+      musicTitle.textContent = period + '音乐';
+      musicArtist.textContent = '未知艺术家';
+    }
+  }
+  
+  // 显示灵动岛
+  function showDynamicIsland() {
+    dynamicIsland.classList.remove('invisible', 'opacity-0');
+    dynamicIsland.classList.add('visible', 'opacity-100');
+  }
+  
+  // 隐藏灵动岛
+  function hideDynamicIsland() {
+    dynamicIsland.classList.add('invisible', 'opacity-0');
+    dynamicIsland.classList.remove('visible', 'opacity-100');
+  }
+  
+  // 格式化时间函数（秒 -> 分:秒）
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
+  
+  // 更新进度条和时间
+  function updateProgress() {
+    if (bgMusic.duration) {
+      // 更新进度条
+      const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
+      musicProgress.style.width = progress + '%';
+      
+      // 更新时间显示
+      currentTime.textContent = formatTime(bgMusic.currentTime);
+    }
+  }
   
   // 连接音乐开关事件
   musicToggleSwitch.addEventListener('change', function() {
     if (this.checked) {
       console.log('尝试播放音乐...');
-      bgMusic.play().then(() => {
-        console.log('音乐开始播放啦~');
-      }).catch(err => {
-        console.log('哎呀，播放失败了:', err);
-        // 有些浏览器要求用户交互后才能播放音频
-        alert('请点击页面后再次尝试开启音乐~');
+      updateMusicInfo(currentPeriod);
+      
+      // 保存当前播放位置
+      const savedTime = bgMusic.currentTime;
+      
+      // 先尝试加载音频元数据
+      bgMusic.load();
+      
+      // 等待元数据加载完成后再播放
+      bgMusic.addEventListener('loadeddata', function playAfterLoad() {
+        // 等待一小段时间确保音频已加载，然后跳转到保存的位置
+        setTimeout(() => {
+          if (savedTime > 0) {
+            bgMusic.currentTime = savedTime;
+          }
+          bgMusic.play().then(() => {
+            console.log('音乐开始播放啦~');
+            showDynamicIsland();
+          }).catch(err => {
+            console.log('哎呀，播放失败了:', err);
+            // 有些浏览器要求用户交互后才能播放音频
+            alert('请点击页面后再次尝试开启音乐~\n\n提示：部分浏览器需要用户主动交互后才能播放音频。');
+          });
+        }, 100); // 延迟100毫秒确保音频已加载
+        
+        // 移除事件监听器，避免重复触发
+        bgMusic.removeEventListener('loadeddata', playAfterLoad);
       });
     } else {
       console.log('暂停音乐播放');
       bgMusic.pause();
+      hideDynamicIsland();
     }
   });
+  
+  // 音乐播放时更新进度条
+  bgMusic.addEventListener('timeupdate', updateProgress);
+  
+  // 音乐元数据加载完成时设置总时长
+  bgMusic.addEventListener('loadedmetadata', function() {
+    totalTime.textContent = formatTime(bgMusic.duration);
+  });
+  
+  // 音乐结束时切换到下一首（仅用于多首歌曲的情况）
+  bgMusic.addEventListener('ended', function() {
+    musicProgress.style.width = '0%';
+    currentTime.textContent = '0:00';
+    
+    // 切换到下一首（仅当该时段有多首歌曲时）
+    const songs = musicInfo[currentPeriod] || [];
+    if (songs.length > 1) {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playCurrentSong();
+      
+      // 如果音乐开关是开启状态，播放下一首歌
+      if (musicToggleSwitch.checked) {
+        bgMusic.play().catch(err => {
+          console.log('播放下一首歌失败:', err);
+        });
+      }
+    }
+    // 对于单首歌曲的情况，由于设置了 bgMusic.loop = true，会自动循环，无需处理 ended 事件
+  });
+  
+  // 关闭按钮事件
+  closeIsland.addEventListener('click', hideDynamicIsland);
   
   // 添加一个辅助函数，让用户可以通过点击页面来启用音频
   document.addEventListener('click', function enableAudio() {
@@ -1702,7 +1937,10 @@ window.addEventListener('load', function() {
     
     // 如果开关已选中，尝试播放
     if (musicToggleSwitch.checked) {
-      bgMusic.play().catch(err => {
+      updateMusicInfo(currentPeriod);
+      bgMusic.play().then(() => {
+        showDynamicIsland();
+      }).catch(err => {
         console.log('初始化播放需要用户交互:', err);
       });
     }
@@ -1710,23 +1948,7 @@ window.addEventListener('load', function() {
 });
 
 // 初始化UI状态
-// 页面加载时确保复选框状态与实际状态一致
-window.addEventListener('DOMContentLoaded', function() {
-  // 触发一次change事件，确保UI状态正确
-  const event = new Event('change');
-  toggle.dispatchEvent(event);
-});
 
-// 页面加载完成后尝试初始化播放
-window.addEventListener('load', function() {
-  if (toggle.checked) {
-    audio.play().catch(err => {
-      console.log("初始化播放失败:", err);
-      // 如果自动播放失败，保持UI状态为播放状态
-      // 用户可以点击开关来暂停并重新开始
-    });
-  }
-});
 
 // 先获取元素引用
 const timePeriod = document.getElementById('time-period');
@@ -1848,6 +2070,221 @@ window.addEventListener('DOMContentLoaded', function() {
             console.log('哎呀，updateTimePeriod函数还没有定义呢~');
         }
     }
+});
+
+// 实现内嵌平台的滚动触发动画效果
+window.addEventListener('DOMContentLoaded', function() {
+    // 创建Intersection Observer实例
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // 为每个卡片添加延迟，创建错落有致的动画效果
+                setTimeout(() => {
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                }, index * 100);
+                
+                // 动画完成后停止观察该元素
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        // 设置观察阈值和根边距
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // 获取所有平台卡片并开始观察
+    const platformCards = document.querySelectorAll('.platform-card');
+    platformCards.forEach(card => {
+        observer.observe(card);
+    });
+});
+
+// 实现平台卡件的折叠/展开功能和一键收纳功能
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM加载完成，开始初始化收纳功能');
+    
+    // 获取所有平台容器
+    const platformContainers = document.querySelectorAll('.platform-container');
+    console.log('找到平台容器数量:', platformContainers.length);
+    
+    // 获取所有单个折叠按钮
+    const toggleButtons = document.querySelectorAll('.toggle-platform');
+    console.log('找到折叠按钮数量:', toggleButtons.length);
+    
+    // 获取一键收纳按钮
+    const toggleAggregateButton = document.getElementById('toggle-aggregate');
+    console.log('一键收纳按钮:', toggleAggregateButton);
+    
+    if (!toggleAggregateButton) {
+        console.error('未找到一键收纳按钮！');
+        return;
+    }
+    
+    // 获取一键收纳按钮的图标和文本
+    const aggregateIcon = toggleAggregateButton.querySelector('i');
+    const aggregateText = toggleAggregateButton.querySelector('span');
+    
+    console.log('一键收纳按钮图标:', aggregateIcon);
+    console.log('一键收纳按钮文本:', aggregateText);
+    
+    // 跟踪每个卡片的展开状态
+    const cardStates = new Map();
+    
+    // 初始化所有卡片为展开状态
+    const platformContents = document.querySelectorAll('.platform-content');
+    platformContents.forEach((content, index) => {
+        content.style.transition = 'max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease';
+        content.style.overflow = 'hidden';
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.opacity = '1';
+        content.style.marginTop = '1rem';
+        cardStates.set(content, true); // 标记为展开状态
+    });
+    
+    // 更新所有折叠按钮的图标为展开状态
+    document.querySelectorAll('.toggle-platform i').forEach(icon => {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    });
+    
+    // 确保所有卡片都有正确的初始状态
+    console.log('初始化完成，平台内容数量:', platformContents.length);
+    console.log('卡片初始状态映射:', cardStates);
+    
+    // 单个平台卡片的折叠/展开功能
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            console.log('单个折叠按钮被点击');
+            // 获取当前按钮对应的内容区域
+            const mdColSpan8 = button.closest('.md\\:col-span-8');
+            console.log('找到的md\:col-span-8元素:', mdColSpan8);
+            const content = mdColSpan8.querySelector('.platform-content');
+            console.log('找到的内容区域:', content);
+            // 获取当前按钮的图标
+            const icon = button.querySelector('i');
+            console.log('找到的图标:', icon);
+            
+            if (!content || !icon) {
+                console.error('未找到内容区域或图标！');
+                return;
+            }
+            
+            // 获取当前状态
+            const isExpanded = cardStates.get(content) || false;
+            console.log('当前卡片状态:', isExpanded);
+            
+            // 切换内容区域的显示/隐藏
+            if (isExpanded) {
+                // 关闭
+                console.log('执行关闭操作');
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                content.style.marginTop = '0';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+                cardStates.set(content, false);
+            } else {
+                // 打开
+                console.log('执行打开操作');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+                content.style.marginTop = '1rem';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+                cardStates.set(content, true);
+            }
+            console.log('更新后的卡片状态:', cardStates.get(content));
+        });
+    });
+    
+    // 一键收纳/展开所有平台卡片
+    toggleAggregateButton.addEventListener('click', () => {
+        console.log('一键收纳按钮被点击');
+        
+        // 判断当前状态（是否有卡片处于展开状态）
+        let isAnyExpanded = false;
+        platformContents.forEach(content => {
+            if (cardStates.get(content)) {
+                isAnyExpanded = true;
+            }
+        });
+        
+        console.log('当前是否有展开的卡片:', isAnyExpanded);
+        console.log('平台内容数量:', platformContents.length);
+        
+        // 统一设置所有卡片的状态
+        platformContents.forEach((content, index) => {
+            console.log('处理第', index, '个内容区域:', content);
+            
+            // 获取对应的按钮和图标
+            const mdColSpan8 = content.closest('.md\\:col-span-8');
+            console.log('找到的md\:col-span-8元素:', mdColSpan8);
+            if (!mdColSpan8) {
+                console.error('未找到md\:col-span-8元素！');
+                return;
+            }
+            
+            const button = mdColSpan8.querySelector('.toggle-platform');
+            const icon = button ? button.querySelector('i') : null;
+            
+            console.log('找到按钮:', button);
+            console.log('找到图标:', icon);
+            
+            if (!button || !icon) {
+                console.error('未找到按钮或图标！');
+                return;
+            }
+            
+            // 添加延迟，创建依次折叠/展开的动画效果
+            setTimeout(() => {
+                console.log('执行动画，索引:', index, '状态:', isAnyExpanded);
+                if (isAnyExpanded) {
+                    // 当前有卡片展开，执行一键收纳
+                    console.log('执行收纳操作');
+                    content.style.maxHeight = '0px';
+                    content.style.opacity = '0';
+                    content.style.marginTop = '0';
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                    cardStates.set(content, false);
+                } else {
+                    // 当前所有卡片都折叠，执行一键展开
+                    console.log('执行展开操作');
+                    // 先重置maxHeight以获取正确的scrollHeight
+                    content.style.maxHeight = 'none';
+                    const scrollHeight = content.scrollHeight;
+                    console.log('内容区域高度:', scrollHeight);
+                    content.style.maxHeight = '0px';
+                    // 触发重排
+                    content.offsetHeight;
+                    // 再设置实际高度
+                    content.style.maxHeight = scrollHeight + 'px';
+                    content.style.opacity = '1';
+                    content.style.marginTop = '1rem';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                    cardStates.set(content, true);
+                }
+            }, index * 50);
+        });
+        
+        // 更新一键收纳按钮的状态
+        if (isAnyExpanded) {
+            // 切换为收纳状态
+            console.log('切换按钮为收纳状态');
+            aggregateIcon.classList.remove('fa-compress');
+            aggregateIcon.classList.add('fa-expand');
+            aggregateText.textContent = '一键展开';
+        } else {
+            // 切换为展开状态
+            console.log('切换按钮为展开状态');
+            aggregateIcon.classList.remove('fa-expand');
+            aggregateIcon.classList.add('fa-compress');
+            aggregateText.textContent = '一键收纳';
+        }
+    });
 });
 </script>
 
