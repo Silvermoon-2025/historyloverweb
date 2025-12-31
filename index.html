@@ -1781,6 +1781,27 @@ window.addEventListener('load', function() {
     playCurrentSong();
   }
   
+  // 定期检查时间变化并更新音乐
+  function checkTimePeriodUpdate() {
+    const newPeriod = getTimePeriod();
+    if (newPeriod !== currentPeriod) {
+      // 时段发生变化，更新音乐
+      currentPeriod = newPeriod;
+      currentSongIndex = 0;
+      playCurrentSong();
+      
+      // 如果音乐开关是开启状态，播放新时段的音乐
+      if (musicToggleSwitch.checked) {
+        bgMusic.play().catch(err => {
+          console.log('播放新时段音乐失败:', err);
+        });
+      }
+    }
+  }
+  
+  // 每30秒检查一次时间变化
+  setInterval(checkTimePeriodUpdate, 30000);
+  
   // 播放当前索引的歌曲
   function playCurrentSong() {
     const songs = musicInfo[currentPeriod] || [];
