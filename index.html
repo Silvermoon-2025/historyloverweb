@@ -1819,6 +1819,10 @@ window.addEventListener('load', function() {
     musicTitle.textContent = currentSong.title;
     musicArtist.textContent = currentSong.artist;
     
+    // 重置进度条和时间显示
+    musicProgress.style.width = '0%';
+    currentTime.textContent = '0:00';
+    
     // 添加错误处理
     bgMusic.onerror = function() {
       console.error('哎呀，音乐文件加载失败了:', currentSong.file);
@@ -1927,8 +1931,9 @@ window.addEventListener('load', function() {
     totalTime.textContent = formatTime(bgMusic.duration);
   });
   
-  // 音乐结束时切换到下一首（仅用于多首歌曲的情况）
+  // 音乐结束时处理
   bgMusic.addEventListener('ended', function() {
+    // 无论是否是单首歌曲，都重置进度条
     musicProgress.style.width = '0%';
     currentTime.textContent = '0:00';
     
@@ -1945,7 +1950,7 @@ window.addEventListener('load', function() {
         });
       }
     }
-    // 对于单首歌曲的情况，由于设置了 bgMusic.loop = true，会自动循环，无需处理 ended 事件
+    // 对于单首歌曲的情况，虽然设置了 bgMusic.loop = true 会自动循环，但我们仍然需要重置进度条
   });
   
   // 关闭按钮事件
