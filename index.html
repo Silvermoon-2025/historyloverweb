@@ -1,3 +1,4 @@
+
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -634,30 +635,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // 添加系统主题监听器（在页面加载时添加，但只有在系统主题功能启用时才生效）
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        if (systemThemeCheckbox && systemThemeCheckbox.checked) { // 确保系统主题功能启用
-            if (e.matches) {
-                // 系统切换到深色模式
-                document.body.classList.add('dark');
-                darkModeCheckbox.checked = true;
-                // 更新夜间模式滑块位置和图标
-                darkModeSlider.style.transform = 'translateX(28px)';
-                darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-                darkModeSun.style.opacity = '0';
-                darkModeMoon.style.opacity = '1';
-                darkModeMoon.style.color = 'white';
-            } else {
-                // 系统切换到浅色模式
-                document.body.classList.remove('dark');
-                darkModeCheckbox.checked = false;
-                // 更新夜间模式滑块位置和图标
-                darkModeSlider.style.transform = 'translateX(0)';
-                darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                darkModeSun.style.opacity = '1';
-                darkModeMoon.style.opacity = '0';
-                darkModeMoon.style.color = '#4b5563';
-            }
+    // 添加系统主题监听器（确保在所有元素创建完成后生效）
+    window.addEventListener('load', function() {
+        // 重新获取DOM元素引用，确保在移动端也能正确获取
+        const systemThemeCheckbox = document.getElementById('system-theme-checkbox');
+        const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
+        const darkModeSlider = document.getElementById('dark-mode-slider');
+        const darkModeTrack = document.getElementById('dark-mode-track');
+        const darkModeSun = document.getElementById('dark-mode-sun');
+        const darkModeMoon = document.getElementById('dark-mode-moon');
+        
+        // 添加系统主题变化监听器
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // 定义主题变化处理函数
+            const handleThemeChange = function(e) {
+                // 确保所有必要的DOM元素都存在
+                if (systemThemeCheckbox && systemThemeCheckbox.checked && darkModeCheckbox && 
+                    darkModeSlider && darkModeTrack && darkModeSun && darkModeMoon) {
+                    
+                    if (e.matches) {
+                        // 系统切换到深色模式
+                        document.body.classList.add('dark');
+                        darkModeCheckbox.checked = true;
+                        // 更新夜间模式滑块位置和图标
+                        darkModeSlider.style.transform = 'translateX(28px)';
+                        darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+                        darkModeSun.style.opacity = '0';
+                        darkModeMoon.style.opacity = '1';
+                        darkModeMoon.style.color = 'white';
+                    } else {
+                        // 系统切换到浅色模式
+                        document.body.classList.remove('dark');
+                        darkModeCheckbox.checked = false;
+                        // 更新夜间模式滑块位置和图标
+                        darkModeSlider.style.transform = 'translateX(0)';
+                        darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                        darkModeSun.style.opacity = '1';
+                        darkModeMoon.style.opacity = '0';
+                        darkModeMoon.style.color = '#4b5563';
+                    }
+                }
+            };
+            
+            // 添加监听器
+            mediaQuery.addEventListener('change', handleThemeChange);
         }
     });
 });
@@ -756,6 +779,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <ul class="ml-6 list-disc space-y-1 text-gray-700 dark:text-gray-300">
                                         <li>主网站背景音乐全换为原创音乐</li>
                                         <li>略调整主网站底层信息</li>
+                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>新增“访问反馈”跳转块与”关联群聊“二维码弹出块在”免责声明“左边</li>
+                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>修复移动端”系统跟随“切换失败问题</li>
                                         <li>新增“灵动岛”式音乐播放功能块</li>
                                         <li>背景音乐表格加入单元格互动效果</li>
                                         <li>新增“系统跟随”功能在设置中，夜间模式的下面</li>
@@ -1661,7 +1686,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <div class="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-sm text-white/70 mb-4 md:mb-0">© 2025-2026 历史爱好者服务专设网站</p>
-                <a href="免责声明.html" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
+                <div class="relative flex flex-wrap items-center justify-center md:justify-end">
+                    <div class="group relative">
+                        <button class="text-sm px-4 py-2 text-white bg-primary rounded-lg hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">群聊进入</button>
+                        <div class="absolute left-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
+                            <img src="绑定群的二维码.png" alt="群聊二维码" class="w-full rounded-lg">
+                            <p class="text-xs text-center text-gray-600 mt-2">扫一扫加入群聊</p>
+                        </div>
+                    </div>
+                    <a href="https://my.feishu.cn/share/base/form/shrcnZGmC3BBAwhAT73IaNcFzxg" target="_blank" rel="noopener noreferrer" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">访问反馈</a>
+                    <a href="免责声明.html" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
+                </div>
             </div>
         </div>
     </footer>
