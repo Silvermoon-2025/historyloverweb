@@ -1,4 +1,3 @@
-
 <html lang="zh-CN"><head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -679,8 +678,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
             
-            // 添加监听器
+            // 添加媒体查询监听器
             mediaQuery.addEventListener('change', handleThemeChange);
+            
+            // 初始加载时检查主题
+            handleThemeChange(mediaQuery);
         }
     });
 });
@@ -779,8 +781,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <ul class="ml-6 list-disc space-y-1 text-gray-700 dark:text-gray-300">
                                         <li>主网站背景音乐全换为原创音乐</li>
                                         <li>略调整主网站底层信息</li>
-                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>新增“访问反馈”跳转块与”关联群聊“二维码弹出块在”免责声明“左边</li>
-                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>修复移动端”系统跟随“切换失败问题</li>
+                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>新增“访问反馈”跳转块与“关联群聊”二维码弹出块在“免责声明”左边</li>
+                                        <li><span class="bg-yellow-300 text-black text-xs px-1.5 py-0.5 rounded mr-2 font-bold">New</span>修复移动端“系统跟随”切换失败问题</li>
                                         <li>新增“灵动岛”式音乐播放功能块</li>
                                         <li>背景音乐表格加入单元格互动效果</li>
                                         <li>新增“系统跟随”功能在设置中，夜间模式的下面</li>
