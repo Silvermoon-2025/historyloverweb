@@ -447,244 +447,218 @@
 
 
 <script>
-// 设置菜单交互逻辑
-const settingsToggle = document.getElementById('settings-toggle');
-const settingsDropdown = document.getElementById('settings-dropdown');
-const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
-const musicToggleSwitch = document.getElementById('music-toggle-switch');
-const systemThemeCheckbox = document.getElementById('system-theme-checkbox');
+// 全局变量（统一管理DOM元素）
+let domElements = {
+    settingsToggle: null,
+    settingsDropdown: null,
+    darkModeCheckbox: null,
+    musicToggleSwitch: null,
+    systemThemeCheckbox: null,
+    darkModeTrack: null,
+    darkModeSlider: null,
+    darkModeSun: null,
+    darkModeMoon: null,
+    systemThemeTrack: null,
+    systemThemeSlider: null,
+    systemThemeDesktop: null,
+    systemThemeLaptop: null,
+    musicModeTrack: null,
+    musicModeSlider: null,
+    musicModePlay: null,
+    musicModePause: null
+};
 
-const darkModeTrack = document.getElementById('dark-mode-track');
-const darkModeSlider = document.getElementById('dark-mode-slider');
-const darkModeSun = document.getElementById('dark-mode-sun');
-const darkModeMoon = document.getElementById('dark-mode-moon');
-
-const musicModeTrack = document.getElementById('music-mode-track');
-const musicModeSlider = document.getElementById('music-mode-slider');
-const musicModePlay = document.getElementById('music-mode-play');
-const musicModePause = document.getElementById('music-mode-pause');
-
-const systemThemeTrack = document.getElementById('system-theme-track');
-const systemThemeSlider = document.getElementById('system-theme-slider');
-const systemThemeDesktop = document.getElementById('system-theme-desktop');
-const systemThemeLaptop = document.getElementById('system-theme-laptop');
-
-// 屏式切换功能 - 提示：请在此处修改跳转链接
-// 找到HTML中的 <a href="#" id="screen-switch-link"> 标签，将 href 属性值替换为您想要跳转的文件路径
-// 例如：<a href="mobile-version.html" id="screen-switch-link">
-
-settingsToggle.addEventListener('click', function() {
-    settingsDropdown.classList.toggle('visible');
-});
-
-// 点击其他地方关闭设置菜单
-document.addEventListener('click', function(event) {
-    if (!settingsToggle.contains(event.target) && !settingsDropdown.contains(event.target)) {
-        settingsDropdown.classList.remove('visible');
+// 工具函数：安全获取DOM元素（兼容移动端延迟）
+function getDOMElement(id, retry = 3) {
+    const el = document.getElementById(id);
+    if (el) return el;
+    // 移动端重试获取（解决渲染延迟）
+    if (retry > 0) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(getDOMElement(id, retry - 1));
+            }, 100);
+        });
     }
-});
+    return null;
+}
 
-// 统一的页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化夜间模式状态
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
+// 工具函数：强制样式重绘（解决移动端滑块不更新）
+function forceRepaint(el) {
+    if (!el) return;
+    el.style.display = 'none';
+    el.offsetHeight; // 触发重绘
+    el.style.display = '';
+}
+
+// 工具函数：更新夜间模式样式（统一桌面/移动端）
+function updateDarkModeStyle(isDark) {
+    if (isDark) {
         document.body.classList.add('dark');
-        darkModeCheckbox.checked = true;
-        // 初始化夜间模式滑块位置和图标
-        darkModeSlider.style.transform = 'translateX(28px)'; // 7px * 4 = 28px
-        darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)'; // indigo-500 to purple-600
-        darkModeSun.style.opacity = '0';
-        darkModeMoon.style.opacity = '1';
-        darkModeMoon.style.color = 'white';
+        domElements.darkModeSlider.style.transform = 'translateX(28px)';
+        domElements.darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+        domElements.darkModeSun.style.opacity = '0';
+        domElements.darkModeMoon.style.opacity = '1';
+        domElements.darkModeMoon.style.color = 'white';
+    } else {
+        document.body.classList.remove('dark');
+        domElements.darkModeSlider.style.transform = 'translateX(0)';
+        domElements.darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+        domElements.darkModeSun.style.opacity = '1';
+        domElements.darkModeMoon.style.opacity = '0';
+        domElements.darkModeMoon.style.color = '#4b5563';
     }
+    localStorage.setItem('darkMode', isDark);
+}
+
+// 工具函数：更新系统主题样式
+function updateSystemThemeStyle(isSystem) {
+    if (isSystem) {
+        domElements.systemThemeSlider.style.transform = 'translateX(28px)';
+        domElements.systemThemeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
+        domElements.systemThemeDesktop.style.opacity = '1';
+        domElements.systemThemeLaptop.style.opacity = '0';
+    } else {
+        domElements.systemThemeSlider.style.transform = 'translateX(0)';
+        domElements.systemThemeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+        domElements.systemThemeDesktop.style.opacity = '1';
+        domElements.systemThemeLaptop.style.opacity = '0';
+    }
+    localStorage.setItem('systemTheme', isSystem);
+}
+
+// 初始化系统主题监听（核心修复）
+function initSystemThemeListener() {
+    // 兼容性检测：移动端优先
+    if (!window.matchMedia) {
+        console.warn('当前设备不支持matchMedia，系统主题跟随失效');
+        domElements.systemThemeCheckbox.disabled = true;
+        return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // 初始化音乐开关状态
-    // 直接使用music-toggle-switch，不再依赖不存在的musicToggle
-    if (musicToggleSwitch) {
-        // 初始化音乐滑块位置和图标
-        if (musicToggleSwitch.checked) {
-            musicModeSlider.style.transform = 'translateX(28px)';
-            musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)'; // green-400 to emerald-600
-            musicModePlay.style.opacity = '0';
-            musicModePause.style.opacity = '1';
+    // 主题变化处理函数（桌面/移动端通用）
+    const handleThemeChange = (e) => {
+        // 仅当「跟随系统」开启时生效
+        if (domElements.systemThemeCheckbox.checked) {
+            const isDark = e.matches;
+            domElements.darkModeCheckbox.checked = isDark;
+            updateDarkModeStyle(isDark);
         }
+    };
+
+    // 移动端兼容：替换addEventListener为addListener（部分老浏览器）
+    if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleThemeChange);
+    } else if (mediaQuery.addListener) {
+        mediaQuery.addListener(handleThemeChange);
     }
-    
-    // 夜间模式切换事件
-    if (darkModeCheckbox) {
-        darkModeCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                document.body.classList.add('dark');
-                // 滑块向右移动
-                darkModeSlider.style.transform = 'translateX(28px)';
-                // 轨道颜色变化
-                darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-                // 图标切换
-                darkModeSun.style.opacity = '0';
-                darkModeMoon.style.opacity = '1';
-                darkModeMoon.style.color = 'white';
-            } else {
-                document.body.classList.remove('dark');
-                // 滑块向左移动
-                darkModeSlider.style.transform = 'translateX(0)';
-                // 轨道颜色变化
-                darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                // 图标切换
-                darkModeSun.style.opacity = '1';
-                darkModeMoon.style.opacity = '0';
-                darkModeMoon.style.color = '#4b5563';
-            }
-            localStorage.setItem('darkMode', this.checked);
+
+    // 初始加载时执行一次
+    handleThemeChange(mediaQuery);
+}
+
+// 初始化所有逻辑（入口函数）
+async function initAll() {
+    // 1. 异步获取所有DOM元素（解决移动端渲染延迟）
+    domElements.settingsToggle = await getDOMElement('settings-toggle');
+    domElements.settingsDropdown = await getDOMElement('settings-dropdown');
+    domElements.darkModeCheckbox = await getDOMElement('dark-mode-checkbox');
+    domElements.musicToggleSwitch = await getDOMElement('music-toggle-switch');
+    domElements.systemThemeCheckbox = await getDOMElement('system-theme-checkbox');
+    domElements.darkModeTrack = await getDOMElement('dark-mode-track');
+    domElements.darkModeSlider = await getDOMElement('dark-mode-slider');
+    domElements.darkModeSun = await getDOMElement('dark-mode-sun');
+    domElements.darkModeMoon = await getDOMElement('dark-mode-moon');
+    domElements.systemThemeTrack = await getDOMElement('system-theme-track');
+    domElements.systemThemeSlider = await getDOMElement('system-theme-slider');
+    domElements.systemThemeDesktop = await getDOMElement('system-theme-desktop');
+    domElements.systemThemeLaptop = await getDOMElement('system-theme-laptop');
+    domElements.musicModeTrack = await getDOMElement('music-mode-track');
+    domElements.musicModeSlider = await getDOMElement('music-mode-slider');
+    domElements.musicModePlay = await getDOMElement('music-mode-play');
+    domElements.musicModePause = await getDOMElement('music-mode-pause');
+
+    // 2. 设置菜单交互
+    if (domElements.settingsToggle) {
+        domElements.settingsToggle.addEventListener('click', () => {
+            domElements.settingsDropdown.classList.toggle('visible');
         });
     }
-    
-    // 音乐切换逻辑
-    if (musicToggleSwitch) {
-        // 直接给music-toggle-switch添加滑块控制
-        musicToggleSwitch.addEventListener('change', function() {
-            // 控制音乐滑块
-            if (this.checked) {
-                musicModeSlider.style.transform = 'translateX(28px)';
-                musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)';
-                musicModePlay.style.opacity = '0';
-                musicModePause.style.opacity = '1';
-            } else {
-                musicModeSlider.style.transform = 'translateX(0)';
-                musicModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                musicModePlay.style.opacity = '1';
-                musicModePause.style.opacity = '0';
+
+    // 点击其他区域关闭菜单（移动端兼容touch事件）
+    document.addEventListener('click', (e) => {
+        if (domElements.settingsToggle && domElements.settingsDropdown) {
+            if (!domElements.settingsToggle.contains(e.target) && !domElements.settingsDropdown.contains(e.target)) {
+                domElements.settingsDropdown.classList.remove('visible');
             }
-        });
-    }
-    
-    // 系统主题功能初始化
-    const savedSystemTheme = localStorage.getItem('systemTheme') === 'true';
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedSystemTheme) {
-        systemThemeCheckbox.checked = true;
-        // 启用系统主题监听
-        if (prefersDark) {
-            document.body.classList.add('dark');
-            darkModeCheckbox.checked = true;
-            // 更新夜间模式滑块位置和图标
-            darkModeSlider.style.transform = 'translateX(28px)';
-            darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-            darkModeSun.style.opacity = '0';
-            darkModeMoon.style.opacity = '1';
-            darkModeMoon.style.color = 'white';
-        } else {
-            document.body.classList.remove('dark');
-            darkModeCheckbox.checked = false;
-            // 更新夜间模式滑块位置和图标
-            darkModeSlider.style.transform = 'translateX(0)';
-            darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-            darkModeSun.style.opacity = '1';
-            darkModeMoon.style.opacity = '0';
-            darkModeMoon.style.color = '#4b5563';
-        }
-        // 更新系统主题滑块位置和图标（保持台式机图标）
-        systemThemeSlider.style.transform = 'translateX(28px)';
-        systemThemeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-        systemThemeDesktop.style.opacity = '1';
-        systemThemeLaptop.style.opacity = '0';
-    }
-    
-    // 系统主题切换事件
-    if (systemThemeCheckbox) {
-        systemThemeCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                // 启用系统主题监听
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (prefersDark) {
-                    document.body.classList.add('dark');
-                    darkModeCheckbox.checked = true;
-                    // 更新夜间模式滑块位置和图标
-                    darkModeSlider.style.transform = 'translateX(28px)';
-                    darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-                    darkModeSun.style.opacity = '0';
-                    darkModeMoon.style.opacity = '1';
-                    darkModeMoon.style.color = 'white';
-                } else {
-                    document.body.classList.remove('dark');
-                    darkModeCheckbox.checked = false;
-                    // 更新夜间模式滑块位置和图标
-                    darkModeSlider.style.transform = 'translateX(0)';
-                    darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                    darkModeSun.style.opacity = '1';
-                    darkModeMoon.style.opacity = '0';
-                    darkModeMoon.style.color = '#4b5563';
-                }
-                // 更新系统主题滑块位置和图标（保持台式机图标）
-                systemThemeSlider.style.transform = 'translateX(28px)';
-                systemThemeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-                systemThemeDesktop.style.opacity = '1';
-                systemThemeLaptop.style.opacity = '0';
-            } else {
-                // 关闭系统主题监听
-                // 保持当前主题状态不变
-                // 更新系统主题滑块位置和图标（保持台式机图标）
-                systemThemeSlider.style.transform = 'translateX(0)';
-                systemThemeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                systemThemeDesktop.style.opacity = '1';
-                systemThemeLaptop.style.opacity = '0';
-            }
-            localStorage.setItem('systemTheme', this.checked);
-        });
-    }
-    
-    // 添加系统主题监听器（确保在所有元素创建完成后生效）
-    window.addEventListener('load', function() {
-        // 重新获取DOM元素引用，确保在移动端也能正确获取
-        const systemThemeCheckbox = document.getElementById('system-theme-checkbox');
-        const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
-        const darkModeSlider = document.getElementById('dark-mode-slider');
-        const darkModeTrack = document.getElementById('dark-mode-track');
-        const darkModeSun = document.getElementById('dark-mode-sun');
-        const darkModeMoon = document.getElementById('dark-mode-moon');
-        
-        // 添加系统主题变化监听器
-        if (window.matchMedia) {
-            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            
-            // 定义主题变化处理函数
-            const handleThemeChange = function(e) {
-                // 确保所有必要的DOM元素都存在
-                if (systemThemeCheckbox && systemThemeCheckbox.checked && darkModeCheckbox && 
-                    darkModeSlider && darkModeTrack && darkModeSun && darkModeMoon) {
-                    
-                    if (e.matches) {
-                        // 系统切换到深色模式
-                        document.body.classList.add('dark');
-                        darkModeCheckbox.checked = true;
-                        // 更新夜间模式滑块位置和图标
-                        darkModeSlider.style.transform = 'translateX(28px)';
-                        darkModeTrack.style.background = 'linear-gradient(to right, #6366f1, #8b5cf6)';
-                        darkModeSun.style.opacity = '0';
-                        darkModeMoon.style.opacity = '1';
-                        darkModeMoon.style.color = 'white';
-                    } else {
-                        // 系统切换到浅色模式
-                        document.body.classList.remove('dark');
-                        darkModeCheckbox.checked = false;
-                        // 更新夜间模式滑块位置和图标
-                        darkModeSlider.style.transform = 'translateX(0)';
-                        darkModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
-                        darkModeSun.style.opacity = '1';
-                        darkModeMoon.style.opacity = '0';
-                        darkModeMoon.style.color = '#4b5563';
-                    }
-                }
-            };
-            
-            // 添加媒体查询监听器
-            mediaQuery.addEventListener('change', handleThemeChange);
-            
-            // 初始加载时检查主题
-            handleThemeChange(mediaQuery);
         }
     });
+
+    // 3. 初始化夜间模式状态
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (domElements.darkModeCheckbox) {
+        domElements.darkModeCheckbox.checked = savedDarkMode;
+        updateDarkModeStyle(savedDarkMode);
+
+        // 夜间模式切换事件
+        domElements.darkModeCheckbox.addEventListener('change', function() {
+            updateDarkModeStyle(this.checked);
+        });
+    }
+
+    // 4. 初始化音乐开关状态
+    if (domElements.musicToggleSwitch) {
+        const savedMusic = localStorage.getItem('musicEnabled') === 'true';
+        domElements.musicToggleSwitch.checked = savedMusic;
+        if (savedMusic) {
+            domElements.musicModeSlider.style.transform = 'translateX(28px)';
+            domElements.musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)';
+            domElements.musicModePlay.style.opacity = '0';
+            domElements.musicModePause.style.opacity = '1';
+        }
+
+        // 音乐切换事件
+        domElements.musicToggleSwitch.addEventListener('change', function() {
+            if (this.checked) {
+                domElements.musicModeSlider.style.transform = 'translateX(28px)';
+                domElements.musicModeTrack.style.background = 'linear-gradient(to right, #4ade80, #059669)';
+                domElements.musicModePlay.style.opacity = '0';
+                domElements.musicModePause.style.opacity = '1';
+            } else {
+                domElements.musicModeSlider.style.transform = 'translateX(0)';
+                domElements.musicModeTrack.style.background = 'linear-gradient(to right, #d1d5db, #9ca3af)';
+                domElements.musicModePlay.style.opacity = '1';
+                domElements.musicModePause.style.opacity = '0';
+            }
+            localStorage.setItem('musicEnabled', this.checked);
+        });
+    }
+
+    // 5. 初始化系统主题状态
+    const savedSystemTheme = localStorage.getItem('systemTheme') === 'true';
+    if (domElements.systemThemeCheckbox) {
+        domElements.systemThemeCheckbox.checked = savedSystemTheme;
+        updateSystemThemeStyle(savedSystemTheme);
+
+        // 系统主题切换事件
+        domElements.systemThemeCheckbox.addEventListener('change', function() {
+            updateSystemThemeStyle(this.checked);
+            // 切换时立即同步系统主题
+            initSystemThemeListener();
+        });
+    }
+
+    // 6. 初始化系统主题监听（核心：移动端修复）
+    initSystemThemeListener();
+}
+
+// 页面加载完成后执行（移动端优先用DOMContentLoaded）
+document.addEventListener('DOMContentLoaded', initAll);
+// 兜底：防止DOMContentLoaded失效
+window.addEventListener('load', () => {
+    if (!domElements.settingsToggle) initAll();
 });
 </script>
 
