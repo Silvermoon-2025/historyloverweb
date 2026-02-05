@@ -378,7 +378,7 @@
 
   <footer class="bg-white dark:bg-dark shadow-inner mt-16 py-6 theme-transition">
     <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-400 text-sm">
-      <p>© 2026 网站前瞻更新展示 | 1.5版本更新前瞻</p>
+      <p>© 2025-2026 网站前瞻更新展示 | 1.5版本更新前瞻</p>
     </div>
   </footer>
 
@@ -496,17 +496,28 @@
         // 先显示小椭圆
         musicPlayer.classList.remove('opacity-0', 'invisible');
         musicPlayer.classList.add('opacity-100', 'visible');
+        // 重置为小椭圆状态
+        musicPlayer.style.width = '5rem';
+        musicPlayer.style.justifyContent = 'center';
+        const playerContent = musicPlayer.querySelector('div.flex');
+        const closeButton = document.getElementById('close-player');
+        if (playerContent) playerContent.style.opacity = '0';
+        if (closeButton) closeButton.style.opacity = '0';
         
         // 延迟后展开到完整大小
         setTimeout(() => {
-          musicPlayer.style.width = '80%';
+          // 根据屏幕宽度设置展开后的宽度
+          const screenWidth = window.innerWidth;
+          if (screenWidth <= 768) {
+            musicPlayer.style.width = '90%';
+          } else {
+            musicPlayer.style.width = '80%';
+          }
           musicPlayer.style.justifyContent = 'space-between';
           musicPlayer.classList.add('showing');
           
           // 显示内部元素
           setTimeout(() => {
-            const playerContent = musicPlayer.querySelector('div.flex');
-            const closeButton = document.getElementById('close-player');
             if (playerContent) playerContent.style.opacity = '1';
             if (closeButton) closeButton.style.opacity = '1';
           }, 100);
