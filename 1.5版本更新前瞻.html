@@ -121,6 +121,46 @@
     .dark\:text-gray-400, .dark\:text-primary {
       transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
     }
+    
+    /* 手机端音乐播放器样式 */
+    @media (max-width: 768px) {
+      #music-player {
+        width: 90% !important;
+        padding: 0.5rem 1rem !important;
+        bottom: 1rem !important;
+      }
+      
+      #music-player .flex {
+        gap: 0.75rem !important;
+      }
+      
+      #music-player .w-10 {
+        width: 2rem !important;
+        height: 2rem !important;
+      }
+      
+      #music-player h4 {
+        font-size: 0.75rem !important;
+      }
+      
+      #music-player p {
+        font-size: 0.625rem !important;
+      }
+      
+      #music-player .w-\[40\%\] {
+        width: 30% !important;
+        gap: 0.5rem !important;
+      }
+      
+      #current-time {
+        font-size: 0.625rem !important;
+      }
+      
+      /* 确保展开后的播放器在手机端正确显示 */
+      #music-player.showing {
+        width: 95% !important;
+      }
+    }
   </style>
 </head>
 <body class="theme-transition bg-gray-50 text-gray-800 dark:bg-dark dark:text-gray-200">
@@ -461,6 +501,7 @@
         setTimeout(() => {
           musicPlayer.style.width = '80%';
           musicPlayer.style.justifyContent = 'space-between';
+          musicPlayer.classList.add('showing');
           
           // 显示内部元素
           setTimeout(() => {
@@ -478,7 +519,7 @@
       if (isPlayerVisible) {
         isPlayerVisible = false;
         // 直接隐藏整个播放器，不需要缩小动画
-        musicPlayer.classList.remove('opacity-100', 'visible');
+        musicPlayer.classList.remove('opacity-100', 'visible', 'showing');
         musicPlayer.classList.add('opacity-0', 'invisible');
         
         // 重置状态，以便下次显示时重新动画
