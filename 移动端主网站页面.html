@@ -201,9 +201,9 @@
                 <span class="text-xl font-bold text-white" id="header-title">首页</span>
                 <!-- 新增时间显示容器 -->
                 <div class="flex items-center" style="position: relative; display: inline-block;">
-                    <!-- 新增时段显示方块 -->
+                    <!-- 时段显示方块 -->
                     <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer text-white bg-primary/20">时段</span>
-                    <!-- 新增北京时间显示方块 -->
+                    <!-- 北京时间显示方块 -->
                     <span id="beijing-time" class="ml-2 px-3 py-1 rounded text-sm font-medium text-white bg-primary/20">时间</span>
                 </div>
             </div>
@@ -295,10 +295,10 @@
                                 <span class="text-primary dark:text-blue-400 font-semibold inline-flex items-center">
                                     <span class="w-2 h-2 bg-primary dark:bg-blue-400 rounded-full mr-2"></span>
                                     网站现已进入公测阶段，当前处于
-                                    <span id="version-number" class="font-bold">1.4</span> 版本
+                                    <span id="version-number" class="font-bold">1.5</span> 版本
                                 </span>
                             </div>
-                            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">新增移动端应用版本，优化触摸体验；添加设置页面；采用底部导航栏设计</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">同步更新网页端部分改进</p>
                         </div>
                     </div>
                 </div>
@@ -316,6 +316,12 @@
                             <i class="fa fa-pencil-square-o text-white"></i>
                         </div>
                         <span class="text-sm font-medium text-gray-800 dark:text-gray-200">站主博客</span>
+                    </a>
+                    <a href="https://my.feishu.cn/wiki/NMbjwplgHi2crHkV5WEcyXeknTb?from=from_copylink" target="_blank" class="bg-white dark:bg-darkCard rounded-xl p-4 shadow-sm text-center card-hover hover-scale glow-effect">
+                        <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md">
+                            <i class="fa fa-podcast text-white"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-800 dark:text-gray-200">播客聆听</span>
                     </a>
                 </div>
 
@@ -392,44 +398,49 @@
         <!-- 文件置放 -->
         <section id="files-screen" class="screen">
             <div class="container mx-auto px-4 py-4">
-                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-gray-900 dark:text-gray-200 mb-8">
-                    文件置放
-                </h2>
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 rounded-2xl p-1 shadow-xl">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6">
-                        <div class="flex flex-col items-center">
-                            <div class="w-full mb-8">
-                                <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-xl flex items-center justify-center mb-6 mx-auto">
-                                    <i class="fa fa-cloud text-primary dark:text-blue-300 text-3xl"></i>
-                                </div>
-                                <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 text-center">云端文件存储匣</h3>
-                                <p class="text-gray-600 dark:text-gray-300 mb-6 text-center">
-                                    全新的网站服务功能统一平台，于此访问，你能获得更好的文件下载体验
-                                </p>
-                                <div class="text-center">
-                                    <a href="https://docs.qq.com/space/DUk1scGtnQmthaEp4/folder/RtwcxIGzjkPD" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-lg hover:from-primary/90 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg">
-                                        <i class="fa fa-cloud-download mr-2"></i> 访问文件存储匣
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="w-full space-y-6">
-                                <div class="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6 border border-blue-100 dark:border-blue-800">
-                                    <p class="text-gray-700 dark:text-gray-300 font-['STXihei']">
-                                        访问夏腾宫网站系统服务平台的文件置放域，下载你想要下载的文件，在新的文件置放功能分区，你还能直接使用系统服务平台的其他服务
-                                    </p>
-                                </div>
-                                <div class="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-6 border border-indigo-100 dark:border-indigo-800">
-                                    <div class="flex items-start">
-                                        <div class="bg-indigo-100 dark:bg-indigo-800/50 p-3 rounded-lg mr-4">
-                                            <i class="fa fa-robot text-indigo-600 dark:text-indigo-300 text-xl"></i>
-                                        </div>
-                                        <p class="text-gray-700 dark:text-gray-300 font-['STXihei']">
-                                            内置人工智能服务助手，助你快速调取文件了解相关信息与系统服务平台的所有信息
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                <h2 class="text-xl font-bold mb-4 dark:text-darkText">文件置放</h2>
+                <div class="bg-white dark:bg-darkCard rounded-xl p-5 shadow-sm mb-6 card-hover">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold mb-2 dark:text-darkText">云盘式文件存储匣</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">
+                            用户需访问下方链接才可看到已上传的文件，我们已做好详细的分区，方便您查找和下载所需资料。
+                        </p>
+                    </div>
+                    <a href="https://www.123865.com/s/d484jv-kkIXv" target="_blank" class="block w-full py-3 bg-primary text-white rounded-lg text-center font-medium hover:bg-primary/90 transition-colors">
+                        <i class="fa fa-cloud-download mr-1"></i> 访问文件存储匣
+                    </a>
+                </div>
+
+                <div class="bg-gray-100 dark:bg-gray-800/50 rounded-xl p-5 shadow-inner relative mb-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fa fa-folder text-primary"></i>
                         </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200">历史文献</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">10个文件</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-secondary/10 dark:bg-secondary/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fa fa-file-text text-secondary"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200">万字文章</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">0个文件</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-accent/10 dark:bg-accent/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fa fa-picture-o text-accent"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200">历史图片</h4>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">0个文件</p>
+                        </div>
+                    </div>
+                    <div class="absolute -top-3 -right-3 bg-secondary text-primary font-bold px-3 py-1 rounded-lg shadow-md text-xs">
+                        内容总量
                     </div>
                 </div>
             </div>
@@ -615,14 +626,13 @@
                     
                     <!-- 节日倒计时卡片 -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
                         <!-- 春节 -->
                         <div class="bg-yellow-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-yellow-500 dark:bg-gray-800 dark:border-yellow-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
                             <div class="absolute -right-6 -top-6 w-24 h-24 bg-yellow-100 rounded-full opacity-50 dark:bg-yellow-900/30"></div>
                             <div class="relative z-10">
                                 <h3 class="text-xl font-bold text-yellow-600 mb-2 dark:text-yellow-400">春节</h3>
                                 <p class="text-gray-500 mb-4 dark:text-gray-400">农历正月初一</p>
-                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
+                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700" id="spring-festival-time">
                                     <div class="text-center">
                                         <span id="spring-festival-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
                                         <p class="text-gray-500 dark:text-gray-400">天</p>
@@ -641,14 +651,14 @@
                             <div class="relative z-10">
                                 <h3 class="text-xl font-bold text-pink-600 mb-2 dark:text-pink-400">元宵节</h3>
                                 <p class="text-gray-500 mb-4 dark:text-gray-400">农历正月十五</p>
-                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
+                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700" id="lantern-festival-time">
                                     <div class="text-center">
                                         <span id="lantern-festival-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
                                         <p class="text-gray-500 dark:text-gray-400">天</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                    <i class="fa fa-moon-o mr-2"></i>
+                                    <i class="fa fa-calendar-o mr-2"></i>
                                     <span>2026年3月3日</span>
                                 </div>
                             </div>
@@ -660,7 +670,7 @@
                             <div class="relative z-10">
                                 <h3 class="text-xl font-bold text-green-600 mb-2 dark:text-green-400">劳动节</h3>
                                 <p class="text-gray-500 mb-4 dark:text-gray-400">05月01日</p>
-                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
+                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700" id="labour-day-time">
                                     <div class="text-center">
                                         <span id="labour-day-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
                                         <p class="text-gray-500 dark:text-gray-400">天</p>
@@ -679,7 +689,7 @@
                             <div class="relative z-10">
                                 <h3 class="text-xl font-bold text-red-600 mb-2 dark:text-red-400">端午节</h3>
                                 <p class="text-gray-500 mb-4 dark:text-gray-400">农历五月初五</p>
-                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700">
+                                <div class="flex items-center justify-center h-32 bg-white rounded-lg shadow-sm mb-4 dark:bg-gray-700" id="dragon-boat-time">
                                     <div class="text-center">
                                         <span id="dragon-boat-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
                                         <p class="text-gray-500 dark:text-gray-400">天</p>
@@ -687,7 +697,7 @@
                                 </div>
                                 <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                                     <i class="fa fa-calendar-o mr-2"></i>
-                                    <span>2026年6月12日</span>
+                                    <span>2026年6月19日</span>
                                 </div>
                             </div>
                         </div>
@@ -811,13 +821,25 @@
                             </div>
                         </a>
                         
-                        <a href="#" class="block group">
+                        <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" target="_blank" class="block group">
                             <div class="relative overflow-hidden rounded-xl card-hover hover-scale">
-                                <img src="https://picsum.photos/id/24/800/300" alt="活动文章发表共阅云坛" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
+                                <img src="电脑办公.jpg" alt="活动文章发表共阅云坛" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                                     <div class="p-4 text-white">
                                         <h3 class="font-semibold">活动文章发表共阅云坛</h3>
                                         <p class="text-xs text-white/80 mt-1">分享历史研究成果，交流阅读心得</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://silvermoon-2025.github.io/Silvermoon-s-Web-Based-Utility-Toolkit/" target="_blank" class="block group">
+                            <div class="relative overflow-hidden rounded-xl card-hover hover-scale">
+                                <img src="网页工具概念图.png" alt="银月的网页式实用工具组" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                    <div class="p-4 text-white">
+                                        <h3 class="font-semibold">银月的网页式实用工具组</h3>
+                                        <p class="text-xs text-white/80 mt-1">提供各种实用的网页工具，方便您的日常使用</p>
                                     </div>
                                 </div>
                             </div>
@@ -885,13 +907,25 @@
                             </div>
                         </a>
                         
-                        <a href="#" class="block group">
+                        <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" target="_blank" class="block group">
                             <div class="relative overflow-hidden rounded-xl card-hover hover-scale">
-                                <img src="https://picsum.photos/id/24/800/300" alt="活动文章发表共阅云坛" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
+                                <img src="电脑办公.jpg" alt="活动文章发表共阅云坛" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
                                     <div class="p-4 text-white">
                                         <h3 class="font-semibold">活动文章发表共阅云坛</h3>
-                                        <p class="text-xs text-white/80 mt-1">分享历史研究成果，交流阅读心得</p>
+                                        <p class="text-xs text-white/80 mt-1">关联群聊活动文章的平台</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://silvermoon-2025.github.io/Silvermoon-s-Web-Based-Utility-Toolkit/" target="_blank" class="block group">
+                            <div class="relative overflow-hidden rounded-xl card-hover hover-scale">
+                                <img src="网页工具概念图.png" alt="银月的网页式实用工具组" class="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                                    <div class="p-4 text-white">
+                                        <h3 class="font-semibold">银月的网页式实用工具组</h3>
+                                        <p class="text-xs text-white/80 mt-1">集合多种实用网页式工具的平台</p>
                                     </div>
                                 </div>
                             </div>
@@ -933,7 +967,7 @@
                                 <p class="text-sm font-medium text-gray-800 dark:text-gray-200">屏式切换</p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">切换不同屏幕显示模式</p>
                             </div>
-                            <a href="index.html" id="screen-switch-link" class="w-10 h-5 bg-primary/10 hover:bg-primary/20 rounded-full transition-all duration-300 flex items-center justify-center">
+                            <a href="#" id="screen-switch-link" class="w-10 h-5 bg-primary/10 hover:bg-primary/20 rounded-full transition-all duration-300 flex items-center justify-center">
                                 <i class="fa fa-exchange text-sm text-gray-700 dark:text-gray-300"></i>
                             </a>
                         </div>
@@ -969,7 +1003,17 @@
                             <div class="flex-1">
                                 <p class="text-sm font-medium text-gray-800 dark:text-gray-200">网站版本</p>
                             </div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Ver 1.4</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Ver 1.5</span>
+                        </div>
+                        
+                        <div class="flex items-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors card-hover">
+                            <div class="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center mr-3 shadow-md">
+                                <i class="fa fa-calendar text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-800 dark:text-gray-200">网站历年</p>
+                            </div>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">2025-2026</span>
                         </div>
                         
                         <div id="help-center-item" class="flex items-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg transition-colors card-hover cursor-pointer">
@@ -1280,19 +1324,6 @@
                     musicTitle.textContent = currentSong.title;
                     musicArtist.textContent = currentSong.artist;
                 }
-                
-                // 添加错误处理
-                bgMusic.onerror = function() {
-                    console.error('哎呀，音乐文件加载失败了:', currentSong.file);
-                    // 尝试播放下一首
-                    const songs = musicInfo[currentPeriod] || [];
-                    if (songs.length > 1) {
-                        currentSongIndex = (currentSongIndex + 1) % songs.length;
-                        playCurrentSong();
-                    } else {
-                        alert('当前时段的音乐文件加载失败，请稍后再试~');
-                    }
-                };
             }
             
             // 初始化音乐
@@ -1423,46 +1454,83 @@
             }, { once: true });
             
             // 实时节日倒计时计算
-            function calculateDaysUntil(target) {
-                const today = new Date();
-                const targetDate = typeof target === 'string' ? new Date(target) : target;
-                // 设置时间为0点，避免时间差影响
-                today.setHours(0, 0, 0, 0);
-                targetDate.setHours(0, 0, 0, 0);
-                // 计算时间差（毫秒）
-                const timeDiff = targetDate - today;
-                // 转换为天数
-                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-                // 如果已经过了目标日期，返回0
-                return daysDiff < 0 ? 0 : daysDiff;
+            function calculateDaysUntil(date) {
+                const now = new Date();
+                const target = new Date(date);
+                
+                // 如果今年的节日已过，计算到明年的天数
+                if (target < now) {
+                    target.setFullYear(target.getFullYear() + 1);
+                }
+                
+                const diffTime = target - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                return diffDays;
             }
             
             function updateFestivalCountdowns() {
-                const today = new Date();
-                const currentYear = today.getFullYear();
+                // 节日日期
+                const festivals = {
+                    'spring-festival-days': '2026-02-17', // 春节（2026年）
+                    'lantern-festival-days': '2026-03-03', // 元宵节（2026年）
+                    'labour-day-days': '2026-05-01',     // 劳动节（2026年）
+                    'dragon-boat-days': '2026-06-19'     // 端午节（2026年）
+                };
                 
-                // 春节（2026年2月17日）
-                const springFestival = new Date('2026-02-17');
-                document.getElementById('spring-festival-days').textContent = calculateDaysUntil(springFestival);
-
-                // 元宵节（2026年农历正月十五，春节后15天）
-                const lanternFestival = new Date('2026-03-03');
-                document.getElementById('lantern-festival-days').textContent = calculateDaysUntil(lanternFestival);
-
-                // 劳动节（2026年5月1日）
-                const labourDay = new Date('2026-05-01');
-                document.getElementById('labour-day-days').textContent = calculateDaysUntil(labourDay);
-
-                // 端午节（2026年6月12日）
-                const dragonBoatFestival = new Date('2026-06-12');
-                document.getElementById('dragon-boat-days').textContent = calculateDaysUntil(dragonBoatFestival);
+                // 存储每个节日的天数
+                const festivalDays = {};
+                
+                Object.keys(festivals).forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        const days = calculateDaysUntil(festivals[id]);
+                        element.textContent = days;
+                        festivalDays[id] = days;
+                    }
+                });
+                
+                // 优先级系统：找出距离最近的节日
+                const festivalElements = [
+                    { name: 'spring-festival', days: festivalDays['spring-festival-days'], element: document.getElementById('spring-festival-time') },
+                    { name: 'lantern-festival', days: festivalDays['lantern-festival-days'], element: document.getElementById('lantern-festival-time') },
+                    { name: 'labour-day', days: festivalDays['labour-day-days'], element: document.getElementById('labour-day-time') },
+                    { name: 'dragon-boat', days: festivalDays['dragon-boat-days'], element: document.getElementById('dragon-boat-time') }
+                ];
+                
+                // 过滤掉已经过去的节日
+                const upcomingFestivals = festivalElements.filter(festival => festival.days > 0);
+                
+                if (upcomingFestivals.length > 0) {
+                    // 找出距离最近的节日
+                    let closestFestival = upcomingFestivals[0];
+                    for (const festival of upcomingFestivals) {
+                        if (festival.days < closestFestival.days) {
+                            closestFestival = festival;
+                        }
+                    }
+                    
+                    // 重置所有节日的背景
+                    for (const festival of festivalElements) {
+                        if (festival.element) {
+                            festival.element.classList.remove('bg-yellow-200', 'dark:bg-yellow-800/50');
+                            festival.element.classList.add('bg-white', 'dark:bg-gray-700');
+                        }
+                    }
+                    
+                    // 高亮距离最近的节日
+                    if (closestFestival.element) {
+                        closestFestival.element.classList.remove('bg-white', 'dark:bg-gray-700');
+                        closestFestival.element.classList.add('bg-yellow-200', 'dark:bg-yellow-800/50');
+                    }
+                }
             }
             
             // 立即更新倒计时
             updateFestivalCountdowns();
             
-            // 每小时更新一次倒计时
-            setInterval(updateFestivalCountdowns, 3600000);
+            // 每天更新一次倒计时
+            setInterval(updateFestivalCountdowns, 24 * 60 * 60 * 1000);
             
             // 帮助中心点击提示
             const helpCenterItem = document.getElementById('help-center-item');
