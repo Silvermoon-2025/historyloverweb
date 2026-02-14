@@ -67,9 +67,13 @@
         background: linear-gradient(to bottom, rgba(22, 93, 255, 0.9), rgba(22, 93, 255, 0.7));
     }
     .glass-effect {
-        /* 取消透明效果，改为纯色背景 */
-        background-color: #6f99fc; 
+        /* 日间模式：雄黄色 */
+        background-color: #fccb16; 
         backdrop-filter: none;
+    }
+    /* 夜间模式：偏深色 */
+    .dark .glass-effect {
+        background-color: #bb8c00;
     }
     /* 隐藏滚动条但保持滚动功能 */
     .scrollbar-hide {
@@ -87,12 +91,25 @@
         transform: translateZ(0);
         will-change: transform;
     }
+    
+    /* 烟花效果 */
+    #fireworks-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
     /* 删除 dark 模式下的 glass-effect 样式 */
 
     /* 夜间模式样式 */
     .dark {
-        background-color: #1a1a2e;
+        background-color: #8b0000;
         color: #e2e8f0;
+        background-image: linear-gradient(to right, rgba(255, 215, 0, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
     }
     .dark .bg-white {
         background-color: #2d2d44;
@@ -112,9 +129,6 @@
     .dark [class*="bg-primary/20"] {
     background-color: rgba(22, 93, 255, 0.2);
 }
-    .dark .glass-effect {
-        background-color: #3a4a6b;
-    }
     /* 夜间模式下的平台卡片样式 */
     .dark .platform-container {
         background: linear-gradient(135deg, #2d2d44 0%, #3a4a6b 100%);
@@ -124,14 +138,11 @@
     .dark .platform-container:hover {
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
     }
-    .dark .platform-content {
-        background-color: transparent;
-    }
     .dark .platform-card {
         background-color: transparent;
     }
     .dark .platform-card .absolute {
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.5) 100%);
     }
     .dark .toggle-platform {
         background-color: #4a5568;
@@ -161,6 +172,35 @@
     }
     .dark .platform-container p {
         color: #cbd5e1;
+    }
+    /* 夜间模式下导航栏的文字颜色 */
+    .dark nav .text-gray-900 {
+        color: #ffffff !important;
+    }
+    .dark nav .text-secondary {
+        color: #ffffff !important;
+    }
+    .dark nav .nav-divider {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    .dark nav #settings-toggle {
+        color: #ffffff !important;
+    }
+    /* 夜间模式下footer的文字颜色 */
+    .dark footer {
+        color: #ffffff;
+    }
+    .dark footer p {
+        color: #ffffff;
+    }
+    .dark footer button,
+    .dark footer a {
+        color: #1a1a2e !important;
+        background-color: rgba(255, 255, 255, 0.9) !important;
+    }
+    .dark footer button:hover,
+    .dark footer a:hover {
+        background-color: rgba(255, 255, 255, 0.7) !important;
     }
     /* 夜间模式下卡片图片悬停效果 */
     .dark .platform-card img:hover {
@@ -272,43 +312,9 @@
             </style>
         </head>
 
-        <body class="bg-light text-gray-800 font-sans transition-colors duration-300">
-            <!-- 进入大公告遮罩 -->
-            <div id="entry-announcement-overlay" class="fixed inset-0 bg-black/70 z-[10000] flex items-center justify-center animate-fade-in">
-                <div id="entry-announcement" class="bg-[#ed3b2f] text-white rounded-2xl shadow-2xl max-w-3xl w-full mx-4 overflow-hidden animate-slide-up">
-                    <div class="relative p-8 md:p-10">
-                        <!-- 关闭按钮 -->
-                        <button id="close-entry-announcement" class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors">
-                            <i class="fa fa-times text-xl"></i>
-                        </button>
-                        
-                        <!-- 灯笼图标 -->
-                        <div class="flex justify-center mb-6">
-                            <span class="text-6xl animate-pulse-slow">🏮</span>
-                        </div>
-                        
-                        <!-- 公告标题 -->
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-                            1.5版本更新公告
-                        </h2>
-                        
-                        <!-- 公告内容 -->
-                        <div class="prose prose-invert max-w-none text-white/90">
-                            <p class="mb-6 text-lg">抱歉耽搁大家这么久了才发布1.5版本更新，延时因于制作者面对突来事务难一时招架，耽搁了更新时间，现在都可以放心体验1.5版本的内容啦。</p>
-                            <p class="mb-6 text-lg">春节也快要到了，节前高速必有大拥堵，访问者们预出行的话，规划要妥当，然后路上注意安全！年货也要开始备了，最后愿诸位都能过一个美满与福运滚滚来的春节假期！</p>
-                        </div>
-                        
-                        <!-- 发表时间 -->
-                        <div class="mt-10 pt-6 border-t border-white/30">
-                            <p class="text-white/80 text-base text-center flex items-center justify-center">
-                                <i class="fa fa-clock-o mr-2"></i>
-                                发表时间：2026年2月6日 20:34
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+        <body class="bg-[#ed3333] text-gray-800 font-sans transition-colors duration-300" style="background-image: linear-gradient(to right, rgba(255, 215, 0, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 215, 0, 0.1) 1px, transparent 1px); background-size: 20px 20px;">
+            <!-- 烟花效果 -->
+            <canvas id="fireworks-canvas"></canvas>
             <!-- 公告块 - 可编辑内容 -->
             <div id="announcement" style=" 
                 position: fixed; 
@@ -326,14 +332,16 @@
                 flex-direction: column; 
             "> 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;"> 
-                    <h4 style="margin: 0; font-size: 14px; font-weight: bold;">📢 1.5版本现已更新！</h4> 
+                    <h4 style="margin: 0; font-size: 14px; font-weight: bold;">📢 春节已至，临时更动</h4> 
                     <button id="announcement-toggle" style="background: none; border: none; cursor: pointer; color: #5d4037; font-size: 12px; padding: 0; margin: 0;"> 
                         <i class="fa fa-chevron-up"></i> 
                     </button> 
                 </div> 
                 <div id="announcement-content"> 
-                    <p style="margin: 0; font-size: 12px; line-height: 1.4;">春节也将到来，诸位访问者抓紧备年货了，预返乡的访问者路上一定要注意安全。</p> 
-                </div> 
+                   <p style="margin: 0; font-size: 12px; line-height: 1.4;">春节现已到来，愿诸位访问者新春佳节各获美满，返乡路上一定要注意安全。</p>
+                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">节日期间，时段划分、背景音乐和主题颜色会临时更换以迎合节日氛围，节日过去后会恢复原样式。</p>
+                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">PS：日间音乐手动切换是春节期间的功能测试，并非最终版本。</p>
+                </div>
             </div>
 
             <!-- 背景音乐元素 -->
@@ -342,61 +350,158 @@
             <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="main-nav">
                 <div class="container mx-auto px-6 py-3 flex justify-between items-center glass-effect rounded-b-xl">
                     <div class="flex items-center space-x-2">
-                        <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
-                        <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
+                        <span class="text-2xl text-secondary" style="text-shadow: -1px -1px 0 #ed3333, 1px -1px 0 #ed3333, -1px 1px 0 #ed3333, 1px 1px 0 #ed3333;"><i class="fa fa-book"></i></span>
+                        <span class="text-xl font-bold text-secondary" style="text-shadow: -1px -1px 0 #ed3333, 1px -1px 0 #ed3333, -1px 1px 0 #ed3333, 1px 1px 0 #ed3333;">历史爱好者服务专设网站</span>
                             <!-- 新增时间显示容器 -->
-                        <div class="flex items-center" style="position: relative; display: inline-block;">
+                        <div class="flex items-center space-x-2" style="position: relative; display: flex;">
                             <!-- 新增时段显示方块 -->
-                            <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md">时段</span>
+                            <span id="time-period" class="px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md">时段</span>
                             <!-- 新增北京时间显示方块 -->
-                            <span id="beijing-time" class="ml-2 px-3 py-1 rounded text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-md">时间</span>
+                            <span id="beijing-time" class="px-3 py-1 rounded text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-md">时间</span>
+                            <!-- 新增节日显示方块 -->
+                            <div id="holiday-block" class="px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md relative">
+                                <div class="holiday-content">
+                                    <div class="lantern-emoji">🏮</div>
+                                    <div class="date-text"></div>
+                                    <div class="holiday-text"></div>
+                                </div>
+                            </div>
                         </div>
+
+<style>
+    #holiday-block {
+        min-width: 120px;
+        width: 120px;
+        height: 30px;
+        text-align: center;
+        background-color: #d42323;
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .holiday-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: opacity 0.5s ease, filter 0.5s ease;
+    }
+    
+    .holiday-content.fade {
+        opacity: 0;
+        filter: blur(5px);
+    }
+    
+    .lantern-emoji {
+        font-size: 16px;
+        line-height: 1;
+        margin: 0;
+    }
+    
+    .date-text, .holiday-text {
+        font-size: 12px;
+        line-height: 1;
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        margin: 0;
+        padding: 0 2px;
+        text-align: center;
+    }
+    
+    /* 确保所有块在同一水平线上 */
+    #time-period, #beijing-time {
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+    }
+</style>
+
+<script>
+    const holidayBlock = document.querySelector('#holiday-block');
+    const lanternEmoji = holidayBlock.querySelector('.lantern-emoji');
+    const dateText = holidayBlock.querySelector('.date-text');
+    const holidayText = holidayBlock.querySelector('.holiday-text');
+    
+    let currentState = 0; // 0: 灯笼, 1: 日期, 2: 节日祝福 
+    
+    function updateHolidayDisplay() {
+        // 添加模糊过渡效果
+        const holidayContent = document.querySelector('.holiday-content');
+        holidayContent.classList.add('fade');
+        
+        setTimeout(() => {
+            switch(currentState) {
+                case 0: // 显示灯笼
+                    lanternEmoji.style.display = 'block';
+                    dateText.textContent = '';
+                    holidayText.textContent = '';
+                    break;
+                case 1: // 显示日期
+                    lanternEmoji.style.display = 'none';
+                    dateText.textContent = '2.15~2.23';
+                    holidayText.textContent = '';
+                    break;
+                case 2: // 显示节日祝福
+                    lanternEmoji.style.display = 'none';
+                    dateText.textContent = '';
+                    holidayText.textContent = '春节假期快乐！';
+                    break;
+            }
+            
+            // 移除模糊效果，显示新内容
+            holidayContent.classList.remove('fade');
+            currentState = (currentState + 1) % 3; // 循环切换状态
+        }, 250); // 等待一半的过渡时间
+    }
+    
+    // 初始显示灯笼
+    updateHolidayDisplay();
+    
+    // 设置定时器，每3秒切换一次
+    setInterval(updateHolidayDisplay, 3000);
+</script>
 <!-- 时段显示对应 -->
 <div id="time-period-dropdown" class="fixed top-[140px] right-4 z-10000 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 invisible opacity-0 transform translate-x-full transition-all duration-500">
     <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">时段划分</div>
     <ul class="space-y-2 text-sm">
         <li class="flex justify-between">
-            <span>早上</span>
-            <span class="text-gray-500 dark:text-gray-400">5:00~11:59</span>
+            <span>日间</span>
+            <span class="text-gray-500 dark:text-gray-400">5:00~16:59</span>
         </li>
         <li class="flex justify-between">
-            <span>中午</span>
-            <span class="text-gray-500 dark:text-gray-400">12:00~13:59</span>
-        </li>
-        <li class="flex justify-between">
-            <span>下午</span>
-            <span class="text-gray-500 dark:text-gray-400">14:00~16:59</span>
-        </li>
-        <li class="flex justify-between">
-            <span>晚间</span>
+            <span>夜间</span>
             <span class="text-gray-500 dark:text-gray-400">17:00~4:59</span>
         </li>
     </ul>
 </div>
                     </div>
-
-
-
                     <!-- 桌面导航 -->
                     <div class="hidden md:flex items-center">
-                        <a href="#home" class="text-white hover:text-secondary transition-colors nav-link px-4">首页</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#files" class="text-white hover:text-secondary transition-colors nav-link px-4">文件置放</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#websites" class="text-white hover:text-secondary transition-colors nav-link px-4">优质网站</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#community" class="text-white hover:text-secondary transition-colors nav-link px-4">相关社区</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#holiday-countdown" class="text-white hover:text-secondary transition-colors nav-link px-4">佳节共盼</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#work" class="text-white hover:text-secondary transition-colors nav-link px-4">工作专区</a>
-                        <div class="nav-divider mx-1"></div>
-                        <a href="#embedded-platform" class="text-white hover:text-secondary transition-colors nav-link px-4">内嵌平台</a>
+                        <a href="#home" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">首页</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#files" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">文件置放</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#websites" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">优质网站</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#community" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">相关社区</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#holiday-countdown" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">佳节共盼</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#work" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">工作专区</a>
+                        <div class="nav-divider mx-1 bg-gray-600"></div>
+                        <a href="#embedded-platform" class="text-gray-900 hover:text-secondary transition-colors nav-link px-4">内嵌平台</a>
                     </div>
 
                     <!-- 设置菜单按钮 -->
                     <div class="relative">
-                        <button id="settings-toggle" class="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-white hover:text-secondary transition-all duration-300 flex items-center justify-center">
+                        <button id="settings-toggle" class="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-gray-900 hover:text-secondary transition-all duration-300 flex items-center justify-center">
                             <i class="fa fa-cog text-xl transition-transform duration-300 hover:rotate-90"></i>
                         </button>
                         
@@ -547,6 +652,17 @@
                                 <div id="music-progress-bar" class="h-full bg-gradient-to-r from-secondary to-yellow-500 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
                             </div>
                         </div>
+                        <!-- 音乐切换按钮 -->
+                        <button id="music-switch" class="p-2 rounded-full hover:bg-gray-200 transition-all duration-300 flex-shrink-0 mr-2">
+                            <i class="fa fa-list text-gray-700 text-sm"></i>
+                        </button>
+                        <!-- 音乐列表弹出框 -->
+                        <div id="music-list-dropdown" class="fixed top-[80px] left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 w-64 invisible opacity-0 transition-all duration-300">
+                            <h4 class="text-sm font-medium text-gray-800 dark:text-white mb-2">选择音乐</h4>
+                            <ul id="music-list" class="space-y-1">
+                                <!-- 音乐列表项将通过JavaScript动态生成 -->
+                            </ul>
+                        </div>
                         <!-- 关闭按钮 -->
                         <button id="close-island" class="p-2 rounded-full hover:bg-gray-200 transition-all duration-300 flex-shrink-0 transform hover:rotate-90">
                             <i class="fa fa-times text-gray-700 text-sm"></i>
@@ -558,6 +674,25 @@
 
 
 <script>
+// 音乐列表定义
+const musicInfo = {
+    '日间': [
+        { title: 'China-P (新年版)', artist: '在也不玩网易云了', file: '日间1.mp3' },
+        { title: '泠鸢单人《吉祥话》（翻自 泠鸢yousa & 鹿乃ちゃん & 祖娅纳惜 & hanser）', artist: '泠鸢yousa', file: '日间2.mp3' },
+        { title: '桃符春叙 Spring Returns in Splendor', artist: 'HOYO-MiX', file: '日间3.mp3' }
+    ],
+    '夜间': [
+        { title: '盼新春·归乡夜', artist: '陈汗文', file: '夜间1.mp3' }
+    ]
+};
+
+// 为了兼容音乐切换功能，创建dayMusicList引用
+const dayMusicList = musicInfo['日间'].map(item => ({
+    title: item.title,
+    artist: item.artist,
+    url: item.file
+}));
+
 // 全局变量（统一管理DOM元素）
 let domElements = {
     settingsToggle: null,
@@ -576,7 +711,13 @@ let domElements = {
     musicModeTrack: null,
     musicModeSlider: null,
     musicModePlay: null,
-    musicModePause: null
+    musicPause: null,
+    musicSwitch: null,
+    musicTitle: null,
+    musicArtist: null,
+    musicListDropdown: null,
+    musicList: null,
+    currentMusicIndex: 0
 };
 
 // 工具函数：安全获取DOM元素（兼容移动端延迟）
@@ -691,6 +832,11 @@ async function initAll() {
     domElements.musicModeSlider = await getDOMElement('music-mode-slider');
     domElements.musicModePlay = await getDOMElement('music-mode-play');
     domElements.musicModePause = await getDOMElement('music-mode-pause');
+    domElements.musicSwitch = await getDOMElement('music-switch');
+    domElements.musicTitle = await getDOMElement('music-title');
+    domElements.musicArtist = await getDOMElement('music-artist');
+    domElements.musicListDropdown = await getDOMElement('music-list-dropdown');
+    domElements.musicList = await getDOMElement('music-list');
 
     // 获取遮罩层元素
     const settingsOverlay = document.getElementById('settings-overlay');
@@ -792,43 +938,93 @@ async function initAll() {
 
     // 6. 初始化系统主题监听（核心：移动端修复）
     initSystemThemeListener();
-}
-
-// 进入公告遮罩功能
-function initEntryAnnouncement() {
-    const overlay = document.getElementById('entry-announcement-overlay');
-    const closeButton = document.getElementById('close-entry-announcement');
     
-    if (overlay && closeButton) {
-        // 点击关闭按钮
-        closeButton.addEventListener('click', () => {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 300);
+    // 7. 初始化音乐切换功能
+    if (domElements.musicSwitch && domElements.musicListDropdown && domElements.musicList) {
+        // 生成音乐列表
+        function generateMusicList() {
+            domElements.musicList.innerHTML = '';
+            // 获取当前时段
+            const currentPeriod = getTimePeriod();
+            
+            // 根据当前时段生成对应的音乐列表
+            if (currentPeriod === '日间') {
+                dayMusicList.forEach((music, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'py-2 px-3 rounded hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-sm text-gray-800 dark:text-white';
+                    li.textContent = music.title;
+                    li.addEventListener('click', () => {
+                        selectMusic(index);
+                    });
+                    domElements.musicList.appendChild(li);
+                });
+            }
+        }
+        
+        // 选择音乐
+        function selectMusic(index) {
+            // 获取当前时段
+            const currentPeriod = getTimePeriod();
+            
+            // 只在日间时段内允许选择音乐
+            if (currentPeriod === '日间') {
+                const currentMusic = dayMusicList[index];
+                domElements.currentMusicIndex = index;
+                
+                // 更新音乐信息显示
+                if (domElements.musicTitle) {
+                    domElements.musicTitle.textContent = currentMusic.title;
+                }
+                if (domElements.musicArtist) {
+                    domElements.musicArtist.textContent = currentMusic.artist;
+                }
+                
+                // 实际播放音乐
+                const bgMusic = document.getElementById('bgMusic');
+                if (bgMusic) {
+                    bgMusic.src = currentMusic.url;
+                    bgMusic.play().catch(error => {
+                        console.error('播放音乐时出错:', error);
+                    });
+                }
+                
+                // 隐藏音乐列表
+                domElements.musicListDropdown.classList.add('invisible', 'opacity-0');
+                console.log('选择音乐:', currentMusic.title, '路径:', currentMusic.url);
+            }
+        }
+        
+        // 切换音乐列表显示/隐藏
+        domElements.musicSwitch.addEventListener('click', function() {
+            // 获取当前时段
+            const currentPeriod = getTimePeriod();
+            
+            // 只在日间时段内显示音乐列表
+            if (currentPeriod === '日间') {
+                // 生成音乐列表
+                generateMusicList();
+                // 切换显示状态
+                domElements.musicListDropdown.classList.toggle('invisible');
+                domElements.musicListDropdown.classList.toggle('opacity-0');
+            }
         });
         
-        // 点击遮罩层
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 300);
+        // 点击其他区域关闭音乐列表
+        document.addEventListener('click', function(e) {
+            if (domElements.musicSwitch && domElements.musicListDropdown) {
+                if (!domElements.musicSwitch.contains(e.target) && !domElements.musicListDropdown.contains(e.target)) {
+                    domElements.musicListDropdown.classList.add('invisible', 'opacity-0');
+                }
             }
         });
     }
 }
 
 // 页面加载完成后执行（移动端优先用DOMContentLoaded）
-document.addEventListener('DOMContentLoaded', () => {
-    initAll();
-    initEntryAnnouncement();
-});
+document.addEventListener('DOMContentLoaded', initAll);
 // 兜底：防止DOMContentLoaded失效
 window.addEventListener('load', () => {
     if (!domElements.settingsToggle) initAll();
-    initEntryAnnouncement();
 });
 
 // 动态调整时段信息显示块的位置，确保它显示在公告块下方
@@ -878,6 +1074,155 @@ if (announcementToggle && announcementContent) {
         updateTimePeriodPosition();
     });
 }
+
+// 烟花效果
+function initFireworks() {
+    const canvas = document.getElementById('fireworks-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // 设置canvas大小
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // 颜色数组
+    const colors = ['#ff0000', '#ffff00', '#00ffff', '#ff00ff', '#00ff00', '#ff9900', '#ff66ff'];
+    
+    // 烟花对象
+    let fireworks = [];
+    // 爆炸粒子
+    let particles = [];
+    
+    // 烟花类
+    class Firework {
+        constructor() {
+            // 主要在左右两侧空白区域生成烟花
+            if (Math.random() < 0.5) {
+                // 左侧
+                this.x = Math.random() * canvas.width * 0.3;
+            } else {
+                // 右侧
+                this.x = canvas.width * 0.7 + Math.random() * canvas.width * 0.3;
+            }
+            this.y = canvas.height;
+            this.targetY = Math.random() * 200 + 100;
+            this.speed = Math.random() * 3 + 2;
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.radius = Math.random() * 1.5 + 0.5;
+        }
+        
+        update() {
+            this.y -= this.speed;
+            
+            // 绘制烟花轨迹
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            
+            // 检查是否到达目标高度
+            if (this.y <= this.targetY) {
+                this.explode();
+                return false;
+            }
+            return true;
+        }
+        
+        explode() {
+            // 创建爆炸效果
+            const count = Math.floor(Math.random() * 50) + 50;
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 1;
+                const size = Math.random() * 2 + 0.5;
+                const life = Math.random() * 50 + 30;
+                
+                particles.push({ 
+                    x: this.x,
+                    y: this.y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    radius: size,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: life
+                });
+            }
+        }
+    }
+    
+    // 动画函数
+    function animate() {
+        // 清除canvas，不影响原有背景
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 设置合成模式，使烟花颜色更鲜艳
+        ctx.globalCompositeOperation = 'lighter';
+        
+        // 更新和绘制烟花
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            if (!fireworks[i].update()) {
+                fireworks.splice(i, 1);
+            }
+        }
+        
+        // 更新和绘制爆炸粒子
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.05; // 重力
+            p.life--;
+            
+            // 绘制粒子
+            ctx.globalAlpha = p.life / 100;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+            
+            // 绘制粒子轨迹
+            ctx.globalAlpha = p.life / 200;
+            for (let j = 1; j <= 3; j++) {
+                const trailX = p.x - p.vx * j * 0.5;
+                const trailY = p.y - p.vy * j * 0.5;
+                const trailRadius = p.radius * (1 - j * 0.3);
+                
+                if (trailRadius > 0) {
+                    ctx.beginPath();
+                    ctx.arc(trailX, trailY, trailRadius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                }
+            }
+            
+            if (p.life <= 0) {
+                particles.splice(i, 1);
+            }
+        }
+        
+        // 重置合成模式
+        ctx.globalCompositeOperation = 'source-over';
+        
+        // 随机添加新的烟花
+        if (Math.random() < 0.03) {
+            fireworks.push(new Firework());
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // 窗口大小改变时重新设置canvas
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+    
+    // 启动动画
+    animate();
+}
+
+// 页面加载完成后初始化烟花效果
+document.addEventListener('DOMContentLoaded', initFireworks);
 </script>
 
             <!-- 英雄区域 -->
@@ -1007,7 +1352,7 @@ if (announcementToggle && announcementContent) {
             📻
         </div>
         <div class="flex-1">
-            <a href="https://my.feishu.cn/docx/G3c5dIzXVoirx6xzDPCcOddonIc?from=from_copylink" target="_blank" class="block">
+            <a href="https://my.feishu.cn/wiki/NMbjwplgHi2crHkV5WEcyXeknTb?from=from_copylink" target="_blank" class="block">
                 <div class="flex-1 h-8 bg-red-300/20 rounded-lg flex items-center justify-center hover:bg-red-500/40 transition-all duration-300">
                     <span class="font-bold text-black dark:text-white">播客聆听</span>
                 </div>
@@ -1105,24 +1450,21 @@ if (announcementToggle && announcementContent) {
                                 </thead>
                                 <tbody>
                                     <tr class="table-row-hover">
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">上午</td>
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis - Silvermoon, AI Music Tool</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">日间</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">China-P (新年版) - 在也不玩网易云了</td>
+                                    </tr>
+
+                                    <tr class="table-row-hover">
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300"></td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">泠鸢单人《吉祥话》（翻自 泠鸢yousa & 鹿乃ちゃん & 祖娅纳惜 & hanser） - 泠鸢yousa</td>
                                     </tr>
                                     <tr class="table-row-hover">
                                         <td class="px-6 py-4 text-gray-700 dark:text-gray-300"></td>
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">都市晨间的快节奏律动 Urban Matutinal Upbeat Groove - Silvermoon, AI Music Tool</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">桃符春叙 Spring Returns in Splendor - HOYO-MiX</td>
                                     </tr>
                                     <tr class="table-row-hover">
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">中午</td>
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">稍作小憩 Just a Little Rest - Silvermoon, AI Music Tool</td>
-                                    </tr>
-                                    <tr class="table-row-hover">
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">下午</td>
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">来自午后的韵律 Rhythms from the Afternoon - Silvermoon, AI Music Tool</td>
-                                    </tr>
-                                    <tr class="table-row-hover">
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">晚间</td>
-                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night - Silvermoon, AI Music Tool</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">夜间</td>
+                                        <td class="px-6 py-4 text-gray-700 dark:text-gray-300">盼新春·归乡夜 - 陈汗文</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1925,68 +2267,68 @@ if (announcementToggle && announcementContent) {
     </main>
     
     <!-- 页脚 -->
-    <footer class="bg-primary text-white py-8 relative overflow-hidden">
+    <footer class="glass-effect text-gray-800 py-8 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">
             <!-- 背景装饰元素 -->
-            <div class="absolute top-0 left-0 w-32 h-32 rounded-full bg-white/20 blur-2xl -translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 right-0 w-48 h-48 rounded-full bg-white/20 blur-2xl translate-x-1/3 translate-y-1/3"></div>
+            <div class="absolute top-0 left-0 w-32 h-32 rounded-full bg-white blur-2xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-48 h-48 rounded-full bg-white blur-2xl translate-x-1/3 translate-y-1/3"></div>
         </div>
         
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
                 <div class="mb-6 lg:mb-0">
                     <h3 class="text-xl md:text-2xl font-bold mb-2 tracking-tight">历史爱好者服务专设网站</h3>
-                    <p class="text-white/80 max-w-md">为历史爱好者提供全方位服务</p>
+                    <p class="text-gray-600 max-w-md">为历史爱好者提供全方位服务</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full lg:w-auto">
                     <div>
-                        <p class="text-sm text-white/70 mb-1">网站版本号</p>
+                        <p class="text-sm text-gray-500 mb-1">网站版本号</p>
                         <p class="font-medium">1.5</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">发布地</p>
+                        <p class="text-sm text-gray-500 mb-1">发布地</p>
                         <p class="font-medium">中国-北京</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">更新时间</p>
+                        <p class="text-sm text-gray-500 mb-1">更新时间</p>
                         <p class="font-medium">2026年2月6日</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">公测时间</p>
+                        <p class="text-sm text-gray-500 mb-1">公测时间</p>
                         <p class="font-medium">2025年8月1日</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">特别鸣谢</p>
+                        <p class="text-sm text-gray-500 mb-1">特别鸣谢</p>
                         <p class="font-medium">我不是徐某人（QQ）</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">隶属群聊</p>
+                        <p class="text-sm text-gray-500 mb-1">隶属群聊</p>
                         <p class="font-medium">夏洛滕堡宫传来歌声</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">联系邮箱</p>
+                        <p class="text-sm text-gray-500 mb-1">联系邮箱</p>
                         <p class="font-medium">Skillmoon2023@163.com</p>
                     </div>
                     <div>
-                        <p class="text-sm text-white/70 mb-1">网页制作者</p>
+                        <p class="text-sm text-gray-500 mb-1">网页制作者</p>
                         <p class="font-medium">Silvermoon</p>
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-white/20 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm text-white/70 mb-4 md:mb-0">© 2025-2026 历史爱好者服务专设网站</p>
+            <div class="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500 mb-4 md:mb-0">© 2025-2026 历史爱好者服务专设网站</p>
                 <div class="relative flex flex-wrap items-center justify-center md:justify-end">
                     <div class="group relative">
-                        <button class="text-sm px-4 py-2 text-white bg-primary rounded-lg hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">群聊进入</button>
+                        <button class="text-sm px-4 py-2 text-gray-800 bg-white rounded-lg hover:bg-gray-100 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">群聊进入</button>
                         <div class="absolute left-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out z-50">
                             <img src="绑定群的二维码.png" alt="群聊二维码" class="w-full rounded-lg">
                             <p class="text-xs text-center text-gray-600 mt-2">扫一扫加入群聊</p>
                         </div>
                     </div>
-                    <a href="https://my.feishu.cn/share/base/form/shrcnZGmC3BBAwhAT73IaNcFzxg" target="_blank" rel="noopener noreferrer" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">访问反馈</a>
-                    <a href="免责声明.html" class="text-sm px-4 py-2 text-white bg-primary rounded-lg ml-4 hover:bg-primary/80 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
+                    <a href="https://my.feishu.cn/share/base/form/shrcnZGmC3BBAwhAT73IaNcFzxg" target="_blank" rel="noopener noreferrer" class="text-sm px-4 py-2 text-gray-800 bg-white rounded-lg ml-4 hover:bg-gray-100 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">访问反馈</a>
+                    <a href="免责声明.html" class="text-sm px-4 py-2 text-gray-800 bg-white rounded-lg ml-4 hover:bg-gray-100 hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50">免责声明</a>
                 </div>
             </div>
         </div>
@@ -2046,9 +2388,7 @@ if (!document.querySelector('link[href*="font-awesome"]')) {
 // 时段判断函数
 function getTimePeriod() {
   const hour = new Date().getHours();
-  return hour >=5 && hour <12 ? "上午" : 
-         hour >=12 && hour <14 ? "中午" : 
-         hour >=14 && hour <17 ? "下午" :"晚间" ;
+  return hour >=5 && hour <17 ? "日间" : "夜间" ;
 }
 
 // 确保在DOM完全加载后初始化
@@ -2067,22 +2407,7 @@ window.addEventListener('load', function() {
   const currentTime = document.getElementById('current-time');
   const totalTime = document.getElementById('total-time');
   
-  // 音乐信息映射 - 支持多首歌
-  const musicInfo = {
-    '上午': [
-      { title: '被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis', artist: 'Silvermoon, AI Music Tool', file: '上午.mp3' },
-      { title: '都市晨间的快节奏律动 Urban Matutinal Upbeat Groove', artist: 'Silvermoon, AI Music Tool', file: '上午2.mp3' }
-    ],
-    '中午': [
-      { title: '稍作小憩 Just a Little Rest', artist: 'Silvermoon, AI Music Tool', file: '中午.mp3' }
-    ],
-    '下午': [
-      { title: '来自午后的韵律 Rhythms from the Afternoon', artist: 'Silvermoon, AI Music Tool', file: '下午.mp3' }
-    ],
-    '晚间': [
-      { title: '于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night', artist: 'Silvermoon, AI Music Tool', file: '晚间.mp3' }
-    ]
-  };
+  // 使用全局定义的musicInfo对象
   
   // 当前播放索引
   let currentSongIndex = 0;
@@ -2105,6 +2430,16 @@ window.addEventListener('load', function() {
     currentPeriod = getTimePeriod();
     currentSongIndex = 0;
     playCurrentSong();
+    
+    // 初始化音乐切换按钮的显示/隐藏状态
+    const musicSwitch = document.getElementById('music-switch');
+    if (musicSwitch) {
+      if (currentPeriod === '日间') {
+        musicSwitch.classList.remove('hidden');
+      } else {
+        musicSwitch.classList.add('hidden');
+      }
+    }
   }
   
   // 定期检查时间变化并更新音乐
@@ -2116,6 +2451,16 @@ window.addEventListener('load', function() {
       currentSongIndex = 0;
       playCurrentSong();
       
+      // 控制音乐切换按钮的显示/隐藏
+      const musicSwitch = document.getElementById('music-switch');
+      if (musicSwitch) {
+        if (currentPeriod === '日间') {
+          musicSwitch.classList.remove('hidden');
+        } else {
+          musicSwitch.classList.add('hidden');
+        }
+      }
+      
       // 如果音乐开关是开启状态，播放新时段的音乐
       if (musicToggleSwitch.checked) {
         bgMusic.play().catch(err => {
@@ -2125,8 +2470,8 @@ window.addEventListener('load', function() {
     }
   }
   
-  // 每30秒检查一次时间变化
-  setInterval(checkTimePeriodUpdate, 30000);
+  // 每3秒检查一次时间变化
+  setInterval(checkTimePeriodUpdate, 3000);
   
   // 播放当前索引的歌曲
   function playCurrentSong() {
@@ -2424,17 +2769,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const hour = new Date().getHours();
         let period, color;
         
-        if (hour >= 5 && hour < 12) {
-            period = '早上';
-            color = 'bg-green-500 text-white';
-        } else if (hour >= 12 && hour < 14) {
-            period = '中午';
-            color = 'bg-yellow-500 text-white';
-        } else if (hour >= 14 && hour < 17) {
-            period = '下午';
-            color = 'bg-orange-500 text-white';
+        if (hour >= 5 && hour < 17) {
+            period = '日间';
+            color = 'bg-blue-500 text-white';
         } else {
-            period = '晚间';
+            period = '夜间';
             color = 'bg-purple-500 text-white';
         }
         
@@ -2709,4 +3048,3 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
