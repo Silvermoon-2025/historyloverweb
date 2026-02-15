@@ -273,6 +273,37 @@
     .dark .nav-divider {
         background-color: rgba(226, 232, 240, 0.5);
     }
+    
+    /* 导航栏折叠功能样式 */
+    .nav-title, .nav-time-container {
+        transition: all 0.3s ease;
+    }
+    
+    /* 折叠状态 */
+    .nav-collapsed .nav-title {
+        display: none;
+    }
+    
+    .nav-collapsed .nav-time-container {
+        display: none;
+    }
+    
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        .nav-title {
+            font-size: 1rem;
+        }
+        
+        #main-nav {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        #main-nav .container {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    }
     /* 表格悬停浮起效果 */
     .table-row-hover {
         transition: all 0.3s ease;
@@ -340,7 +371,7 @@
                 <div id="announcement-content"> 
                    <p style="margin: 0; font-size: 12px; line-height: 1.4;">春节现已到来，愿诸位访问者新春佳节各获美满，返乡路上一定要注意安全。</p>
                    <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">节日期间，时段划分、背景音乐和主题颜色会临时更换以迎合节日氛围，节日过去后会恢复原样式。</p>
-                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">PS：日间音乐手动切换是春节期间的功能测试，并非最终版本。</p>
+                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">PS：日间音乐手动切换和置顶栏移动端折叠功能是春节期间的功能测试，并非最终版本。</p>
                 </div>
             </div>
 
@@ -351,9 +382,9 @@
                 <div class="container mx-auto px-6 py-3 flex justify-between items-center glass-effect rounded-b-xl">
                     <div class="flex items-center space-x-2">
                         <span class="text-2xl text-secondary" style="text-shadow: -1px -1px 0 #ed3333, 1px -1px 0 #ed3333, -1px 1px 0 #ed3333, 1px 1px 0 #ed3333;"><i class="fa fa-book"></i></span>
-                        <span class="text-xl font-bold text-secondary" style="text-shadow: -1px -1px 0 #ed3333, 1px -1px 0 #ed3333, -1px 1px 0 #ed3333, 1px 1px 0 #ed3333;">历史爱好者服务专设网站</span>
+                        <span class="text-xl font-bold text-secondary nav-title" style="text-shadow: -1px -1px 0 #ed3333, 1px -1px 0 #ed3333, -1px 1px 0 #ed3333, 1px 1px 0 #ed3333;">历史爱好者服务专设网站</span>
                             <!-- 新增时间显示容器 -->
-                        <div class="flex items-center space-x-2" style="position: relative; display: flex;">
+                        <div class="flex items-center space-x-2 nav-time-container" style="position: relative; display: flex;">
                             <!-- 新增时段显示方块 -->
                             <span id="time-period" class="px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md">时段</span>
                             <!-- 新增北京时间显示方块 -->
@@ -367,6 +398,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 移动端折叠/展开按钮 -->
+                        <button id="nav-toggle" class="md:hidden p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-gray-900 hover:text-secondary transition-all duration-300 ml-2">
+                            <i class="fa fa-chevron-up text-sm"></i>
+                        </button>
 
 <style>
     #holiday-block {
@@ -1020,11 +1055,38 @@ async function initAll() {
     }
 }
 
+// 导航栏折叠功能
+function initNavToggle() {
+    const navToggle = document.getElementById('nav-toggle');
+    const mainNav = document.getElementById('main-nav');
+    
+    if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+            // 切换导航栏折叠状态
+            mainNav.classList.toggle('nav-collapsed');
+            
+            // 更新按钮图标
+            const icon = navToggle.querySelector('i');
+            if (mainNav.classList.contains('nav-collapsed')) {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        });
+    }
+}
+
 // 页面加载完成后执行（移动端优先用DOMContentLoaded）
-document.addEventListener('DOMContentLoaded', initAll);
+document.addEventListener('DOMContentLoaded', () => {
+    initAll();
+    initNavToggle();
+});
 // 兜底：防止DOMContentLoaded失效
 window.addEventListener('load', () => {
     if (!domElements.settingsToggle) initAll();
+    initNavToggle();
 });
 
 // 动态调整时段信息显示块的位置，确保它显示在公告块下方
@@ -1258,6 +1320,65 @@ document.addEventListener('DOMContentLoaded', initFireworks);
                     </svg>
                 </div>
             </header>
+
+            <!-- 春节晚会导览模块 -->
+            <div class="container mx-auto px-4 py-8">
+                <div class="bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-2xl shadow-2xl p-6 border-4 border-yellow-400 max-w-4xl mx-auto">
+                    <!-- 标题 -->
+                    <h3 class="text-2xl font-bold text-white text-shadow-lg mb-2 flex items-center">
+                        <i class="fa fa-calendar-check-o mr-3 text-yellow-300"></i>
+                        春节晚会导览
+                    </h3>
+                    <p class="text-yellow-200 text-sm text-center mb-6">进入他们的B站主页，待到指定时间方可观看直播</p>
+                    
+                    <!-- 跳转块容器 -->
+                    <div class="space-y-4">
+                        <!-- 第一个跳转块：B站拜年纪 -->
+                        <a href="https://space.bilibili.com/1868902080?spm_id_from=333.337.0.0" target="_blank" class="block">
+                            <div class="bg-white/90 dark:bg-gray-800/90 rounded-xl p-4 hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-[1.02] shadow-lg border-2 border-yellow-300">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="text-lg font-semibold text-red-600 dark:text-red-400">
+                                        哔哩哔哩2026年拜年纪
+                                    </h4>
+                                    <span class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-300 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                        <i class="fa fa-clock-o mr-1"></i>
+                                        2026年2月16日 19:00
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm">B站年度盛宴，与你共度除夕</p>
+                                    <button class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 flex items-center">
+                                        <i class="fa fa-external-link mr-1"></i>
+                                        前往观看
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- 第二个跳转块：央视春晚 -->
+                        <a href="https://space.bilibili.com/501554611" target="_blank" class="block">
+                            <div class="bg-white/90 dark:bg-gray-800/90 rounded-xl p-4 hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-[1.02] shadow-lg border-2 border-yellow-300">
+                                <div class="flex justify-between items-center mb-3">
+                                    <h4 class="text-lg font-semibold text-red-600 dark:text-red-400">
+                                        2026年中央广播电视总台春节联欢晚会
+                                    </h4>
+                                    <span class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-300 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                        <i class="fa fa-clock-o mr-1"></i>
+                                        2026年2月16日 20:00
+                                    </span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm">央视年度春晚，全球华人的文化盛宴</p>
+                                    <button class="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 flex items-center">
+                                        <i class="fa fa-external-link mr-1"></i>
+                                        前往观看
+                                    </button>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
