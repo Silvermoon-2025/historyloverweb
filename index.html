@@ -274,20 +274,6 @@
         background-color: rgba(226, 232, 240, 0.5);
     }
     
-    /* 导航栏折叠功能样式 */
-    .nav-title, .nav-time-container {
-        transition: all 0.3s ease;
-    }
-    
-    /* 折叠状态 */
-    .nav-collapsed .nav-title {
-        display: none;
-    }
-    
-    .nav-collapsed .nav-time-container {
-        display: none;
-    }
-    
     /* 移动端适配 */
     @media (max-width: 768px) {
         .nav-title {
@@ -302,6 +288,21 @@
         #main-nav .container {
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
+        }
+        
+        /* 移动端只隐藏北京时间显示方块，保留时段块和节日块 */
+        #beijing-time {
+            display: none;
+        }
+        
+        /* 调整移动端时间容器的间距和大小 */
+        .nav-time-container {
+            gap: 0.5rem;
+        }
+        
+        #holiday-block {
+            min-width: 100px;
+            width: 100px;
         }
     }
     /* 表格悬停浮起效果 */
@@ -371,7 +372,7 @@
                 <div id="announcement-content"> 
                    <p style="margin: 0; font-size: 12px; line-height: 1.4;">春节现已到来，愿诸位访问者新春佳节各获美满，返乡路上一定要注意安全。</p>
                    <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">节日期间，时段划分、背景音乐和主题颜色会临时更换以迎合节日氛围，节日过去后会恢复原样式。</p>
-                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">PS：日间音乐手动切换和置顶栏移动端折叠功能是春节期间的功能测试，并非最终版本。</p>
+                   <p style="margin: 8px 0 0 0; font-size: 12px; line-height: 1.4;">PS：日间音乐手动切换和移动端时间块隐藏功能是春节期间的功能测试，并非最终版本。</p>
                 </div>
             </div>
 
@@ -398,10 +399,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 移动端折叠/展开按钮 -->
-                        <button id="nav-toggle" class="md:hidden p-2 rounded-full bg-primary/10 hover:bg-primary/20 text-gray-900 hover:text-secondary transition-all duration-300 ml-2">
-                            <i class="fa fa-chevron-up text-sm"></i>
-                        </button>
 
 <style>
     #holiday-block {
@@ -1055,38 +1052,11 @@ async function initAll() {
     }
 }
 
-// 导航栏折叠功能
-function initNavToggle() {
-    const navToggle = document.getElementById('nav-toggle');
-    const mainNav = document.getElementById('main-nav');
-    
-    if (navToggle && mainNav) {
-        navToggle.addEventListener('click', () => {
-            // 切换导航栏折叠状态
-            mainNav.classList.toggle('nav-collapsed');
-            
-            // 更新按钮图标
-            const icon = navToggle.querySelector('i');
-            if (mainNav.classList.contains('nav-collapsed')) {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            } else {
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            }
-        });
-    }
-}
-
 // 页面加载完成后执行（移动端优先用DOMContentLoaded）
-document.addEventListener('DOMContentLoaded', () => {
-    initAll();
-    initNavToggle();
-});
+document.addEventListener('DOMContentLoaded', initAll);
 // 兜底：防止DOMContentLoaded失效
 window.addEventListener('load', () => {
     if (!domElements.settingsToggle) initAll();
-    initNavToggle();
 });
 
 // 动态调整时段信息显示块的位置，确保它显示在公告块下方
