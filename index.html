@@ -268,6 +268,27 @@
     .music-table tr:last-child td {
         border-bottom: none;
     }
+    /* 时间块文本折叠动画 */
+    #beijing-time {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #beijing-time .time-text {
+        display: inline-block;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #beijing-time.collapsed .time-text {
+        max-width: 0;
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateX(-10px);
+    }
+    #beijing-time:not(.collapsed) .time-text {
+        max-width: 200px;
+        opacity: 1;
+        filter: blur(0);
+        transform: translateX(0);
+    }
 }
             </style>
         </head>
@@ -282,11 +303,16 @@
                         <span class="text-2xl text-secondary"><i class="fa fa-book"></i></span>
                         <span class="text-xl font-bold text-white">历史爱好者服务专设网站</span>
                             <!-- 新增时间显示容器 -->
-                        <div class="flex items-center" style="position: relative; display: inline-block;">
+                        <div class="flex items-center" style="position: relative; display: inline-flex;">
                             <!-- 新增时段显示方块 -->
-                            <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md">时段</span>
+                            <span id="time-period" class="ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md flex items-center">
+                                时段
+                            </span>
                             <!-- 新增北京时间显示方块 -->
-                            <span id="beijing-time" class="ml-2 px-3 py-1 rounded text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-md">时间</span>
+                            <span id="beijing-time" class="ml-2 px-3 py-1 rounded text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-md flex items-center justify-between">
+                                时间
+                                <i class="fa fa-chevron-down ml-1 transition-transform duration-300 cursor-pointer" id="beijing-time-toggle"></i>
+                            </span>
                         </div>
 <!-- 时段显示对应 -->
 <div id="time-period-dropdown" class="fixed top-16 right-4 z-50 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 invisible opacity-0 transform translate-x-full transition-all duration-500">
@@ -454,6 +480,33 @@
 #dynamic-island.visible {
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+/* 时间块折叠样式 */
+#beijing-time {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#beijing-time.collapsed {
+  width: 30px !important;
+  min-width: 30px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+#beijing-time.collapsed {
+  font-size: 0;
+}
+
+#beijing-time.collapsed i {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  font-size: 12px;
 }
 </style>
                 </div>
@@ -737,6 +790,146 @@ document.addEventListener('DOMContentLoaded', initAll);
 window.addEventListener('load', () => {
     if (!domElements.settingsToggle) initAll();
 });
+
+// 修复弹出功能的JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取元素引用
+    const timePeriod = document.getElementById('time-period');
+    const timeDropdown = document.getElementById('time-period-dropdown');
+    
+    // 检查元素是否存在
+    if (!timePeriod || !timeDropdown) {
+        console.error('时段块或下拉框元素未找到');
+        return;
+    }
+    
+    // 移除之前的定位容器逻辑，因为我们现在使用fixed定位
+    
+    // 强制设置下拉框初始位置
+    timeDropdown.style.top = '4rem'; // 调整到导航栏下方
+    timeDropdown.style.right = '1rem'; // 固定在右侧
+    timeDropdown.style.left = 'auto'; // 重置左侧定位
+    timeDropdown.style.marginTop = '0'; // 重置顶部边距
+    
+    // 更新北京时间显示
+        function updateBeijingTime() {
+        const now = new Date();
+        // 北京时间是UTC+8，直接获取本地时间即可
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        
+        const formattedTime = `${year}年${month}月${day}日${hours}时${minutes}分`;
+        
+        // 获取时间显示元素
+        const beijingTime = document.getElementById('beijing-time');
+        if (beijingTime) {
+            // 保留折叠状态
+            const isCollapsed = beijingTime.classList.contains('collapsed');
+            beijingTime.innerHTML = `<span class="time-text">${formattedTime}</span><i class="fa fa-chevron-down ml-1 transition-transform duration-300 cursor-pointer" id="beijing-time-toggle" style="transform: ${isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)'}"></i>`;
+            if (isCollapsed) {
+                beijingTime.classList.add('collapsed');
+            }
+        }
+    }
+    
+    // 更新时段显示和时间显示
+    function updateTimePeriod() {
+        const hour = new Date().getHours();
+        let period, color;
+        
+        if (hour >= 5 && hour < 17) {
+            period = '日间';
+            color = 'bg-blue-500 text-white';
+        } else {
+            period = '夜间';
+            color = 'bg-purple-500 text-white';
+        }
+        
+        timePeriod.textContent = period;
+        timePeriod.className = `ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer ${color} transition-all duration-300 hover:scale-105 hover:shadow-md`;
+        
+        // 同步时间块的样式
+        const beijingTime = document.getElementById('beijing-time');
+        if (beijingTime) {
+            // 保留折叠状态
+            const isCollapsed = beijingTime.classList.contains('collapsed');
+            beijingTime.className = `ml-2 px-3 py-1 rounded text-sm font-medium ${color} transition-all duration-300 hover:scale-105 hover:shadow-md flex items-center justify-between${isCollapsed ? ' collapsed' : ''}`;
+        }
+
+        
+        // 更新北京时间
+        updateBeijingTime();
+    }
+    
+    // 绑定触碰事件（鼠标移入显示下拉菜单）
+    timePeriod.addEventListener('mouseenter', () => {
+        timeDropdown.classList.remove('invisible', 'opacity-0', 'translate-x-full');
+    });
+    
+    // 鼠标移出时段块和下拉框区域时关闭
+    timePeriod.addEventListener('mouseleave', (e) => {
+        setTimeout(() => {
+            if (!timeDropdown.matches(':hover') && !timePeriod.matches(':hover')) {
+                timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
+            }
+        }, 100);
+    });
+    
+    timeDropdown.addEventListener('mouseleave', () => {
+        if (!timePeriod.matches(':hover')) {
+            timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
+        }
+    });
+    
+    // 初始化
+    updateTimePeriod();
+    // 每小时更新一次时段显示（包含样式和时间）
+    setInterval(updateTimePeriod, 3600000);
+    // 每秒更新一次时间显示
+    setInterval(updateBeijingTime, 1000);
+    
+    // 为时间块添加折叠功能
+    const beijingTime = document.getElementById('beijing-time');
+    if (beijingTime) {
+        beijingTime.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止事件冒泡
+            // 切换折叠状态
+            const isCollapsed = beijingTime.classList.contains('collapsed');
+            const beijingTimeToggle = document.getElementById('beijing-time-toggle');
+            if (isCollapsed) {
+                // 展开
+                beijingTime.classList.remove('collapsed');
+                if (beijingTimeToggle) {
+                    beijingTimeToggle.style.transform = 'rotate(0deg)';
+                }
+            } else {
+                // 折叠
+                beijingTime.classList.add('collapsed');
+                if (beijingTimeToggle) {
+                    beijingTimeToggle.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    }
+});
+
+// 初始化显示当前时段和时间
+window.addEventListener('DOMContentLoaded', function() {
+    const timePeriod = document.getElementById('time-period');
+    const beijingTime = document.getElementById('beijing-time');
+    
+    if (timePeriod && beijingTime) {
+        // 确保updateTimePeriod函数存在
+        if (typeof updateTimePeriod === 'function') {
+            updateTimePeriod();
+        } else {
+            console.log('哎呀，updateTimePeriod函数还没有定义呢~');
+        }
+    }
+});
 </script>
 
             <!-- 英雄区域 -->
@@ -830,6 +1023,7 @@ window.addEventListener('load', () => {
                                         <h4 class="text-lg font-semibold text-primary">网页端更新</h4>
                                     </div>
                                     <ul class="ml-6 list-disc space-y-1 text-gray-700 dark:text-gray-300">
+                                        <li><span style="background-color: #1e3a5f; color: #ffd700; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold;">NEW</span>时间块支持折叠</li>
                                         <li>改进灵动岛式音乐播放器，添加更多动态效果，并为日间和夜间模式设置不同的背景颜色</li>
                                         <li>优化灵动岛式音乐播放器，移除模糊效果，使其在显示时更加清晰</li>
                                         <li>为灵动岛式音乐播放器添加进度条拖动功能，支持点击跳转和按住拖动调整播放位置</li>                                       
@@ -1752,7 +1946,7 @@ window.addEventListener('load', () => {
                 <div class="grid md:grid-cols-12 gap-6 items-center">
                     <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card transform hover:-translate-y-1">
                         <div class="aspect-w-16 aspect-h-9 overflow-hidden">
-                            <img src="网页工具概念图.jpg" alt="银月的网页式实用工具组截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                            <img src="网页工具概念图.png" alt="银月的网页式实用工具组截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
                             <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
@@ -2232,123 +2426,7 @@ window.addEventListener('load', function() {
   }, { once: true });
 });
 
-// 初始化UI状态
 
-
-// 先获取元素引用
-const timePeriod = document.getElementById('time-period');
-const timeDropdown = document.getElementById('time-period-dropdown');
-
-// 修复弹出功能的JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取元素引用
-    const timePeriod = document.getElementById('time-period');
-    const timeDropdown = document.getElementById('time-period-dropdown');
-    
-    // 检查元素是否存在
-    if (!timePeriod || !timeDropdown) {
-        console.error('时段块或下拉框元素未找到');
-        return;
-    }
-    
-    // 移除之前的定位容器逻辑，因为我们现在使用fixed定位
-    
-    // 强制设置下拉框初始位置
-    timeDropdown.style.top = '4rem'; // 调整到导航栏下方
-    timeDropdown.style.right = '1rem'; // 固定在右侧
-    timeDropdown.style.left = 'auto'; // 重置左侧定位
-    timeDropdown.style.marginTop = '0'; // 重置顶部边距
-    
-    // 更新北京时间显示
-    function updateBeijingTime() {
-        const now = new Date();
-        // 北京时间是UTC+8，直接获取本地时间即可
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        
-        const formattedTime = `${year}年${month}月${day}日${hours}时${minutes}分`;
-        
-        // 获取时间显示元素
-        const beijingTime = document.getElementById('beijing-time');
-        if (beijingTime) {
-            beijingTime.textContent = formattedTime;
-        }
-    }
-    
-    // 更新时段显示和时间显示
-    function updateTimePeriod() {
-        const hour = new Date().getHours();
-        let period, color;
-        
-        if (hour >= 5 && hour < 12) {
-            period = '早上';
-            color = 'bg-green-500 text-white';
-        } else if (hour >= 12 && hour < 14) {
-            period = '中午';
-            color = 'bg-yellow-500 text-white';
-        } else if (hour >= 14 && hour < 17) {
-            period = '下午';
-            color = 'bg-orange-500 text-white';
-        } else {
-            period = '晚间';
-            color = 'bg-purple-500 text-white';
-        }
-        
-        timePeriod.textContent = period;
-        timePeriod.className = `ml-4 px-3 py-1 rounded text-sm font-medium cursor-pointer ${color} transition-all duration-300 hover:scale-105 hover:shadow-md`;
-        
-        // 同步时间块的样式
-        const beijingTime = document.getElementById('beijing-time');
-        if (beijingTime) {
-            beijingTime.className = `ml-2 px-3 py-1 rounded text-sm font-medium ${color} transition-all duration-300 hover:scale-105 hover:shadow-md`;
-        }
-        
-        // 更新北京时间
-        updateBeijingTime();
-    }
-    
-    // 绑定悬停事件（确保能弹出）
-    timePeriod.addEventListener('mouseenter', () => {
-        timeDropdown.classList.remove('invisible', 'opacity-0', 'translate-x-full');
-    });
-    
-    timePeriod.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-            if (!timeDropdown.matches(':hover')) {
-                timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
-            }
-        }, 200);
-    });
-    
-    timeDropdown.addEventListener('mouseleave', () => {
-        timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
-    });
-    
-    // 初始化
-    updateTimePeriod();
-    // 每小时更新一次时段显示（包含样式和时间）
-    setInterval(updateTimePeriod, 3600000);
-    // 每秒更新一次时间显示
-    setInterval(updateBeijingTime, 1000);
-});
-
-// 初始化显示当前时段和时间
-window.addEventListener('DOMContentLoaded', function() {
-    const timePeriod = document.getElementById('time-period');
-    const beijingTime = document.getElementById('beijing-time');
-    
-    if (timePeriod && beijingTime) {
-        // 确保updateTimePeriod函数存在
-        if (typeof updateTimePeriod === 'function') {
-            updateTimePeriod();
-        } else {
-            console.log('哎呀，updateTimePeriod函数还没有定义呢~');
-        }
-    }
-});
 
 // 实现内嵌平台的滚动触发动画效果
 window.addEventListener('DOMContentLoaded', function() {
