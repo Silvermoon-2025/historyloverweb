@@ -1563,21 +1563,21 @@ window.addEventListener('DOMContentLoaded', function() {
                         佳节共盼
                     </h2>
                     <div class="space-y-6">
-                        <!-- 元宵节 -->
-                        <div class="bg-pink-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-pink-500 dark:bg-gray-800 dark:border-pink-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-pink-100 rounded-full opacity-50 dark:bg-pink-900/30"></div>
+                        <!-- 清明节 -->
+                        <div class="bg-green-50 rounded-xl p-6 shadow-lg relative overflow-hidden border-l-4 border-green-500 dark:bg-gray-800 dark:border-green-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
+                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-green-100 rounded-full opacity-50 dark:bg-green-900/30"></div>
                             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between">
                                 <div class="mb-4 md:mb-0 md:w-1/4">
-                                    <h3 class="text-xl font-bold text-pink-600 mb-2 dark:text-pink-400">元宵节</h3>
-                                    <p class="text-gray-500 mb-4 dark:text-gray-400">农历正月十五</p>
+                                    <h3 class="text-xl font-bold text-green-600 mb-2 dark:text-green-400">清明节</h3>
+                                    <p class="text-gray-500 mb-4 dark:text-gray-400">公历4月4日</p>
                                     <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
                                         <i class="fa fa-calendar-o mr-2"></i>
-                                        <span>2026年3月3日</span>
+                                        <span>2026年4月4日</span>
                                     </div>
                                 </div>
-                                <div class="flex-1 md:mx-8 flex items-center justify-center h-24 bg-white rounded-lg shadow-sm dark:bg-gray-700" id="lantern-festival-time">
+                                <div class="flex-1 md:mx-8 flex items-center justify-center h-24 bg-white rounded-lg shadow-sm dark:bg-gray-700" id="qingming-festival-time">
                                     <div class="text-center">
-                                        <span id="lantern-festival-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
+                                        <span id="qingming-festival-days" class="text-4xl font-bold text-gray-900 dark:text-white">--</span>
                                         <p class="text-gray-500 dark:text-gray-400 inline-block ml-2">天</p>
                                     </div>
                                 </div>
@@ -1670,10 +1670,10 @@ window.addEventListener('DOMContentLoaded', function() {
                         const today = new Date();
                         const currentYear = today.getFullYear();
                         
-                        // 元宵节（2026年农历正月十五）
-                        const lanternFestival = new Date('2026-03-03');
-                        const lanternFestivalDays = calculateDaysUntil(lanternFestival);
-                        document.getElementById('lantern-festival-days').textContent = lanternFestivalDays;
+                        // 清明节（2026年4月4日）
+                        const qingmingFestival = new Date('2026-04-04');
+                        const qingmingFestivalDays = calculateDaysUntil(qingmingFestival);
+                        document.getElementById('qingming-festival-days').textContent = qingmingFestivalDays;
 
                         // 劳动节（2026年5月1日）
                         const labourDay = new Date('2026-05-01');
@@ -1692,7 +1692,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                         // 优先级系统：找出距离最近的节日
                         const festivals = [
-                            { name: 'lantern-festival', days: lanternFestivalDays, element: document.getElementById('lantern-festival-time') },
+                            { name: 'qingming-festival', days: qingmingFestivalDays, element: document.getElementById('qingming-festival-time') },
                             { name: 'labour-day', days: labourDayDays, element: document.getElementById('labour-day-time') },
                             { name: 'dragon-boat', days: dragonBoatFestivalDays, element: document.getElementById('dragon-boat-time') },
                             { name: 'mid-autumn', days: midAutumnFestivalDays, element: document.getElementById('mid-autumn-time') }
@@ -2652,4 +2652,3 @@ window.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
