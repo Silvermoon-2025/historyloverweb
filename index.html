@@ -289,6 +289,36 @@
         filter: blur(0);
         transform: translateX(0);
     }
+    /* 模块切换标签页平滑过渡动画 */
+    .tab-panels-container {
+        position: relative;
+    }
+    .tab-panel {
+        transition: opacity 0.45s ease, transform 0.45s ease;
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: translateY(12px);
+        visibility: hidden;
+        pointer-events: none;
+    }
+    .tab-panel.active {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+        position: relative;
+    }
+    /* 导航按钮激活态 */
+    .tab-nav-btn.active-tab {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        color: #1e293b !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+    }
+    .dark .tab-nav-btn.active-tab {
+        background-color: rgba(55, 65, 81, 0.9) !important;
+        color: #f1f5f9 !important;
+    }
 }
             </style>
         </head>
@@ -446,7 +476,11 @@
                             </div>
                             
                             <!-- 屏式切换 -->
-                            <div class="mb-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                            <div class="mb-2 p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors relative">
+                                <!-- 右上角小角标 "即将辞别" -->
+                                <span class="absolute -top-2 -right-2 px-2 py-0.5 text-[10px] font-medium rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-sm dark:from-amber-500 dark:to-orange-600 transition-colors duration-300">
+                                    即将辞别
+                                </span>
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="text-gray-800 dark:text-white text-sm font-medium">屏式切换</span>
@@ -974,19 +1008,47 @@ window.addEventListener('DOMContentLoaded', function() {
 
             <!-- 主要内容 -->
             <main class="container mx-auto px-4 py-12">
-                <!-- 国内版前瞻页通知 -->
-                <div class="bg-gradient-to-br from-emerald-500/30 via-teal-500/20 to-green-500/30 rounded-2xl p-8 mb-12 animate-fade-in border border-emerald-400/30 dark:from-emerald-600/30 dark:via-teal-600/20 dark:to-green-600/30 dark:border-emerald-500/30">
-                    <div class="text-center">
-                        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full mb-4 shadow-lg shadow-emerald-500/30">
-                            <i class="fa fa-rocket text-2xl text-white"></i>
+                <!-- 模块切换：2.0版本前瞻 / 国内版前瞻 -->
+                <div class="bg-gradient-to-br from-emerald-500/30 via-teal-500/20 to-green-500/30 rounded-2xl p-8 mb-12 animate-fade-in border border-emerald-400/30 dark:from-emerald-600/30 dark:via-teal-600/20 dark:to-green-600/30 dark:border-emerald-500/30" id="preview-module">
+                    <!-- 左上角小导航栏 -->
+                    <div class="flex items-center gap-2 mb-6">
+                        <button class="tab-nav-btn px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-300 bg-white/90 dark:bg-gray-700/90 text-gray-800 dark:text-gray-100 shadow-sm" data-tab="v2preview">
+                            2.0版本更新信息前瞻
+                        </button>
+                        <button class="tab-nav-btn px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-300 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" data-tab="domestic">
+                            国内版群网站内测申请
+                        </button>
+                    </div>
+
+                    <!-- 模块内容容器（用于平滑切换） -->
+                    <div class="tab-panels-container relative min-h-[240px]">
+                        <!-- Tab 1: 2.0版本更新信息前瞻 -->
+                        <div id="module-v2preview" class="tab-panel active text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mb-4 shadow-lg shadow-blue-500/30">
+                                <i class="fa fa-star text-2xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 mb-3">2.0版本更新信息前瞻</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                                2.0版本更新信息前瞻页现已发布，前去了解一下会有什么改进吧
+                            </p>
+                            <a href="https://7ef6fe471b3c44fcb80fcac6cc5dfa46.app.codebuddy.work/" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-1">
+                                前往访问
+                            </a>
                         </div>
-                        <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mb-3">国内版前瞻页现已发布</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
-                            国内版群网站内测现已开始，通过前瞻页可申请内测资格
-                        </p>
-                        <a href="https://266cccb774774a60a78612daf7318c84.app.codebuddy.work/" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-1">
-                            前往访问
-                        </a>
+
+                        <!-- Tab 2: 国内版前瞻页 -->
+                        <div id="module-domestic" class="tab-panel text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full mb-4 shadow-lg shadow-emerald-500/30">
+                                <i class="fa fa-rocket text-2xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 mb-3">国内版前瞻页现已发布</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                                国内版群网站内测现已开始，通过前瞻页可申请内测资格
+                            </p>
+                            <a href="https://266cccb774774a60a78612daf7318c84.app.codebuddy.work/" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-1">
+                                前往访问
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -2666,5 +2728,62 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- 模块切换导航栏交互逻辑 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-nav-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    const panelsContainer = document.querySelector('.tab-panels-container');
+
+    function switchTab(tabId) {
+        const targetPanel = document.getElementById('module-' + tabId);
+        if (!targetPanel || targetPanel.classList.contains('active')) return;
+
+        // 1. 固定容器高度，防止布局抖动
+        const activePanel = document.querySelector('.tab-panel.active');
+        if (activePanel && panelsContainer) {
+            panelsContainer.style.height = activePanel.offsetHeight + 'px';
+        }
+
+        // 2. 移除所有面板的 active 状态（触发当前面板淡出）
+        panels.forEach(function(p) { p.classList.remove('active'); });
+
+        // 3. 强制重排，确保 CSS 过渡生效
+        void panelsContainer.offsetHeight;
+
+        // 4. 给目标面板添加 active（触发目标面板淡入）
+        targetPanel.classList.add('active');
+
+        // 5. 过渡完成后释放容器高度
+        setTimeout(function() {
+            if (panelsContainer) panelsContainer.style.height = '';
+        }, 500);
+
+        // 6. 更新导航按钮样式
+        tabBtns.forEach(function(btn) {
+            btn.classList.remove('active-tab', 'bg-white/90', 'dark:bg-gray-700/90', 'shadow-sm');
+            btn.classList.add('text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-200');
+        });
+        var activeBtn = document.querySelector('.tab-nav-btn[data-tab="' + tabId + '"]');
+        if (activeBtn) {
+            activeBtn.classList.add('active-tab', 'bg-white/90', 'dark:bg-gray-700/90', 'shadow-sm');
+            activeBtn.classList.remove('text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-200');
+        }
+    }
+
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            switchTab(this.getAttribute('data-tab'));
+        });
+    });
+
+    // 初始化：确保第一个标签按钮样式正确
+    var firstBtn = document.querySelector('.tab-nav-btn[data-tab="v2preview"]');
+    if (firstBtn) {
+        firstBtn.classList.add('active-tab', 'bg-white/90', 'dark:bg-gray-700/90', 'shadow-sm');
+        firstBtn.classList.remove('text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-200');
+    }
+});
+</script>
+
 </body>
-</html>
