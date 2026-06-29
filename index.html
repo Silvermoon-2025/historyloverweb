@@ -1,425 +1,2627 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>历史爱好者服务专设网站</title>
-  <link rel="icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    /* ===== 基础重置 & 全局 ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史爱好者服务专设网站</title>
+    <link rel="icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="历史爱好者服务专设网站（网页图标）.ico" type="image/x-icon">
+    <!-- 引入字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    :root {
-      --bg-start: #eef2f7;
-      --bg-end: #d9e2ec;
-      --card-bg: rgba(255, 255, 255, 0.72);
-      --card-border: rgba(255, 255, 255, 0.4);
-      --card-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.12);
-      --text-main: #1a202c;
-      --text-secondary: #4a5568;
-      --accent: #3b82f6;
-      --accent-glow: rgba(59, 130, 246, 0.2);
-      --tag-bg: rgba(255, 255, 255, 0.5);
-      --tag-border: rgba(255, 255, 255, 0.6);
-      --overlay-dot: rgba(59, 130, 246, 0.08);
-      --toggle-bg: rgba(255, 255, 255, 0.6);
-      --toggle-border: rgba(255, 255, 255, 0.5);
-      --status-ring: #3b82f6;
-    }
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fafaf9;
+            color: #1c1917;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        body.dark {
+            background-color: #0c0a09;
+            color: #e7e5e4;
+        }
+        /* ===== 主题系统 ===== */
+        body[data-theme="bamboo"] {
+            background-color: #ecfdf5;
+            color: #065f46;
+        }
+        /* 竹林晨曦 - 品牌色覆盖 (绿/青色系) */
+        body[data-theme="bamboo"] .bg-brand-50 { background-color: #ecfdf5; }
+        body[data-theme="bamboo"] .bg-brand-100 { background-color: #d1fae5; }
+        body[data-theme="bamboo"] .bg-brand-500 { background-color: #10b981; }
+        body[data-theme="bamboo"] .bg-brand-600 { background-color: #059669; }
+        body[data-theme="bamboo"] .text-brand-300 { color: #6ee7b7; }
+        body[data-theme="bamboo"] .text-brand-400 { color: #34d399; }
+        body[data-theme="bamboo"] .text-brand-500 { color: #10b981; }
+        body[data-theme="bamboo"] .text-brand-600 { color: #059669; }
+        body[data-theme="bamboo"] .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        body[data-theme="bamboo"] .glass {
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        /* 月下黑森 - 品牌色覆盖 (墨灰/青灰色系) */
+        body[data-theme="forest"].dark {
+            background-color: #14161f;
+            color: #cbd5e1;
+        }
+        body[data-theme="forest"] .bg-brand-50 { background-color: #1e293b; }
+        body[data-theme="forest"] .bg-brand-100 { background-color: #334155; }
+        body[data-theme="forest"] .bg-brand-500 { background-color: #64748b; }
+        body[data-theme="forest"] .bg-brand-600 { background-color: #475569; }
+        body[data-theme="forest"] .text-brand-300 { color: #94a3b8; }
+        body[data-theme="forest"] .text-brand-400 { color: #94a3b8; }
+        body[data-theme="forest"] .text-brand-500 { color: #94a3b8; }
+        body[data-theme="forest"] .text-brand-600 { color: #cbd5e1; }
+        body[data-theme="forest"] .text-gradient {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        body[data-theme="forest"] .glass {
+            background: rgba(20, 22, 31, 0.8);
+            border-color: rgba(100, 116, 139, 0.12);
+        }
+        /* 月下黑森卡片/表面覆盖 */
+        body[data-theme="forest"] .bg-stone-50\/80 { background-color: rgba(30, 41, 59, 0.8); }
+        body[data-theme="forest"] .bg-stone-100\/80 { background-color: rgba(51, 65, 85, 0.8); }
+        body[data-theme="forest"] .bg-white { background-color: #1e293b; }
+        body[data-theme="forest"] .text-stone-500 { color: #94a3b8; }
+        body[data-theme="forest"] .text-stone-400 { color: #94a3b8; }
+        body[data-theme="forest"].dark .bg-stone-800 { background-color: #1e293b; }
+        body[data-theme="forest"].dark .bg-stone-900 { background-color: #334155; }
+        body[data-theme="forest"].dark .text-stone-900 { color: #e2e8f0; }
+        /* 竹林晨曦表面覆盖 */
+        body[data-theme="bamboo"] .bg-stone-50\/80 { background-color: rgba(236, 253, 245, 0.8); }
+        body[data-theme="bamboo"] .bg-stone-100\/80 { background-color: rgba(209, 250, 229, 0.8); }
+        body[data-theme="bamboo"] .text-stone-500 { color: #6b7280; }
+        body[data-theme="bamboo"] .text-stone-400 { color: #9ca3af; }
+        /* 主题选项选中状态 */
+        .theme-option.active-theme {
+            border-color: var(--accent-color, #0ea5e9);
+            box-shadow: 0 0 0 1px var(--accent-color, #0ea5e9), 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .theme-option:not(.active-theme) {
+            border-color: transparent;
+            opacity: 0.75;
+        }
+        .theme-option:not(.active-theme):hover {
+            opacity: 1;
+        }
+        /* 主题分类选中高亮 */
+        .themes-category-active {
+            box-shadow: inset 0 0 0 1px var(--accent-color, rgba(14,165,233,0.2));
+            background-color: rgba(14,165,233,0.04);
+        }
+        body.dark .themes-category-active {
+            background-color: rgba(14,165,233,0.08);
+        }
+        /* 隐藏滚动条但保留功能 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* 玻璃拟态通用类 */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .dark .glass {
+            background: rgba(28, 25, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* 文本渐变 */
+        .text-gradient {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .dark .text-gradient {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* 滚动渐显动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        /* 设置菜单显示动画 */
+        #settings-dropdown.visible {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: translate(-50%, -50%) scale(1) !important;
+        }
+        #settings-overlay.visible {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        /* 时段下拉框行样式 */
+        .time-slot {
+            cursor: default;
+        }
+        .time-slot:hover {
+            background-color: rgba(14, 165, 233, 0.04);
+        }
+        .dark .time-slot:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+        .time-slot.time-slot-active {
+            background-color: rgba(14, 165, 233, 0.07);
+        }
+        .dark .time-slot.time-slot-active {
+            background-color: rgba(14, 165, 233, 0.12);
+        }
+        .time-slot.time-slot-active .time-dot {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+        /* 灵动岛显示动画 */
+        #dynamic-island.visible {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        /* 时间块折叠样式 - 流畅自然 */
+        #beijing-time {
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        background-color 0.3s ease;
+        }
+        #beijing-time .time-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 300px;
+            opacity: 1;
+            transition: max-width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #beijing-time.collapsed .time-text {
+            max-width: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+        #beijing-time.collapsed {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        #beijing-time .fa-chevron-down {
+            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        #beijing-time.collapsed .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        /* 时段下拉框动画 */
+        .slide-from-right {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* 表格样式 - 圆角模块化 */
+        .music-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        .music-table thead tr th:first-child {
+            border-radius: 14px 0 0 14px;
+        }
+        .music-table thead tr th:last-child {
+            border-radius: 0 14px 14px 0;
+        }
+        .music-table th,
+        .music-table td {
+            padding: 0.875rem 1.25rem;
+            text-align: left;
+            border: none;
+            font-size: 0.875rem;
+        }
+        .music-table th {
+            background-color: rgba(14, 165, 233, 0.08);
+            font-weight: 600;
+        }
+        .music-table tbody tr {
+            display: table-row;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .music-table tbody tr td:first-child {
+            border-radius: 14px 0 0 14px;
+            width: 5rem;
+            font-weight: 500;
+        }
+        .music-table tbody tr td:last-child {
+            border-radius: 0 14px 14px 0;
+        }
+        .music-table tbody tr {
+            background-color: rgba(250, 250, 249, 0.6);
+        }
+        .dark .music-table tbody tr {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .music-table tbody tr:hover {
+            background-color: rgba(14, 165, 233, 0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+        .dark .music-table tbody tr:hover {
+            background-color: rgba(14, 165, 233, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        .music-table td { color: #78716c; }
+        .dark .music-table td { color: #a8a29e; }
+        /* 版本号弹动动画 */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        #version-number:hover {
+            animation: bounce 1s infinite;
+        }
+        /* 横向滚动隐藏滚动条 */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* 平滑滚动 */
+        .overflow-x-auto {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        /* 动画延迟 */
+        .animation-delay-200 {
+            animation-delay: 200ms;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2000ms;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4000ms;
+        }
 
-    .dark-mode {
-      --bg-start: #0b0f1a;
-      --bg-end: #141b2d;
-      --card-bg: rgba(30, 41, 59, 0.78);
-      --card-border: rgba(71, 85, 105, 0.35);
-      --card-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.5);
-      --text-main: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --accent: #60a5fa;
-      --accent-glow: rgba(96, 165, 250, 0.2);
-      --tag-bg: rgba(30, 41, 59, 0.5);
-      --tag-border: rgba(71, 85, 105, 0.4);
-      --overlay-dot: rgba(96, 165, 250, 0.06);
-      --toggle-bg: rgba(30, 41, 59, 0.6);
-      --toggle-border: rgba(71, 85, 105, 0.4);
-      --status-ring: #60a5fa;
-    }
+        /* ========== 佳节共盼 - 卡片轮播 ========== */
+        .festival-carousel {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 0 0 2rem;
+            user-select: none;
+        }
+        .festival-track {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 380px;
+        }
+        .festival-card {
+            position: absolute;
+            width: 100%;
+            max-width: 340px;
+            padding: 2rem 1.5rem 1.8rem;
+            border-radius: 1.5rem;
+            background: #fff;
+            border: 1px solid #f5f5f4;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px) scale(0.92);
+            pointer-events: none;
+        }
+        .dark .festival-card {
+            background: #292524;
+            border-color: #44403c;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .festival-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            z-index: 10;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .dark .festival-card.active {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .festival-card.prev {
+            opacity: 0.5;
+            transform: translateY(-30px) scale(0.88);
+            pointer-events: none;
+            z-index: 5;
+        }
+        .festival-card.next {
+            opacity: 0.5;
+            transform: translateY(30px) scale(0.88);
+            pointer-events: none;
+            z-index: 5;
+        }
+        .festival-card.hidden-card {
+            opacity: 0;
+            transform: translateY(60px) scale(0.82);
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* 角标 - 节日已至 */
+        .festival-badge {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 2px 8px rgba(220,38,38,0.4);
+            z-index: 20;
+            white-space: nowrap;
+        }
+        .festival-badge.show {
+            display: block !important;
+        }
+        .festival-badge.arrived {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: 0 2px 8px rgba(34,197,94,0.4);
+        }
+        .festival-badge.passed {
+            background: linear-gradient(135deg, #a8a29e, #78716c);
+            box-shadow: 0 2px 8px rgba(120,113,108,0.3);
+        }
+        /* 图标 */
+        .festival-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .festival-icon i {
+            background: rgba(0,0,0,0.04);
+            border-radius: 1rem;
+            padding: 0.6rem;
+        }
+        .dark .festival-icon i {
+            background: rgba(255,255,255,0.06);
+        }
+        /* 节日名称 */
+        .festival-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            margin-bottom: 0.35rem;
+        }
+        /* 农历 */
+        .festival-lunar {
+            font-size: 0.85rem;
+            color: #a8a29e;
+            margin-bottom: 0.6rem;
+        }
+        .dark .festival-lunar {
+            color: #78716c;
+        }
+        /* 日期 */
+        .festival-date {
+            font-size: 0.8rem;
+            color: #a8a29e;
+            margin-bottom: 1.2rem;
+        }
+        .festival-date i {
+            margin-right: 0.35rem;
+        }
+        .dark .festival-date {
+            color: #78716c;
+        }
+        /* 倒计时数字 */
+        .festival-countdown {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.25rem;
+            background: #fafaf9;
+            border-radius: 1rem;
+            padding: 0.6rem 1.5rem;
+            border: 1px solid #f5f5f4;
+        }
+        .dark .festival-countdown {
+            background: #1c1917;
+            border-color: #44403c;
+        }
+        .festival-days {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1c1917;
+            line-height: 1;
+            min-width: 2.5rem;
+            text-align: center;
+        }
+        .dark .festival-days {
+            color: #e7e5e4;
+        }
+        .festival-unit {
+            font-size: 0.9rem;
+            color: #a8a29e;
+        }
+        .dark .festival-unit {
+            color: #78716c;
+        }
+        /* 指示圆点 */
+        .festival-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .festival-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #d6d3d1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+        .dark .festival-dot {
+            background: #57534e;
+        }
+        .festival-dot.active {
+            width: 24px;
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            border-radius: 999px;
+        }
+        .festival-hint {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #a8a29e;
+            margin-top: 0.6rem;
+            display: none;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .festival-hint {
+                display: block;
+            }
+        }
 
-    body {
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
-      background: linear-gradient(145deg, var(--bg-start), var(--bg-end));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* ===== 装饰背景网格 ===== */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 50%, var(--overlay-dot) 0px, transparent 1px),
-        radial-gradient(circle at 80% 20%, var(--overlay-dot) 0px, transparent 1px);
-      background-size: 48px 48px, 64px 64px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ===== 装饰光晕 ===== */
-    .glow {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .glow--1 {
-      width: 480px; height: 480px;
-      background: var(--accent-glow);
-      top: -120px; right: -80px;
-    }
-    .glow--2 {
-      width: 360px; height: 360px;
-      background: var(--accent-glow);
-      bottom: -80px; left: -60px;
-      opacity: 0.6;
-    }
-
-    /* ===== 主题切换按钮 ===== */
-    .theme-toggle {
-      position: fixed;
-      top: 28px;
-      right: 28px;
-      z-index: 100;
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      border: 1px solid var(--toggle-border);
-      background: var(--toggle-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1),
-                  box-shadow 0.25s ease,
-                  background 0.3s ease;
-    }
-    .theme-toggle:hover {
-      transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
-    .theme-toggle:active {
-      transform: scale(0.94);
-    }
-    .theme-toggle .material-icons {
-      font-size: 22px;
-      transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
-    }
-    .theme-toggle:active .material-icons {
-      transform: rotate(60deg);
-    }
-
-    /* ===== 主卡片容器 ===== */
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 540px;
-      width: 100%;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 32px;
-      box-shadow: var(--card-shadow);
-      padding: 56px 44px 48px;
-      text-align: center;
-      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    /* ===== 状态指示器（脉冲环+图标） ===== */
-    .status-indicator {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 88px;
-      height: 88px;
-      margin-bottom: 28px;
-    }
-
-    .status-indicator .ring {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 3px solid var(--status-ring);
-      opacity: 0.2;
-      animation: pulse-ring 2.4s cubic-bezier(.4,0,.6,1) infinite;
-    }
-    .status-indicator .ring:nth-child(2) {
-      animation-delay: 0.8s;
-    }
-    .status-indicator .ring:nth-child(3) {
-      animation-delay: 1.6s;
-    }
-
-    @keyframes pulse-ring {
-      0%   { transform: scale(0.88); opacity: 0.4; }
-      50%  { opacity: 0.1; }
-      100% { transform: scale(1.3); opacity: 0; }
-    }
-
-    .status-indicator .icon-wrap {
-      position: relative;
-      z-index: 1;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 2px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-    }
-    .status-indicator .icon-wrap .material-icons {
-      font-size: 30px;
-      color: var(--accent);
-      animation: cog-rotate 3s linear infinite;
-    }
-    @keyframes cog-rotate {
-      to { transform: rotate(360deg); }
-    }
-
-    /* ===== 标签 ===== */
-    .version-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 18px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent);
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      margin-bottom: 24px;
-      letter-spacing: 0.3px;
-    }
-    .version-tag .material-icons {
-      font-size: 16px;
-    }
-
-    /* ===== 标题 ===== */
-    .main-title {
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.4;
-      margin-bottom: 20px;
-      letter-spacing: -0.3px;
-    }
-    .main-title span {
-      display: block;
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--text-secondary);
-      margin-top: 8px;
-      letter-spacing: normal;
-    }
-
-    /* ===== 进度条装饰 ===== */
-    .progress-bar {
-      width: 160px;
-      height: 4px;
-      border-radius: 4px;
-      background: var(--tag-border);
-      margin: 0 auto 28px;
-      overflow: hidden;
-      position: relative;
-    }
-    .progress-bar .fill {
-      height: 100%;
-      width: 38%;
-      border-radius: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--accent));
-      box-shadow: 0 0 12px var(--accent-glow);
-      animation: progress-slide 2.4s ease-in-out infinite;
-    }
-    @keyframes progress-slide {
-      0%   { width: 18%; margin-left: 0; }
-      50%  { width: 55%; margin-left: 20%; }
-      100% { width: 18%; margin-left: 82%; }
-    }
-
-    /* ===== 底部链接 ===== */
-    .update-link {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-    .update-link a {
-      position: relative;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-    .update-link a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 100%;
-      height: 1.5px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-    }
-    .update-link a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    .update-link a:hover {
-      color: var(--accent);
-    }
-    .update-link .material-icons {
-      font-size: 14px;
-      vertical-align: middle;
-      margin-left: 2px;
-    }
-
-    /* ===== 响应式 ===== */
-    @media (max-width: 640px) {
-      .container {
-        padding: 40px 24px 36px;
-        border-radius: 24px;
-      }
-      .main-title {
-        font-size: 26px;
-      }
-      .main-title span {
-        font-size: 16px;
-      }
-      .theme-toggle {
-        top: 16px;
-        right: 16px;
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-      }
-      .status-indicator {
-        width: 76px;
-        height: 76px;
-      }
-      .status-indicator .icon-wrap {
-        width: 54px;
-        height: 54px;
-      }
-      .status-indicator .icon-wrap .material-icons {
-        font-size: 26px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .container {
-        padding: 32px 18px 28px;
-      }
-      .main-title {
-        font-size: 22px;
-      }
-    }
-  </style>
+        /* ========== 公告遮罩层 ========== */
+        .announcement-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .announcement-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .announcement-card {
+            position: relative;
+            width: 90%;
+            max-width: 520px;
+            padding: 2.5rem 2rem 2rem;
+            border-radius: 2rem;
+            background: #fff;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px) scale(0.96);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+            opacity: 0;
+        }
+        .announcement-overlay.show .announcement-card {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .dark .announcement-card {
+            background: #292524;
+            border-color: rgba(255,255,255,0.05);
+        }
+        body[data-theme="forest"] .announcement-card {
+            background: #1e293b;
+            border-color: rgba(100,116,139,0.12);
+        }
+        body[data-theme="bamboo"] .announcement-card {
+            background: #fff;
+            border-color: rgba(16,185,129,0.2);
+        }
+        .announcement-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            border: none;
+            background: transparent;
+            color: #a8a29e;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            opacity: 0.45;
+        }
+        .announcement-close:hover {
+            background: rgba(0,0,0,0.05);
+            opacity: 0.75;
+        }
+        .dark .announcement-close:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        .announcement-countdown {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #64748b;
+            background: #f1f5f9;
+            margin-bottom: 1rem;
+        }
+        .dark .announcement-countdown {
+            background: #334155;
+            color: #94a3b8;
+        }
+        body[data-theme="forest"] .announcement-countdown {
+            background: #334155;
+            color: #94a3b8;
+        }
+        body[data-theme="bamboo"] .announcement-countdown {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .announcement-countdown i {
+            font-size: 0.75rem;
+        }
+        .announcement-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .announcement-body {
+            color: #78716c;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+        .dark .announcement-body {
+            color: #a8a29e;
+        }
+    </style>
 </head>
-<body>
-  <!-- 装饰光晕 -->
-  <div class="glow glow--1"></div>
-  <div class="glow glow--2"></div>
+<body class="antialiased selection:bg-brand-500 selection:text-white transition-colors duration-500">
 
-  <!-- 主题切换 -->
-  <button class="theme-toggle" id="themeToggle" title="切换夜间/日间模式">
-    <span class="material-icons">dark_mode</span>
-  </button>
-
-  <!-- 主卡片 -->
-  <div class="container">
-    <!-- 状态指示器 -->
-    <div class="status-indicator">
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <div class="icon-wrap">
-        <span class="material-icons">settings</span>
-      </div>
+    <!-- ===== 公告遮罩层 ===== -->
+    <div id="announcement-overlay" class="announcement-overlay">
+        <div class="announcement-card">
+            <button id="announcement-close" class="announcement-close" aria-label="关闭公告">
+                <i class="fa fa-times"></i>
+            </button>
+            <div class="announcement-countdown" id="announcement-countdown">
+                <i class="fa fa-clock-o"></i>
+                <span id="announcement-countdown-text">距公告块彻底隐去还有...</span>
+            </div>
+            <h2 class="announcement-title">
+                <span class="text-gradient">2.0版本正式上线！</span>
+            </h2>
+            <p class="announcement-body">
+                UI换新，观感升级。我们以更清新与现代的设计对网站进行了底层代码大改进，原内容基础不变，如此方能放心浏览，此外，还新增了些许有益更新项，访问者们可即刻前去体验。
+            </p>
+        </div>
     </div>
 
-    <!-- 版本标签 -->
-    <div class="version-tag">
-      <span class="material-icons">auto_awesome</span>
-      2.0版本即将到来，焕然一新的体验马上便能体验
+    <!-- 背景音乐元素 -->
+    <audio id="bgMusic" preload="auto" style="display: none;"></audio>
+
+    <!-- 背景装饰元素（2.0版blob动画） -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-500/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
     </div>
 
-    <!-- 标题 -->
-    <h1 class="main-title">
-      网页正在维护
-      <span>我们正在升级系统，稍后即可恢复正常访问</span>
-    </h1>
+    <!-- 导航栏：2.0版悬浮胶囊样式 -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[98%] max-w-6xl">
+        <div class="glass rounded-full shadow-lg px-8 py-4 flex items-center justify-between transition-all duration-300">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl text-brand-600"><i class="fa fa-book"></i></span>
+                <span class="font-serif font-bold text-lg tracking-tight hidden sm:block">历史爱好者服务专设网站</span>
+            </div>
 
-    <!-- 进度装饰 -->
-    <div class="progress-bar">
-      <div class="fill"></div>
+            <div class="hidden lg:flex items-center gap-1 bg-stone-100 dark:bg-stone-800 rounded-full p-1.5">
+                <a href="#home" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">首页</a>
+                <a href="#files" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">文件置放</a>
+                <a href="#websites" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">优质网站</a>
+                <a href="#community" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">相关社区</a>
+                <a href="#holiday-countdown" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">佳节共盼</a>
+                <a href="#work" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">工作专区</a>
+                <a href="#embedded-platform" class="px-4 py-2 rounded-full text-sm font-medium hover:text-brand-600 transition-colors">内嵌平台</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- 时段显示 -->
+                <span id="time-period" class="hidden sm:flex px-3 py-1.5 rounded-lg bg-brand-50 dark:bg-brand-900/30 text-xs font-bold text-brand-600 dark:text-brand-400 cursor-pointer transition-all duration-300 hover:scale-105">
+                    时段
+                </span>
+                <!-- 时间显示 -->
+                <span id="beijing-time" class="collapsed hidden sm:flex px-3 py-1.5 rounded-lg bg-brand-50 dark:bg-brand-900/30 text-xs font-bold text-brand-600 dark:text-brand-400 cursor-pointer transition-all duration-300 items-center">
+                    <span class="time-text">时间</span>
+                    <i class="fa fa-chevron-down transition-transform duration-300"></i>
+                </span>
+                <!-- 设置按钮 -->
+                <button id="settings-toggle" class="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors relative">
+                    <i class="fa fa-cog text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 时段下拉框 -->
+    <div id="time-period-dropdown" class="fixed top-24 right-6 z-50 w-56 bg-white dark:bg-stone-800 rounded-2xl shadow-xl p-5 invisible opacity-0 translate-x-full transition-all duration-500 border border-stone-100 dark:border-stone-700">
+        <div class="flex items-center gap-2 mb-3 text-xs font-medium text-stone-400 dark:text-stone-500 tracking-wide">
+            <i class="fa fa-clock-o"></i>
+            时段划分
+        </div>
+        <div class="h-px bg-stone-100 dark:bg-stone-700/60 mb-3"></div>
+        <ul class="space-y-1.5 text-sm">
+            <li class="time-slot flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200" data-period="morning">
+                <span class="flex items-center gap-2.5">
+                    <span class="time-dot w-2 h-2 rounded-full bg-green-500 ring-2 ring-green-500/20"></span>
+                    <span class="font-medium">早上</span>
+                </span>
+                <span class="text-xs text-stone-400 dark:text-stone-500">5:00~11:59</span>
+            </li>
+            <li class="time-slot flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200" data-period="noon">
+                <span class="flex items-center gap-2.5">
+                    <span class="time-dot w-2 h-2 rounded-full bg-yellow-500 ring-2 ring-yellow-500/20"></span>
+                    <span class="font-medium">中午</span>
+                </span>
+                <span class="text-xs text-stone-400 dark:text-stone-500">12:00~13:59</span>
+            </li>
+            <li class="time-slot flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200" data-period="afternoon">
+                <span class="flex items-center gap-2.5">
+                    <span class="time-dot w-2 h-2 rounded-full bg-orange-500 ring-2 ring-orange-500/20"></span>
+                    <span class="font-medium">下午</span>
+                </span>
+                <span class="text-xs text-stone-400 dark:text-stone-500">14:00~16:59</span>
+            </li>
+            <li class="time-slot flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200" data-period="night">
+                <span class="flex items-center gap-2.5">
+                    <span class="time-dot w-2 h-2 rounded-full bg-purple-500 ring-2 ring-purple-500/20"></span>
+                    <span class="font-medium">晚间</span>
+                </span>
+                <span class="text-xs text-stone-400 dark:text-stone-500">17:00~4:59</span>
+            </li>
+        </ul>
     </div>
 
-    <!-- 链接 -->
-    <div class="update-link">
-      如若查看新版本更新信息，请访问
-      <a href="https://7ef6fe471b3c44fcb80fcac6cc5dfa46.app.codebuddy.work/" target="_blank" rel="noopener noreferrer">
-        更新信息前瞻页
-        <span class="material-icons">open_in_new</span>
-      </a>
+    <!-- 设置菜单 (2.0版Modal风格) -->
+    <div id="settings-overlay" class="fixed inset-0 z-[60] bg-black/20 dark:bg-black/60 backdrop-blur-sm invisible opacity-0 transition-opacity duration-300"></div>
+    <div id="settings-dropdown" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[70] w-[480px] max-w-[90vw] bg-white dark:bg-stone-900 rounded-3xl shadow-2xl p-8 invisible scale-95 opacity-0 transition-all duration-300 border border-stone-100 dark:border-stone-800">
+        <div class="flex items-center justify-between mb-7">
+            <h3 class="font-serif font-bold text-2xl flex items-center">
+                <i class="fa fa-cog text-brand-500 mr-3"></i>
+                设置选项
+            </h3>
+            <button id="close-settings" class="w-9 h-9 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors flex items-center justify-center">
+                <i class="fa fa-times text-stone-500"></i>
+            </button>
+        </div>
+        <div class="space-y-4">
+
+            <!-- ===== 主题选择 ===== -->
+            <div>
+                <p class="text-xs font-medium text-stone-500 dark:text-stone-400 mb-3 flex items-center gap-1.5">
+                    <i class="fa fa-paint-brush text-brand-500"></i> 主题选择
+                </p>
+
+                <!-- 通用主题 -->
+                <div id="general-themes" class="rounded-2xl p-4 bg-stone-50/80 dark:bg-white/5 transition-all duration-300">
+                    <p class="text-xs font-medium text-stone-400 dark:text-stone-500 mb-3 flex items-center gap-1.5">
+                        <i class="fa fa-star"></i> 通用主题
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button data-theme="day" class="theme-option flex flex-col items-center gap-2 p-3.5 rounded-xl bg-white dark:bg-stone-800 border-2 transition-all duration-300 text-center hover:shadow-md">
+                            <div class="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center">
+                                <i class="fa fa-sun-o text-amber-500 text-lg"></i>
+                            </div>
+                            <span class="text-xs font-medium">白日主题</span>
+                        </button>
+                        <button data-theme="night" class="theme-option flex flex-col items-center gap-2 p-3.5 rounded-xl bg-white dark:bg-stone-800 border-2 transition-all duration-300 text-center hover:shadow-md">
+                            <div class="w-9 h-9 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
+                                <i class="fa fa-moon-o text-indigo-500 dark:text-indigo-300 text-lg"></i>
+                            </div>
+                            <span class="text-xs font-medium">深夜主题</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 文墨志趣主题 -->
+                <div id="literati-themes" class="rounded-2xl p-4 mt-2 transition-all duration-300">
+                    <p class="text-xs font-medium text-stone-400 dark:text-stone-500 mb-3 flex items-center gap-1.5">
+                        <i class="fa fa-leaf"></i> 文墨志趣主题
+                    </p>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button data-theme="bamboo" class="theme-option flex flex-col items-center gap-2 p-3.5 rounded-xl bg-white dark:bg-stone-800 border-2 transition-all duration-300 text-center hover:shadow-md">
+                            <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
+                                <i class="fa fa-pagelines text-green-500 text-lg"></i>
+                            </div>
+                            <span class="text-xs font-medium">竹林晨曦</span>
+                            <span class="text-[10px] text-stone-400">日间 · 青绿</span>
+                        </button>
+                        <button data-theme="forest" class="theme-option flex flex-col items-center gap-2 p-3.5 rounded-xl bg-white dark:bg-stone-800 border-2 transition-all duration-300 text-center hover:shadow-md">
+                            <div class="w-9 h-9 rounded-full bg-gray-200 dark:bg-slate-700 flex items-center justify-center">
+                                <i class="fa fa-tree text-slate-500 dark:text-slate-300 text-lg"></i>
+                            </div>
+                            <span class="text-xs font-medium">月下黑森</span>
+                            <span class="text-[10px] text-stone-400">夜间 · 墨灰</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 跟随系统 -->
+                <div class="flex justify-between items-center p-3 mt-2 rounded-xl bg-stone-50/50 dark:bg-white/5 hover:bg-stone-100/50 dark:hover:bg-white/10 transition-colors">
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa fa-desktop text-brand-500 text-sm"></i>
+                        <span class="text-xs font-medium">跟随系统</span>
+                        <span class="px-1.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-500/20 text-brand-600 dark:text-brand-300 text-[10px] font-medium">自动</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                        <input type="checkbox" id="system-theme-checkbox" class="sr-only peer">
+                        <div class="w-10 h-5 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[18px] after:w-[18px] after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 背景音乐 -->
+            <div class="flex justify-between items-center p-4 rounded-2xl bg-stone-50/80 dark:bg-white/5 hover:bg-stone-100/80 dark:hover:bg-white/10 transition-colors">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 dark:bg-brand-500/20 flex items-center justify-center flex-shrink-0">
+                        <i class="fa fa-music text-brand-600 dark:text-brand-400 text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-sm font-medium">背景音乐</span>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 mt-0.5">开启或关闭网站背景音乐</p>
+                    </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                    <input type="checkbox" id="music-toggle-switch" class="sr-only peer">
+                    <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer dark:bg-stone-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-600"></div>
+                </label>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const toggleBtn = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    const icon = toggleBtn.querySelector('.material-icons');
+    <!-- 灵动岛音乐播放器（2.0版玻璃拟态风格） -->
+    <div id="dynamic-island" class="fixed top-24 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-md glass rounded-2xl p-4 shadow-xl hidden opacity-0 transition-all duration-500 transform translate-y-4">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white animate-pulse">
+                <i class="fa fa-music"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <h4 id="music-title" class="text-sm font-bold truncate">音乐标题</h4>
+                <p id="music-artist" class="text-xs text-stone-500 dark:text-stone-400 truncate">艺术家</p>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 text-xs text-stone-400">
+                <span id="current-time">0:00</span>
+                <span>/</span>
+                <span id="total-time">0:00</span>
+            </div>
+            <button id="close-island" class="text-stone-400 hover:text-stone-900 dark:hover:text-white"><i class="fa fa-times"></i></button>
+        </div>
+        <!-- 进度条 -->
+        <div class="mt-3 h-1.5 w-full bg-stone-200 dark:bg-stone-700 rounded-full overflow-hidden cursor-pointer" id="music-progress">
+            <div id="music-progress-bar" class="h-full bg-brand-500 w-0 transition-all duration-100 ease-linear"></div>
+        </div>
+    </div>
 
-    function initTheme() {
-      const isDark = localStorage.getItem('darkMode') === 'true';
-      if (isDark) {
-        html.classList.add('dark-mode');
-        icon.textContent = 'light_mode';
-      }
-    }
+    <!-- 主体内容 -->
+    <main class="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
 
-    toggleBtn.addEventListener('click', () => {
-      html.classList.toggle('dark-mode');
-      const isDark = html.classList.contains('dark-mode');
-      icon.textContent = isDark ? 'light_mode' : 'dark_mode';
-      localStorage.setItem('darkMode', isDark);
-    });
+        <!-- Hero Section（2.0版左右分栏布局） -->
+        <section id="home" class="grid lg:grid-cols-2 gap-12 items-center min-h-[60vh] animate-fade-in-up">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 text-xs font-bold uppercase tracking-wider">
+                    <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                    Ver 2.0 现已发布
+                </div>
+                <h1 class="text-5xl md:text-6xl font-serif font-bold leading-tight">
+                    历史爱好者<br>
+                    <span class="text-gradient">服务专设网站</span>
+                </h1>
+                <p class="text-lg md:text-xl text-stone-600 dark:text-stone-400 max-w-lg leading-relaxed">
+                    为历史爱好者提供文献下载、史料整理、社区交流以及文件转置服务
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#websites" class="px-8 py-3.5 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-full font-medium hover:scale-105 transition-transform shadow-lg hover:shadow-xl flex items-center gap-2">
+                        浏览优质网站 <i class="fa fa-arrow-right"></i>
+                    </a>
+                    <a href="#work" class="px-8 py-3.5 bg-white dark:bg-stone-800 text-stone-900 dark:text-white border border-stone-200 dark:border-stone-700 rounded-full font-medium hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors">
+                        访问工作专区
+                    </a>
+                </div>
+            </div>
+            <!-- 抽象视觉卡片 -->
+            <div class="relative hidden lg:block animate-fade-in-up animation-delay-200">
+                <div class="relative w-full aspect-square">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-purple-500/20 rounded-[3rem] rotate-3"></div>
+                    <div class="absolute inset-0 bg-white dark:bg-stone-800 rounded-[3rem] shadow-2xl border border-stone-100 dark:border-stone-700 p-8 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="h-4 w-1/3 bg-stone-100 dark:bg-stone-700 rounded"></div>
+                            <div class="h-2 w-full bg-stone-50 dark:bg-stone-800 rounded"></div>
+                            <div class="h-32 w-full bg-stone-50 dark:bg-stone-800 rounded-xl border border-stone-100 dark:border-stone-700 p-4">
+                                <p class="text-xs text-stone-400">正在分析历史数据...</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-3xl font-serif font-bold">1940</p>
+                                <p class="text-xs text-stone-500">关键年份</p>
+                            </div>
+                            <i class="fa fa-hourglass-end text-4xl text-stone-200 dark:text-stone-700"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    initTheme();
-  </script>
+        <!-- 公告栏（访问注意 + 更新内容） -->
+        <div class="grid md:grid-cols-2 gap-6 animate-fade-in-up">
+            <div class="p-6 rounded-2xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm flex items-start gap-4">
+                <div class="p-3 bg-brand-50 dark:bg-brand-900/30 rounded-xl text-brand-500 flex-shrink-0">
+                    <i class="fa fa-exclamation-circle text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">访问注意</h3>
+                    <p class="text-sm text-stone-500 dark:text-stone-400 mt-1">
+                        [屏式切换]功能现已退出网站历史舞台，此后将更专注于当前主网站的发展
+                    </p>
+                </div>
+            </div>
+            <div class="p-6 rounded-2xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm flex items-start gap-4">
+                <div class="p-3 bg-brand-50 dark:bg-brand-900/30 rounded-xl text-brand-500 flex-shrink-0">
+                    <i class="fa fa-bullhorn text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">更新内容</h3>
+                    <div class="text-sm text-stone-500 dark:text-stone-400 mt-1">
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <i class="fa fa-desktop text-brand-500 mr-2 text-lg"></i>
+                                <h4 class="text-base font-semibold text-brand-600">网页端更新</h4>
+                            </div>
+                            <ul class="ml-4 list-disc space-y-1">
+                                <li><span style="background-color: #1e3a5f; color: #ffd700; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-right: 6px; font-weight: bold;">NEW</span>设置方面，以"主题选择"模块取代"夜间模式"，内含通用主题（白日主题、深夜主题）与文墨志趣主题（竹林晨曦、月下黑森），选中主题对应模块可见度更高</li>
+                                <li>
+                                    网站UI大幅调整
+                                    <p class="text-xs text-stone-400 dark:text-stone-500 ml-4 mt-0.5">以更清新、现代化的设计，给访问者们带来与往昔截然不同的观感</p>
+                                    <ul class="ml-4 list-disc space-y-1 mt-1">
+                                        <li>重构主题着色系统，修复夜间模式颜色覆盖失效问题；新增"跟随系统"功能，自动根据所选主题配色组匹配系统明暗</li>
+                                        <li>优化背景音乐信息表格样式，单元格改为独立圆角模块，行悬停带动画微浮动</li>
+                                        <li>优化网站卡片"访问网站"按钮，添加悬停下滑线动画与图标位移放大效果</li>
+                                        <li>优化“内嵌平台”的跳转按钮，小而更具动态感，不再有箱框显示问题</li>
+                                        <li>优化时段下拉框UI，每行添加彩色圆点时段指示器与当前时段高亮</li>
+                                        <li>“佳节共盼”分区的节日模块调整为堆叠样式，到了节日当天则角标“节日已至”，而当节日过后则角标“节日已逾”</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能卡片（3.0版白色圆角卡片风格） -->
+        <section class="grid md:grid-cols-3 gap-6 animate-fade-in-up">
+            <a href="https://my.feishu.cn/wiki/NMbjwplgHi2crHkV5WEcyXeknTb" target="_blank" class="group p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 hover:border-brand-500/50 dark:hover:border-brand-500/50 shadow-sm hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300">
+                <div class="w-12 h-12 rounded-2xl bg-red-100 dark:bg-red-900/30 text-red-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa fa-podcast text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 font-serif">播客聆听</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">历史相关与社会近况资讯，用声音记录时间。</p>
+            </a>
+            <a href="https://www.mubu.com/doc/5ec6ndg5PDR" target="_blank" class="group p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 hover:border-brand-500/50 dark:hover:border-brand-500/50 shadow-sm hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300">
+                <div class="w-12 h-12 rounded-2xl bg-brand-100 dark:bg-brand-900/30 text-brand-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa fa-history text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 font-serif">更新日志</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">查阅网站建立以来的所有迭代与进化记录。</p>
+            </a>
+            <a href="https://silvermoon-public-blog.netlify.app/" target="_blank" class="group p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 hover:border-brand-500/50 dark:hover:border-brand-500/50 shadow-sm hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300">
+                <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i class="fa fa-pencil-square-o text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 font-serif">站主博客</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">了解网站制作者 Silvermoon 的更多幕后故事。</p>
+            </a>
+        </section>
+
+        <!-- 首页说明 -->
+        <section class="animate-fade-in-up">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                    <span class="text-gradient">首页说明</span>
+                </h2>
+                <p class="text-lg text-stone-500 dark:text-stone-400 mb-8">
+                    欢迎来到历史爱好者服务专设网站。这里是为历史爱好者提供文献下载、史料下载、社区进入、优质网页访问以及文件转置服务的平台。
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 mt-10">
+                    <div class="p-7 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center text-2xl mb-5 mx-auto">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-serif">资料下载</h3>
+                        <p class="text-stone-500 text-sm">丰富的历史文献和史料资源，助您深入研究历史。</p>
+                    </div>
+                    <div class="p-7 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center text-2xl mb-5 mx-auto">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-serif">社区交流</h3>
+                        <p class="text-stone-500 text-sm">与志同道合的历史爱好者交流，分享见解和发现。</p>
+                    </div>
+                    <div class="p-7 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center text-2xl mb-5 mx-auto">
+                            <i class="fa fa-cogs"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 font-serif">专业服务</h3>
+                        <p class="text-stone-500 text-sm">提供文件转置、翻译等专业服务，满足您的研究需求。</p>
+                    </div>
+                </div>
+
+                <!-- 背景音乐信息表格 -->
+                <h3 class="text-xl font-bold mt-14 mb-6 font-serif">[背景音乐信息]</h3>
+                <div class="overflow-x-auto rounded-2xl bg-white dark:bg-stone-800 shadow-sm">
+                    <table class="music-table w-full text-left">
+                        <thead>
+                            <tr>
+                                <th class="text-stone-600 dark:text-stone-300">时段</th>
+                                <th class="text-stone-600 dark:text-stone-300">音乐名称</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>上午</td>
+                                <td>被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis - Silvermoon, AI Music Tool</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>都市晨间的快节奏律动 Urban Matutinal Upbeat Groove - Silvermoon, AI Music Tool</td>
+                            </tr>
+                            <tr>
+                                <td>中午</td>
+                                <td>稍作小憩 Just a Little Rest - Silvermoon, AI Music Tool</td>
+                            </tr>
+                            <tr>
+                                <td>下午</td>
+                                <td>来自午后的韵律 Rhythms from the Afternoon - Silvermoon, AI Music Tool</td>
+                            </tr>
+                            <tr>
+                                <td>晚间</td>
+                                <td>于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night - Silvermoon, AI Music Tool</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文件置放 -->
+        <section id="files" class="scroll-mt-28 animate-fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                <span class="text-gradient">文件置放</span>
+            </h2>
+            <div class="p-8 md:p-10 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm">
+                <div class="flex flex-col md:flex-row items-center gap-10">
+                    <div class="md:w-1/2">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center mb-6 text-3xl">
+                            <i class="fa fa-cloud"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 font-serif">云端文件存储匣</h3>
+                        <p class="text-stone-500 dark:text-stone-400 mb-6">
+                            全新的网站服务功能统一平台，于此访问，你能获得更好的文件下载体验
+                        </p>
+                        <a href="https://docs.qq.com/space/DUk1scGtnQmthaEp4/folder/RtwcxIGzjkPD" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-brand-500 to-indigo-600 text-white rounded-full hover:from-brand-600 hover:to-indigo-700 transition-all shadow-lg shadow-brand-500/20">
+                            <i class="fa fa-cloud-download mr-2"></i> 访问文件存储匣
+                        </a>
+                    </div>
+                    <div class="md:w-1/2 space-y-4 w-full">
+                        <div class="bg-brand-50/50 dark:bg-brand-500/5 rounded-2xl p-5 border border-brand-100 dark:border-brand-500/10">
+                            <p class="text-stone-500 dark:text-stone-400">
+                                访问夏腾宫网站系统服务平台的文件置放域，下载你想要下载的文件，在新的文件置放功能分区，你还能直接使用系统服务平台的其他服务
+                            </p>
+                        </div>
+                        <div class="bg-indigo-50/50 dark:bg-indigo-500/5 rounded-2xl p-5 border border-indigo-100 dark:border-indigo-500/10">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fa fa-robot"></i>
+                                </div>
+                                <p class="text-stone-500 dark:text-stone-400">
+                                    内置人工智能服务助手，助你快速调取文件了解相关信息与系统服务平台的所有信息
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 优质网站 -->
+        <section id="websites" class="scroll-mt-28 animate-fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                <span class="text-gradient">优质网站</span>
+            </h2>
+            <div class="p-4 rounded-2xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm mb-6 text-stone-500 dark:text-stone-400 text-sm">
+                <p class="flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-brand-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    提示：PC端请先单击任意卡片后再按左右方向键，移动端可直接滑动屏幕查看更多优质网站哦~
+                </p>
+            </div>
+            <!-- 横向滚动容器 -->
+            <div class="overflow-x-auto pb-6 scrollbar-hide">
+                <div class="flex space-x-6 w-max min-w-full">
+                    <!-- 网站卡片 1 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="玻尔论文网.png" alt="学术资源网站" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">Bohrium论文网</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                Bohrium是国产学术论文网站，为国内科研人员提供便捷学术资源服务，在AI应用、中文资源整合及用户体验上独具特色。随着开放科学理念推广与AI技术发展，未来潜力巨大。该网站也适用于历史学习，AI搜索可关联相关学术文献
+                            </p>
+                            <a href="https://bohrium.dp.tech/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 网站卡片 2 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="IMA.png" alt="AI辅助工具" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">ima</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                腾讯智能工作台，人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。
+                            </p>
+                            <a href="https://ima.qq.com/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 网站卡片 3 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p3-search.byteimg.com/obj/tos-cn-i-qvj2lq49k0/fda390b1942d4eccaf15a34c78150060" alt="浏览器工具" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">iTab</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                简洁美观的浏览器起始页工具。
+                            </p>
+                            <a href="https://go.itab.link/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 网站卡片 4 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p3-search.byteimg.com/obj/labis/3ac0358603ec379ba36f989b88850d9a" alt="数字图书馆" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">书格</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                完全开放的数字图书馆。
+                            </p>
+                            <a href="https://www.shuge.org/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 网站卡片 5 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p3-search.byteimg.com/obj/labis/4eef46ac9f98ebffc5ff987bd166411f" alt="历史研究网站" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">Wahlplakate in der Weimarer Republik</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                魏玛政党网站，因是德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。
+                            </p>
+                            <a href="https://www.wahlplakate-archiv.de/wahlen/reichstagswahl-1930/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 网站卡片 6 -->
+                    <div class="rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-w-[280px] max-w-[280px] sm:min-w-[300px] sm:max-w-[300px]" style="flex-shrink: 0;">
+                        <div class="h-48 overflow-hidden">
+                            <img src="deepseek.png" alt="AI聊天平台" class="w-full h-full object-cover transition-transform hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 font-serif">DeepSeek Chat</h3>
+                            <p class="text-stone-500 text-sm mb-4">
+                                DeepSeek官网的聊天页面，是去年春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。
+                            </p>
+                            <a href="https://chat.deepseek.com/" target="_blank" class="inline-flex items-center gap-1.5 text-brand-500 hover:text-brand-600 font-medium relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                访问网站 <i class="fa fa-external-link ml-1 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:scale-110"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 网站详细内容区域 -->
+            <div class="mt-12 p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm" id="website-content-container">
+                <div class="space-y-6">
+                    <!-- 网站详细 1 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">1</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">Bohrium论文网</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>Bohrium作为国产学术论文网站，致力于为国内科研人员提供便捷的学术资源服务，并可能在AI技术的应用、中文资源的整合、用户体验等方面具有特色。随着开放科学理念的推广和AI技术的不断发展，Bohrium有望在未来发挥更大的作用。其也能用来学学历史，AI搜索会绑定相关学术文献。</p>
+                                <p class="mt-4">在Bohrium上，您可以：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>便捷获取各类学术资源</li>
+                                    <li>利用AI技术辅助搜索和筛选</li>
+                                    <li>访问丰富的中文文献资料</li>
+                                    <li>体验优化的用户界面和服务</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 网站详细 2 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">2</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">DeepSeek Chat</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>DeepSeek Chat是DeepSeek官网的聊天页面，是去年春节期间闻名的国产大语言模型访问处，通过手机号登录即可使用。该平台基于先进的人工智能技术，能够理解和生成自然语言，为用户提供智能对话服务。</p>
+                                <p class="mt-4">在DeepSeek Chat上，您可以：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>进行自然流畅的对话交流</li>
+                                    <li>获取历史问题的解答和分析</li>
+                                    <li>进行文献摘要和内容理解</li>
+                                    <li>获得个性化的学习和研究建议</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 网站详细 3 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">3</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">ima</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>腾讯智能工作台ima是一款人工智能辅助工具，便于快速、准确了解文件和网页信息，可自建知识库并设置是否公开访问。该工具结合了自然语言处理和机器学习技术，能够帮助用户高效处理和理解大量信息。</p>
+                                <p class="mt-4">ima的主要功能包括：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>文档内容提取和摘要</li>
+                                    <li>网页信息快速理解和总结</li>
+                                    <li>自建知识库和知识管理</li>
+                                    <li>智能问答和信息检索</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 网站详细 4 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">4</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">iTab</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>iTab是一款简洁美观的浏览器起始页工具，它不仅提供了个性化的浏览器主页，还集成了多种实用功能，帮助用户提高浏览效率。</p>
+                                <p class="mt-4">iTab的主要特点：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>简洁美观的界面设计</li>
+                                    <li>自定义主题和背景</li>
+                                    <li>快速访问常用网站</li>
+                                    <li>集成天气、日历等实用功能</li>
+                                    <li>支持待办事项和笔记功能</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 网站详细 5 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">5</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">书格</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>书格是一个完全开放的数字图书馆，致力于传播中国传统文化典籍和开放获取的古籍善本。该平台提供高清扫描的古籍文献，涵盖经、史、子、集等多个类别，是历史研究的重要资源。</p>
+                                <p class="mt-4">在书格上，您可以：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>浏览和下载各类古籍文献</li>
+                                    <li>搜索特定主题的历史资料</li>
+                                    <li>参与古籍整理和校对工作</li>
+                                    <li>了解中国传统文化和历史</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 网站详细 6 -->
+                    <div class="flex flex-col md:flex-row md:items-start gap-5 p-5 rounded-2xl bg-stone-50 dark:bg-stone-700/30">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl">6</div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-3 font-serif">Wahlplakate in der Weimarer Republik</h3>
+                            <div class="text-stone-500 dark:text-stone-400 max-w-none">
+                                <p>Wahlplakate in der Weimarer Republik是一个关于魏玛共和国的历史研究网站，由德国人制作，内容全为德文，需一定翻译门槛（或直接用AI辅助理解）。该网站主要展示了魏玛共和国时期的选举海报和政治宣传材料，为研究魏玛时期的政治和社会提供了丰富的视觉资料。</p>
+                                <p class="mt-4">网站内容包括：</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li>魏玛共和国时期的选举海报高清图片</li>
+                                    <li>各政党的政治宣传材料和口号</li>
+                                    <li>选举历史和政治背景介绍</li>
+                                    <li>专家分析和研究文章</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 相关社区 -->
+        <section id="community" class="scroll-mt-28 animate-fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                <span class="text-gradient">相关社区</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 md:p-12 text-center rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm">
+                    <div class="inline-flex p-4 bg-brand-50 dark:bg-brand-900/30 rounded-full mb-6 shadow-md">
+                        <i class="fa fa-qq text-5xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif">国子监★"诸朝府记"-腾讯频道</h3>
+                    <p class="text-lg text-stone-500 dark:text-stone-400 mb-8 max-w-2xl mx-auto">
+                        加入我们的社区，与众多历史爱好者一起探讨历史，分享研究成果，共同进步。
+                    </p>
+                    <a href="https://pd.qq.com/g/4y6vjc5db2?_wv=3&amp;_wwv=128&amp;appChannel=share&amp;inviteCode=2oZR45pbAJA&amp;businessType=9" target="_blank" class="inline-flex items-center px-8 py-4 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-full font-medium hover:scale-105 transition-transform shadow-lg">
+                        <i class="fa fa-user-plus mr-2"></i> 加入社区
+                    </a>
+                </div>
+                <div class="p-8 md:p-12 text-center rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm">
+                    <div class="inline-flex p-4 bg-brand-50 dark:bg-brand-900/30 rounded-full mb-6 shadow-md">
+                        <i class="fa fa-qq text-5xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif">夏腾宫服务网站新讯频道-腾讯频道</h3>
+                    <p class="text-lg text-stone-500 dark:text-stone-400 mb-8 max-w-2xl mx-auto">
+                        及时获取网站最新动态、服务更新和维护通知，确保您的使用体验始终流畅。
+                    </p>
+                    <a href="https://pd.qq.com/s/16c6awn89" target="_blank" class="inline-flex items-center px-8 py-4 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-full font-medium hover:scale-105 transition-transform shadow-lg">
+                        <i class="fa fa-user-plus mr-2"></i> 加入社区
+                    </a>
+                </div>
+            </div>
+
+            <!-- 社区介绍 -->
+            <div id="community-content" class="mt-12 p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm">
+                <h3 class="text-2xl font-bold mb-6 font-serif">社区介绍</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold mb-3">社区特色</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start text-stone-500 dark:text-stone-400">
+                                <i class="fa fa-check-circle text-brand-500 mt-1 mr-2 flex-shrink-0"></i>
+                                <span>专业的历史讨论氛围，避免无关话题干扰</span>
+                            </li>
+                            <li class="flex items-start text-stone-500 dark:text-stone-400">
+                                <i class="fa fa-check-circle text-brand-500 mt-1 mr-2 flex-shrink-0"></i>
+                                <span>定期举办历史主题讲座和线上研讨会</span>
+                            </li>
+                            <li class="flex items-start text-stone-500 dark:text-stone-400">
+                                <i class="fa fa-check-circle text-brand-500 mt-1 mr-2 flex-shrink-0"></i>
+                                <span>丰富的历史资料共享和交流</span>
+                            </li>
+                            <li class="flex items-start text-stone-500 dark:text-stone-400">
+                                <i class="fa fa-check-circle text-brand-500 mt-1 mr-2 flex-shrink-0"></i>
+                                <span>友好的历史爱好者社区，共同进步</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-3">社区规则</h4>
+                        <div class="bg-stone-50 dark:bg-stone-700/30 rounded-2xl p-6 border border-stone-100 dark:border-stone-700">
+                            <ol class="list-decimal pl-5 space-y-3 text-stone-500 dark:text-stone-400">
+                                <li>尊重历史事实，避免传播未经证实的信息</li>
+                                <li>保持友好和尊重，避免人身攻击和争吵</li>
+                                <li>讨论内容需与历史相关，避免无关话题</li>
+                                <li>禁止发布广告、垃圾信息和恶意链接</li>
+                                <li>保护个人隐私，不随意泄露他人信息</li>
+                                <li>鼓励分享原创研究和见解，注明资料来源</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 佳节共盼 -->
+        <section id="holiday-countdown" class="scroll-mt-28 reveal">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                <span class="text-gradient">佳节共盼</span>
+            </h2>
+            <div class="festival-carousel" data-current="0">
+                <!-- 卡片容器 -->
+                <div class="festival-track" id="festivalTrack">
+                    <!-- 端午节 -->
+                    <div class="festival-card" data-index="0" data-festival="dragon-boat" data-date="2026-06-19">
+                        <div class="festival-badge hidden">节日已至</div>
+                        <div class="festival-icon" style="color:#dc2626;">
+                            <i class="fa fa-leaf"></i>
+                        </div>
+                        <h3 class="festival-name" style="color:#dc2626;">端午节</h3>
+                        <p class="festival-lunar">农历五月初五</p>
+                        <div class="festival-date">
+                            <i class="fa fa-calendar-o"></i>
+                            <span>2026年6月19日</span>
+                        </div>
+                        <div class="festival-countdown">
+                            <span class="festival-days" id="dragon-boat-days">--</span>
+                            <span class="festival-unit">天</span>
+                        </div>
+                    </div>
+                    <!-- 七夕节 -->
+                    <div class="festival-card" data-index="1" data-festival="qixi" data-date="2026-08-19">
+                        <div class="festival-badge hidden">节日已至</div>
+                        <div class="festival-icon" style="color:#e91e91;">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <h3 class="festival-name" style="color:#e91e91;">七夕节</h3>
+                        <p class="festival-lunar">农历七月初七</p>
+                        <div class="festival-date">
+                            <i class="fa fa-calendar-o"></i>
+                            <span>2026年8月19日</span>
+                        </div>
+                        <div class="festival-countdown">
+                            <span class="festival-days" id="qixi-days">--</span>
+                            <span class="festival-unit">天</span>
+                        </div>
+                    </div>
+                    <!-- 中元节 -->
+                    <div class="festival-card" data-index="2" data-festival="zhongyuan" data-date="2026-08-27">
+                        <div class="festival-badge hidden">节日已至</div>
+                        <div class="festival-icon" style="color:#9333ea;">
+                            <i class="fa fa-moon-o"></i>
+                        </div>
+                        <h3 class="festival-name" style="color:#9333ea;">中元节</h3>
+                        <p class="festival-lunar">农历七月十五</p>
+                        <div class="festival-date">
+                            <i class="fa fa-calendar-o"></i>
+                            <span>2026年8月27日</span>
+                        </div>
+                        <div class="festival-countdown">
+                            <span class="festival-days" id="zhongyuan-days">--</span>
+                            <span class="festival-unit">天</span>
+                        </div>
+                    </div>
+                    <!-- 中秋节 -->
+                    <div class="festival-card" data-index="3" data-festival="mid-autumn" data-date="2026-09-25">
+                        <div class="festival-badge hidden">节日已至</div>
+                        <div class="festival-icon" style="color:#f97316;">
+                            <i class="fa fa-circle-o"></i>
+                        </div>
+                        <h3 class="festival-name" style="color:#f97316;">中秋节</h3>
+                        <p class="festival-lunar">农历八月十五</p>
+                        <div class="festival-date">
+                            <i class="fa fa-calendar-o"></i>
+                            <span>2026年9月25日</span>
+                        </div>
+                        <div class="festival-countdown">
+                            <span class="festival-days" id="mid-autumn-days">--</span>
+                            <span class="festival-unit">天</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 指示圆点 -->
+                <div class="festival-dots" id="festivalDots"></div>
+                <!-- 键盘提示（桌面端） -->
+                <p class="festival-hint"><i class="fa fa-keyboard-o"></i> ← → 键切换</p>
+            </div>
+        </section>
+
+        <!-- 工作专区 -->
+        <section id="work" class="scroll-mt-28 animate-fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8">
+                <span class="text-gradient">工作专区</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm relative overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-brand-500/10 dark:bg-brand-500/20 rounded-bl-3xl"></div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif relative z-10">电子文件转置专区</h3>
+                    <p class="text-stone-500 dark:text-stone-400 mb-6 relative z-10">
+                        在工作填表，选择你要放置在电子文件总置区的文件，填写归类类型，即可完成文件置放，目前默认支持存储时间为半年，且文件上传后不会立即在云盘中展示。
+                    </p>
+                    <p class="font-medium mb-4 relative z-10">负责人员：Silvermoon2025</p>
+                    <a href="https://docs.qq.com/form/page/DRWRLVW16ZmpFaGN6" target="_blank" class="inline-flex items-center px-6 py-3 bg-brand-500 text-white rounded-full hover:bg-brand-600 transition-colors shadow-md relative z-10">
+                        <i class="fa fa-file-text-o mr-2"></i> 文件转置工作填表
+                    </a>
+                </div>
+                <div class="p-8 rounded-3xl bg-white dark:bg-stone-800 border border-stone-100 dark:border-stone-700 shadow-sm relative overflow-hidden hover:shadow-xl transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-yellow-500/10 dark:bg-yellow-500/20 rounded-bl-3xl"></div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif relative z-10">文件转译工作专区</h3>
+                    <p class="text-stone-500 dark:text-stone-400 mb-6 relative z-10">
+                        我们提供专业的文件翻译服务，默认可翻译范围为1~50页，如需更大范围请联系我们。
+                    </p>
+                    <p class="font-medium mb-4 relative z-10">负责人员：Silvermoon2025</p>
+                    <a href="https://docs.qq.com/form/page/DRVJhTEpyU2xXTXd1" target="_blank" class="inline-flex items-center px-6 py-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-colors shadow-md relative z-10">
+                        <i class="fa fa-language mr-2"></i> 文件转译工作单
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 内嵌平台 -->
+        <section id="embedded-platform" class="scroll-mt-28 reveal">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold">
+                    <span class="text-gradient">内嵌平台</span>
+                </h2>
+                <button id="toggle-aggregate" class="inline-flex items-center px-5 py-2.5 bg-brand-500 text-white rounded-full hover:bg-brand-600 transition-colors shadow-md text-sm font-medium">
+                    <i class="fa fa-compress mr-2"></i>
+                    <span>一键收纳</span>
+                </button>
+            </div>
+
+            <!-- 日耳曼尼亚二三事 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="德意志帝国.jpg" alt="日耳曼尼亚二三事网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold font-serif">日耳曼尼亚二三事</h3>
+                            </div>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                "日耳曼尼亚二三事"是一个专注于德国历史文化的特色平台，深入探讨从古代到现代的德国历史事件、人物和文化。平台提供丰富的历史资料、学术研究和文化解读，帮助历史爱好者更深入地了解德国历史和文化。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/deutsche-trivia-through-the-ages-web/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 赤县神州古今漫谈 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="长安.jpg" alt="赤县神州古今漫谈网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <h3 class="text-2xl font-bold font-serif">赤县神州古今漫谈</h3>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                "赤县神州古今漫谈"是一个专注于中国古今历史文化的特色平台，深入探讨中国的经济、人文、地理等方面资讯与知识。在这里，丰富的关联性文章有助于帮你了解我国多方面进展及传统艺术等丰富的多元内容。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/chinese-trivia-across-eras-web/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 银月的游戏咖厅 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="游戏机.jpeg" alt="Silvermoon Arcade网站截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <h3 class="text-2xl font-bold font-serif">银月的游戏咖厅</h3>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                "银月的游戏咖厅"是一个为访问者提供消遣时间的休闲游戏平台，每隔很长一段时间平台会换一个游戏上线其中。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/silvermoon-arcade/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 赛博纪元倒计时 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="赛博朋克2077.jpg" alt="赛博纪元倒计时截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <h3 class="text-2xl font-bold font-serif">赛博纪元倒计时</h3>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                《赛博朋克2077》的游玩、熟悉这款游戏的人们，通过这个内嵌平台可以查看当前距离2077年还剩余的时光，同作为消遣网站，它也有着自身特色。该内嵌平台是迄今为止在内部设计上相对独立的一个，虽然有夜间模式按钮和音乐播放按钮，但其他方面是区别于前三个的，访问者亲自体验便知。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/cyberera-countdown/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动文章发表共阅云坛 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="电脑办公.jpg" alt="活动文章发表共阅云坛截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <h3 class="text-2xl font-bold font-serif">活动文章发表共阅云坛</h3>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                这是一个关联群聊活动文章的平台，用户可以在此发表和阅读与群聊活动相关的文章。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/activity-article-co-read-web/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 银月的网页式实用工具组 -->
+            <div class="rounded-3xl bg-white dark:bg-stone-800 shadow-sm overflow-hidden mt-8">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-4 relative overflow-hidden rounded-2xl shadow-lg group opacity-0 translate-y-10 transition-all duration-800 ease-out platform-card">
+                        <div class="overflow-hidden">
+                            <img src="网页工具概念图.png" alt="银月的网页式实用工具组截图" class="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end">
+                            <div class="p-4 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <a href="https://silvermoon-2025.github.io/Silvermoon-s-Web-Based-Utility-Toolkit/" class="block w-full text-center py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all transform hover:scale-105">
+                                    <i class="fa fa-external-link mr-2"></i> 访问网站
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-8 p-6">
+                        <div class="flex items-start justify-between mb-6">
+                            <h3 class="text-2xl font-bold font-serif">银月的网页式实用工具组</h3>
+                            <button class="toggle-platform p-2 rounded-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 transition-colors border border-stone-200 dark:border-stone-600">
+                                <i class="fa fa-chevron-up text-brand-500 text-lg"></i>
+                            </button>
+                        </div>
+                        <div class="platform-content">
+                            <p class="text-stone-500 dark:text-stone-400 mb-5 leading-relaxed">
+                                这是一个集合了多种实用工具的内嵌平台，为用户提供便捷的在线工具服务。
+                            </p>
+                            <a href="https://silvermoon-2025.github.io/Silvermoon-s-Web-Based-Utility-Toolkit/" class="inline-flex items-center gap-1.5 text-brand-600 dark:text-brand-400 font-medium text-sm relative after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 transition-colors duration-300 group">
+                                <i class="fa fa-rocket transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-hover:translate-x-0.5"></i> 快速访问
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 页脚（3.0版stone色系简洁风格，保留所有2.0版页脚内容） -->
+    <footer class="relative z-10 bg-stone-900 dark:bg-stone-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
+                <div class="mb-6 lg:mb-0">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2 font-serif tracking-tight">历史爱好者服务专设网站</h3>
+                    <p class="text-stone-400 max-w-md">为历史爱好者提供全方位服务</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full lg:w-auto">
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">网站版本号</p>
+                        <p class="font-medium">2.0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">发布地</p>
+                        <p class="font-medium">中国-北京</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">更新时间</p>
+                        <p class="font-medium">2026年6月30日</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">公测时间</p>
+                        <p class="font-medium">2025年8月1日</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">特别鸣谢</p>
+                        <p class="font-medium">我不是徐某人（QQ）</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">隶属群聊</p>
+                        <p class="font-medium">夏洛滕堡宫传来歌声</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">联系邮箱</p>
+                        <p class="font-medium">Skillmoon2023@163.com</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-stone-500 mb-1">网页制作者</p>
+                        <p class="font-medium">Silvermoon</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-stone-700 dark:border-stone-600 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-stone-500 mb-4 md:mb-0">© 2025-2026 历史爱好者服务专设网站</p>
+                <div class="flex flex-wrap items-center justify-center md:justify-end gap-4">
+                    <div class="group relative">
+                        <button class="text-sm px-4 py-2 bg-stone-800 dark:bg-stone-700 rounded-lg hover:bg-stone-700 dark:hover:bg-stone-600 transition-all duration-300">群聊进入</button>
+                        <div class="absolute left-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                            <img src="绑定群的二维码.png" alt="群聊二维码" class="w-full rounded-lg">
+                            <p class="text-xs text-center text-gray-600 mt-2">扫一扫加入群聊</p>
+                        </div>
+                    </div>
+                    <a href="https://my.feishu.cn/share/base/form/shrcnZGmC3BBAwhAT73IaNcFzxg" target="_blank" rel="noopener noreferrer" class="text-sm px-4 py-2 bg-stone-800 dark:bg-stone-700 rounded-lg hover:bg-stone-700 dark:hover:bg-stone-600 transition-all duration-300">访问反馈</a>
+                    <a href="免责声明.html" class="text-sm px-4 py-2 bg-stone-800 dark:bg-stone-700 rounded-lg hover:bg-stone-700 dark:hover:bg-stone-600 transition-all duration-300">免责声明</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript功能（保留2.0版所有JavaScript） -->
+
+    <script>
+        // ========== 设置菜单交互 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            const settingsToggle = document.getElementById('settings-toggle');
+            const settingsDropdown = document.getElementById('settings-dropdown');
+            const settingsOverlay = document.getElementById('settings-overlay');
+            const closeSettings = document.getElementById('close-settings');
+
+            if (settingsToggle && settingsDropdown && settingsOverlay) {
+                settingsToggle.addEventListener('click', () => {
+                    settingsDropdown.classList.toggle('visible');
+                    settingsOverlay.classList.toggle('visible');
+                });
+
+                if (closeSettings) {
+                    closeSettings.addEventListener('click', () => {
+                        settingsDropdown.classList.remove('visible');
+                        settingsOverlay.classList.remove('visible');
+                    });
+                }
+
+                settingsOverlay.addEventListener('click', () => {
+                    settingsDropdown.classList.remove('visible');
+                    settingsOverlay.classList.remove('visible');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target) && !settingsOverlay.contains(e.target)) {
+                        settingsDropdown.classList.remove('visible');
+                        settingsOverlay.classList.remove('visible');
+                    }
+                });
+            }
+
+            // ========== 公告遮罩层 ==========
+            const announcementOverlay = document.getElementById('announcement-overlay');
+            const announcementClose = document.getElementById('announcement-close');
+            const countdownText = document.getElementById('announcement-countdown-text');
+
+            if (announcementOverlay) {
+                // 计算公告倒计时（结束日: 2026年7月5日）
+                const endDate = new Date('2026-07-05T23:59:59');
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const timeDiff = endDate.getTime() - today.getTime();
+                const daysRemaining = Math.max(0, Math.ceil(timeDiff / (1000 * 60 * 60 * 24)));
+
+                if (countdownText) {
+                    if (daysRemaining <= 0) {
+                        countdownText.textContent = '本公告块即将消隐';
+                    } else {
+                        countdownText.textContent = '距公告块彻底隐去还有 ' + daysRemaining + ' 天';
+                    }
+                }
+
+                // 延迟显示遮罩（等待DOM就绪）
+                setTimeout(() => {
+                    announcementOverlay.classList.add('show');
+                }, 200);
+
+                function closeAnnouncement() {
+                    announcementOverlay.classList.remove('show');
+                }
+
+                // 点击叉子关闭
+                if (announcementClose) {
+                    announcementClose.addEventListener('click', closeAnnouncement);
+                }
+
+                // 点击遮罩背景关闭
+                announcementOverlay.addEventListener('click', function(e) {
+                    if (e.target === announcementOverlay) {
+                        closeAnnouncement();
+                    }
+                });
+
+                // 按 ESC 键关闭
+                document.addEventListener('keydown', function escClose(e) {
+                    if (e.key === 'Escape' && announcementOverlay.classList.contains('show')) {
+                        closeAnnouncement();
+                        document.removeEventListener('keydown', escClose);
+                    }
+                });
+            }
+
+            // ========== 时段和时间显示 ==========
+            const timePeriod = document.getElementById('time-period');
+            const timeDropdown = document.getElementById('time-period-dropdown');
+            const beijingTime = document.getElementById('beijing-time');
+
+            function updateBeijingTime() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const formattedTime = `${year}年${month}月${day}日${hours}时${minutes}分`;
+
+                if (beijingTime) {
+                    const isCollapsed = beijingTime.classList.contains('collapsed');
+                    beijingTime.innerHTML = `<span class="time-text">${formattedTime}</span><i class="fa fa-chevron-down transition-transform duration-300"></i>`;
+                    if (isCollapsed) beijingTime.classList.add('collapsed');
+                }
+            }
+
+            function updateTimePeriod() {
+                const hour = new Date().getHours();
+                let period, colorClass, periodKey;
+                if (hour >= 5 && hour < 12) { period = '早上'; colorClass = 'bg-green-500 text-white'; periodKey = 'morning'; }
+                else if (hour >= 12 && hour < 14) { period = '中午'; colorClass = 'bg-yellow-500 text-white'; periodKey = 'noon'; }
+                else if (hour >= 14 && hour < 17) { period = '下午'; colorClass = 'bg-orange-500 text-white'; periodKey = 'afternoon'; }
+                else { period = '晚间'; colorClass = 'bg-purple-500 text-white'; periodKey = 'night'; }
+
+                if (timePeriod) {
+                    timePeriod.textContent = period;
+                    timePeriod.className = `px-3 py-1 rounded-lg text-xs font-bold cursor-pointer transition-all duration-300 hover:scale-105 ${colorClass}`;
+                }
+                if (beijingTime) {
+                    const isCollapsed = beijingTime.classList.contains('collapsed');
+                    beijingTime.className = `px-3 py-1 rounded-lg text-xs font-bold cursor-pointer transition-all duration-300 items-center ${colorClass}${isCollapsed ? ' collapsed' : ''}`;
+                }
+                // 高亮当前时段行
+                document.querySelectorAll('.time-slot').forEach(function(slot) {
+                    slot.classList.toggle('time-slot-active', slot.getAttribute('data-period') === periodKey);
+                });
+                updateBeijingTime();
+            }
+
+            if (timePeriod && timeDropdown) {
+                timePeriod.addEventListener('mouseenter', () => {
+                    timeDropdown.classList.remove('invisible', 'opacity-0', 'translate-x-full');
+                });
+                timePeriod.addEventListener('mouseleave', (e) => {
+                    setTimeout(() => {
+                        if (!timeDropdown.matches(':hover') && !timePeriod.matches(':hover')) {
+                            timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
+                        }
+                    }, 100);
+                });
+                timeDropdown.addEventListener('mouseleave', () => {
+                    if (!timePeriod.matches(':hover')) {
+                        timeDropdown.classList.add('invisible', 'opacity-0', 'translate-x-full');
+                    }
+                });
+            }
+
+            updateTimePeriod();
+            setInterval(updateTimePeriod, 3600000);
+            setInterval(updateBeijingTime, 1000);
+
+            if (beijingTime) {
+                beijingTime.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    beijingTime.classList.toggle('collapsed');
+                });
+            }
+
+            // ========== 主题系统 ==========
+            const savedTheme = localStorage.getItem('siteTheme') || 'day';
+            const systemThemeCheckbox = document.getElementById('system-theme-checkbox');
+            const savedSystemTheme = localStorage.getItem('systemTheme') === 'true';
+            const themeOptions = document.querySelectorAll('.theme-option');
+            const generalThemes = document.getElementById('general-themes');
+            const literatiThemes = document.getElementById('literati-themes');
+
+            // 主题映射
+            const THEMES = {
+                day: { dark: false, group: 'general' },
+                night: { dark: true, group: 'general' },
+                bamboo: { dark: false, group: 'literati' },
+                forest: { dark: true, group: 'literati' }
+            };
+
+            // 记录最后一次手动选的主题（用于"跟随系统"时保持同组）
+            let lastManualTheme = savedTheme;
+
+            function applyTheme(theme) {
+                const config = THEMES[theme];
+                if (!config) return;
+
+                document.body.setAttribute('data-theme', theme);
+                if (config.dark) {
+                    document.body.classList.add('dark');
+                } else {
+                    document.body.classList.remove('dark');
+                }
+
+                localStorage.setItem('siteTheme', theme);
+
+                // 更新选项视觉高亮
+                themeOptions.forEach(function(btn) {
+                    const t = btn.getAttribute('data-theme');
+                    btn.classList.toggle('active-theme', t === theme);
+                });
+
+                // 更新主题分类高亮
+                if (generalThemes && literatiThemes) {
+                    const isGeneral = config.group === 'general';
+                    generalThemes.classList.toggle('themes-category-active', isGeneral);
+                    generalThemes.classList.toggle('opacity-50', !isGeneral);
+                    literatiThemes.classList.toggle('themes-category-active', !isGeneral);
+                    literatiThemes.classList.toggle('opacity-50', isGeneral);
+                }
+
+                // 更新 --accent-color CSS变量
+                const accentColors = {
+                    day: '#0ea5e9',
+                    night: '#38bdf8',
+                    bamboo: '#10b981',
+                    forest: '#64748b'
+                };
+                document.body.style.setProperty('--accent-color', accentColors[theme] || '#0ea5e9');
+            }
+
+            // 确定"跟随系统"时该用哪个主题
+            function getSystemTheme() {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const group = THEMES[lastManualTheme]?.group || 'general';
+                return group === 'literati'
+                    ? (prefersDark ? 'forest' : 'bamboo')
+                    : (prefersDark ? 'night' : 'day');
+            }
+
+            // 初始化主题
+            applyTheme(savedTheme);
+            if (systemThemeCheckbox) {
+                systemThemeCheckbox.checked = savedSystemTheme;
+                if (savedSystemTheme && window.matchMedia) {
+                    applyTheme(getSystemTheme());
+                }
+            }
+
+            // 主题按钮点击
+            themeOptions.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const theme = this.getAttribute('data-theme');
+                    lastManualTheme = theme;
+                    if (systemThemeCheckbox && systemThemeCheckbox.checked) {
+                        systemThemeCheckbox.checked = false;
+                        localStorage.setItem('systemTheme', 'false');
+                    }
+                    applyTheme(theme);
+                });
+            });
+
+            // 跟随系统
+            if (systemThemeCheckbox) {
+                systemThemeCheckbox.addEventListener('change', function() {
+                    localStorage.setItem('systemTheme', this.checked);
+                    if (this.checked && window.matchMedia) {
+                        applyTheme(getSystemTheme());
+                    }
+                });
+            }
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+                    if (systemThemeCheckbox && systemThemeCheckbox.checked) {
+                        applyTheme(getSystemTheme());
+                    }
+                });
+            }
+
+            // ========== 音乐播放器 ==========
+            const bgMusic = document.getElementById('bgMusic');
+            const musicToggleSwitch = document.getElementById('music-toggle-switch');
+            const dynamicIsland = document.getElementById('dynamic-island');
+            const musicTitle = document.getElementById('music-title');
+            const musicArtist = document.getElementById('music-artist');
+            const musicProgress = document.getElementById('music-progress-bar');
+            const closeIsland = document.getElementById('close-island');
+            const currentTimeEl = document.getElementById('current-time');
+            const totalTimeEl = document.getElementById('total-time');
+
+            function getTimePeriod() {
+                const hour = new Date().getHours();
+                return hour >=5 && hour <12 ? "上午" : 
+                       hour >=12 && hour <14 ? "中午" : 
+                       hour >=14 && hour <17 ? "下午" : "晚间";
+            }
+
+            const musicInfo = {
+                '上午': [
+                    { title: '被晨光漫染的现代都市 Morning Radiance-Bathed Modern Metropolis', artist: 'Silvermoon, AI Music Tool', file: '上午.mp3' },
+                    { title: '都市晨间的快节奏律动 Urban Matutinal Upbeat Groove', artist: 'Silvermoon, AI Music Tool', file: '上午2.mp3' }
+                ],
+                '中午': [
+                    { title: '稍作小憩 Just a Little Rest', artist: 'Silvermoon, AI Music Tool', file: '中午.mp3' }
+                ],
+                '下午': [
+                    { title: '来自午后的韵律 Rhythms from the Afternoon', artist: 'Silvermoon, AI Music Tool', file: '下午.mp3' }
+                ],
+                '晚间': [
+                    { title: '于静夜中度过安逸之梦 Serene Dreams Through the Quiet Night', artist: 'Silvermoon, AI Music Tool', file: '晚间.mp3' }
+                ]
+            };
+
+            let currentSongIndex = 0;
+            let currentPeriod = getTimePeriod();
+
+            if (bgMusic && musicToggleSwitch) {
+                function playCurrentSong() {
+                    const songs = musicInfo[currentPeriod] || [];
+                    if (songs.length === 0) return;
+                    const currentSong = songs[currentSongIndex];
+                    bgMusic.src = currentSong.file;
+                    bgMusic.loop = songs.length === 1;
+                    if (musicTitle) musicTitle.textContent = currentSong.title;
+                    if (musicArtist) musicArtist.textContent = currentSong.artist;
+                    if (musicProgress) musicProgress.style.width = '0%';
+                    if (currentTimeEl) currentTimeEl.textContent = '0:00';
+                }
+
+                function showDynamicIsland() {
+                    if (dynamicIsland) {
+                        dynamicIsland.classList.remove('hidden', 'opacity-0');
+                        dynamicIsland.classList.add('visible');
+                    }
+                }
+
+                function hideDynamicIsland() {
+                    if (dynamicIsland) {
+                        dynamicIsland.classList.add('hidden', 'opacity-0');
+                        dynamicIsland.classList.remove('visible');
+                    }
+                }
+
+                function formatTime(seconds) {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = Math.floor(seconds % 60);
+                    return `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+
+                function updateProgress() {
+                    if (bgMusic.duration) {
+                        const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
+                        if (musicProgress) musicProgress.style.width = progress + '%';
+                        if (currentTimeEl) currentTimeEl.textContent = formatTime(bgMusic.currentTime);
+                    }
+                }
+
+                playCurrentSong();
+
+                const savedMusic = localStorage.getItem('musicEnabled') === 'true';
+                musicToggleSwitch.checked = savedMusic;
+
+                musicToggleSwitch.addEventListener('change', function() {
+                    if (this.checked) {
+                        if (bgMusic.src) {
+                            // 有已加载的音频，直接从当前位置继续播放
+                            setTimeout(() => {
+                                bgMusic.play().then(() => {
+                                    showDynamicIsland();
+                                }).catch(err => {
+                                    alert('请点击页面后再次尝试开启音乐~\n\n提示：部分浏览器需要用户主动交互后才能播放音频。');
+                                });
+                            }, 100);
+                        } else {
+                            // 首次加载，加载后播放
+                            bgMusic.load();
+                            bgMusic.addEventListener('loadeddata', function playAfterLoad() {
+                                setTimeout(() => {
+                                    bgMusic.play().then(() => {
+                                        showDynamicIsland();
+                                    }).catch(err => {
+                                        alert('请点击页面后再次尝试开启音乐~\n\n提示：部分浏览器需要用户主动交互后才能播放音频。');
+                                    });
+                                }, 100);
+                                bgMusic.removeEventListener('loadeddata', playAfterLoad);
+                            });
+                        }
+                    } else {
+                        bgMusic.pause();
+                        hideDynamicIsland();
+                    }
+                    localStorage.setItem('musicEnabled', this.checked);
+                });
+
+                if (bgMusic) {
+                    bgMusic.addEventListener('timeupdate', updateProgress);
+                    bgMusic.addEventListener('loadedmetadata', function() {
+                        if (totalTimeEl) totalTimeEl.textContent = formatTime(bgMusic.duration);
+                    });
+                }
+
+                const musicProgressContainer = document.getElementById('music-progress');
+                if (musicProgressContainer) {
+                    musicProgressContainer.addEventListener('click', function(e) {
+                        if (bgMusic.duration) {
+                            const rect = this.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            const percentage = clickX / rect.width;
+                            bgMusic.currentTime = percentage * bgMusic.duration;
+                            updateProgress();
+                        }
+                    });
+                    let isDragging = false;
+                    musicProgressContainer.addEventListener('mousedown', function(e) {
+                        isDragging = true;
+                        if (bgMusic.duration) {
+                            const rect = this.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            bgMusic.currentTime = (clickX / rect.width) * bgMusic.duration;
+                            updateProgress();
+                        }
+                    });
+                    document.addEventListener('mousemove', function(e) {
+                        if (isDragging && bgMusic.duration) {
+                            const rect = musicProgressContainer.getBoundingClientRect();
+                            const moveX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                            bgMusic.currentTime = moveX * bgMusic.duration;
+                            updateProgress();
+                        }
+                    });
+                    document.addEventListener('mouseup', function() { isDragging = false; });
+                    musicProgressContainer.addEventListener('touchstart', function(e) {
+                        isDragging = true;
+                        if (bgMusic.duration) {
+                            const rect = this.getBoundingClientRect();
+                            const touchX = e.touches[0].clientX - rect.left;
+                            bgMusic.currentTime = (touchX / rect.width) * bgMusic.duration;
+                            updateProgress();
+                        }
+                    });
+                    document.addEventListener('touchmove', function(e) {
+                        if (isDragging && bgMusic.duration) {
+                            const rect = musicProgressContainer.getBoundingClientRect();
+                            const touchX = Math.max(0, Math.min(1, (e.touches[0].clientX - rect.left) / rect.width));
+                            bgMusic.currentTime = touchX * bgMusic.duration;
+                            updateProgress();
+                        }
+                    });
+                    document.addEventListener('touchend', function() { isDragging = false; });
+                }
+
+                bgMusic.addEventListener('ended', function() {
+                    if (musicProgress) musicProgress.style.width = '0%';
+                    if (currentTimeEl) currentTimeEl.textContent = '0:00';
+                    const songs = musicInfo[currentPeriod] || [];
+                    if (songs.length > 1) {
+                        currentSongIndex = (currentSongIndex + 1) % songs.length;
+                        playCurrentSong();
+                        if (musicToggleSwitch.checked) {
+                            bgMusic.play().catch(err => console.log('播放下一首歌失败:', err));
+                        }
+                    }
+                });
+
+                if (closeIsland) {
+                    closeIsland.addEventListener('click', hideDynamicIsland);
+                }
+
+                // 页面点击启用音频
+                document.addEventListener('click', function enableAudio() {
+                    document.removeEventListener('click', enableAudio);
+                    if (musicToggleSwitch.checked) {
+                        bgMusic.play().then(() => {
+                            showDynamicIsland();
+                        }).catch(err => {});
+                    }
+                }, { once: true });
+            }
+
+            // ========== 版本号显示 ==========
+            const versionSpan = document.getElementById('version-number');
+            if (versionSpan) {
+                versionSpan.textContent = '1.5';
+            }
+
+            // ========== 佳节共盼 - 卡片轮播 ==========
+            function calculateDaysUntil(target) {
+                const today = new Date();
+                const targetDate = typeof target === 'string' ? new Date(target) : target;
+                today.setHours(0, 0, 0, 0);
+                targetDate.setHours(0, 0, 0, 0);
+                const timeDiff = targetDate - today;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                return daysDiff;
+            }
+
+            const festivalData = [
+                { id: 'dragon-boat-days', date: '2026-06-19', badge: true },
+                { id: 'qixi-days', date: '2026-08-19', badge: true },
+                { id: 'zhongyuan-days', date: '2026-08-27', badge: true },
+                { id: 'mid-autumn-days', date: '2026-09-25', badge: true }
+            ];
+
+            function updateFestivalCountdowns() {
+                festivalData.forEach(function(fd) {
+                    const el = document.getElementById(fd.id);
+                    if (el) {
+                        const days = calculateDaysUntil(fd.date);
+                        el.textContent = days < 0 ? 0 : days;
+                    }
+                });
+                // 更新角标：已逾 / 已至
+                document.querySelectorAll('.festival-card').forEach(function(card) {
+                    const dateStr = card.getAttribute('data-date');
+                    const badge = card.querySelector('.festival-badge');
+                    if (dateStr && badge) {
+                        const days = calculateDaysUntil(dateStr);
+                        if (days < 0) {
+                            badge.textContent = '节日已逾';
+                            badge.classList.add('show', 'passed');
+                            badge.classList.remove('arrived');
+                        } else if (days === 0) {
+                            badge.textContent = '节日已至';
+                            badge.classList.add('show', 'arrived');
+                            badge.classList.remove('passed');
+                        } else {
+                            badge.classList.remove('show', 'arrived', 'passed');
+                        }
+                    }
+                });
+            }
+
+            // ========== 轮播控制 ==========
+            var festivalCurrent = 0;
+            var festivalCards = [];
+            var festivalDotsContainer = document.getElementById('festivalDots');
+
+            function initFestivalCarousel() {
+                festivalCards = document.querySelectorAll('.festival-card');
+                if (!festivalCards.length) return;
+
+                // 创建指示圆点
+                festivalDotsContainer.innerHTML = '';
+                for (var i = 0; i < festivalCards.length; i++) {
+                    var dot = document.createElement('button');
+                    dot.className = 'festival-dot';
+                    dot.setAttribute('data-index', i);
+                    dot.addEventListener('click', function() {
+                        goToFestival(parseInt(this.getAttribute('data-index')));
+                    });
+                    festivalDotsContainer.appendChild(dot);
+                }
+
+                // 初始定位到最近节日或第一个
+                var closestIdx = 0;
+                var minDays = Infinity;
+                festivalCards.forEach(function(card, idx) {
+                    var dateStr = card.getAttribute('data-date');
+                    if (dateStr) {
+                        var days = calculateDaysUntil(dateStr);
+                        if (days > 0 && days < minDays) {
+                            minDays = days;
+                            closestIdx = idx;
+                        }
+                    }
+                });
+                goToFestival(closestIdx);
+                updateFestivalCountdowns();
+            }
+
+            function goToFestival(index) {
+                var total = festivalCards.length;
+                if (total === 0) return;
+                // 循环
+                index = ((index % total) + total) % total;
+                festivalCurrent = index;
+
+                festivalCards.forEach(function(card, i) {
+                    card.classList.remove('active', 'prev', 'next', 'hidden-card');
+                    if (i === index) {
+                        card.classList.add('active');
+                    } else if (i === index - 1 || (index === 0 && i === total - 1)) {
+                        card.classList.add('prev');
+                    } else if (i === index + 1 || (index === total - 1 && i === 0)) {
+                        card.classList.add('next');
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+
+                // 更新圆点
+                var dots = document.querySelectorAll('.festival-dot');
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextFestival() {
+                goToFestival(festivalCurrent + 1);
+            }
+
+            function prevFestival() {
+                goToFestival(festivalCurrent - 1);
+            }
+
+            // ========== 交互事件 ==========
+
+            // 桌面端：点击卡片切换
+            document.addEventListener('click', function(e) {
+                var card = e.target.closest('.festival-card');
+                if (card && card.classList.contains('active')) {
+                    nextFestival();
+                }
+            });
+
+            // 桌面端：键盘 ← → 切换
+            document.addEventListener('keydown', function(e) {
+                var section = document.getElementById('holiday-countdown');
+                if (!section) return;
+                var rect = section.getBoundingClientRect();
+                var isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                if (!isVisible) return;
+
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextFestival();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevFestival();
+                }
+            });
+
+            // 移动端：触摸滑动
+            (function() {
+                var track = document.getElementById('festivalTrack');
+                if (!track) return;
+                var startX = 0, startY = 0;
+                var isSwiping = false;
+
+                track.addEventListener('touchstart', function(e) {
+                    var touch = e.changedTouches[0];
+                    startX = touch.screenX;
+                    startY = touch.screenY;
+                    isSwiping = false;
+                }, { passive: true });
+
+                track.addEventListener('touchmove', function(e) {
+                    var touch = e.changedTouches[0];
+                    var diffX = Math.abs(touch.screenX - startX);
+                    var diffY = Math.abs(touch.screenY - startY);
+                    if (diffX > diffY && diffX > 10) {
+                        isSwiping = true;
+                    }
+                }, { passive: true });
+
+                track.addEventListener('touchend', function(e) {
+                    if (!isSwiping) return;
+                    var touch = e.changedTouches[0];
+                    var diffX = touch.screenX - startX;
+                    if (diffX < -30) {
+                        nextFestival();
+                    } else if (diffX > 30) {
+                        prevFestival();
+                    }
+                }, { passive: true });
+            })();
+
+            initFestivalCarousel();
+            setInterval(updateFestivalCountdowns, 3600000);
+        });
+    </script>
+
+    <script>
+        // ========== 内嵌平台滚动触发动画 ==========
+        window.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.remove('opacity-0', 'translate-y-10');
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                        }, index * 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.platform-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // ========== 区块滚动渐显动画 ==========
+        window.addEventListener('DOMContentLoaded', function() {
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+        });
+
+        // ========== 平台卡片折叠/展开 + 一键收纳 ==========
+        window.addEventListener('DOMContentLoaded', function() {
+            const platformContainers = document.querySelectorAll('.platform-container') || document.querySelectorAll('#embedded-platform .rounded-3xl');
+            const toggleButtons = document.querySelectorAll('.toggle-platform');
+            const toggleAggregateButton = document.getElementById('toggle-aggregate');
+
+            // Use all platform sections that have .platform-content
+            const platformContents = document.querySelectorAll('.platform-content');
+            const cardStates = new Map();
+
+            platformContents.forEach((content, index) => {
+                content.style.transition = 'max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease';
+                content.style.overflow = 'hidden';
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+                content.style.marginTop = '1rem';
+                cardStates.set(content, true);
+            });
+
+            document.querySelectorAll('.toggle-platform i').forEach(icon => {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            });
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const parent = button.closest('.md\\:col-span-8');
+                    if (!parent) return;
+                    const content = parent.querySelector('.platform-content');
+                    const icon = button.querySelector('i');
+                    if (!content || !icon) return;
+
+                    const isExpanded = cardStates.get(content) || false;
+                    if (isExpanded) {
+                        content.style.maxHeight = '0px';
+                        content.style.opacity = '0';
+                        content.style.marginTop = '0';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                        cardStates.set(content, false);
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        content.style.opacity = '1';
+                        content.style.marginTop = '1rem';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                        cardStates.set(content, true);
+                    }
+                });
+            });
+
+            if (toggleAggregateButton) {
+                const aggregateIcon = toggleAggregateButton.querySelector('i');
+                const aggregateText = toggleAggregateButton.querySelector('span');
+
+                toggleAggregateButton.addEventListener('click', () => {
+                    let isAnyExpanded = false;
+                    platformContents.forEach(content => {
+                        if (cardStates.get(content)) isAnyExpanded = true;
+                    });
+
+                    platformContents.forEach((content, index) => {
+                        const parent = content.closest('.md\\:col-span-8');
+                        if (!parent) return;
+                        const button = parent.querySelector('.toggle-platform');
+                        const icon = button ? button.querySelector('i') : null;
+
+                        setTimeout(() => {
+                            if (isAnyExpanded) {
+                                content.style.maxHeight = '0px';
+                                content.style.opacity = '0';
+                                content.style.marginTop = '0';
+                                if (icon) {
+                                    icon.classList.remove('fa-chevron-up');
+                                    icon.classList.add('fa-chevron-down');
+                                }
+                                cardStates.set(content, false);
+                            } else {
+                                content.style.maxHeight = 'none';
+                                const scrollHeight = content.scrollHeight;
+                                content.style.maxHeight = '0px';
+                                content.offsetHeight;
+                                content.style.maxHeight = scrollHeight + 'px';
+                                content.style.opacity = '1';
+                                content.style.marginTop = '1rem';
+                                if (icon) {
+                                    icon.classList.remove('fa-chevron-down');
+                                    icon.classList.add('fa-chevron-up');
+                                }
+                                cardStates.set(content, true);
+                            }
+                        }, index * 50);
+                    });
+
+                    if (isAnyExpanded) {
+                        if (aggregateIcon) { aggregateIcon.classList.remove('fa-compress'); aggregateIcon.classList.add('fa-expand'); }
+                        if (aggregateText) aggregateText.textContent = '一键展开';
+                    } else {
+                        if (aggregateIcon) { aggregateIcon.classList.remove('fa-expand'); aggregateIcon.classList.add('fa-compress'); }
+                        if (aggregateText) aggregateText.textContent = '一键收纳';
+                    }
+                });
+            }
+        });
+    </script>
+
 </body>
 </html>
