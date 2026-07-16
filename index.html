@@ -13,7 +13,6 @@
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="//at.alicdn.com/t/c/font_5208576_p3ki86bxb2.css" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -60,19 +59,6 @@
         }
     </script>
     <style>
-        @font-face {
-            font-family: 'iconfont';
-            src: url('//at.alicdn.com/t/c/font_5208576_p3ki86bxb2.woff2?t=1783693489098') format('woff2'),
-                 url('//at.alicdn.com/t/c/font_5208576_p3ki86bxb2.woff?t=1783693489098') format('woff'),
-                 url('//at.alicdn.com/t/c/font_5208576_p3ki86bxb2.ttf?t=1783693489098') format('truetype');
-        }
-        .iconfont {
-            font-family: "iconfont" !important;
-            font-size: 16px;
-            font-style: normal;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
         body {
             background-color: #fafaf9;
             color: #1c1917;
@@ -571,201 +557,168 @@
             }
         }
 
-        /* ========== 自然灾害警惕提示弹窗 ========== */
-        .announcement-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        .announcement-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .announcement-card {
-            position: relative;
-            width: 90%;
-            max-width: 520px;
-            padding: 2.5rem 2rem 2rem;
-            border-radius: 1.5rem;
-            background: #fff;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
-            transform: translateY(20px) scale(0.96);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
-            opacity: 0;
-        }
-        .announcement-overlay.show .announcement-card {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
-        .dark .announcement-card {
-            background: #292524;
-            border-color: rgba(239, 68, 68, 0.3);
-            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.15);
-        }
-        body[data-theme="forest"] .announcement-card {
-            background: #1e293b;
-            border-color: rgba(239, 68, 68, 0.25);
-        }
-        body[data-theme="bamboo"] .announcement-card {
-            background: #fff;
-            border-color: rgba(239, 68, 68, 0.2);
-        }
-        .announcement-close {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 999px;
-            border: none;
-            background: transparent;
-            color: #a8a29e;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            opacity: 0.45;
-        }
-        .announcement-close:hover {
-            background: rgba(239, 68, 68, 0.1);
-            opacity: 0.75;
-            color: #ef4444;
-        }
-        .dark .announcement-close:hover {
-            background: rgba(239, 68, 68, 0.15);
-        }
-        .disaster-title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-            color: #dc2626;
-        }
-        .dark .disaster-title {
-            color: #f87171;
-        }
-        .disaster-intro {
-            color: #78716c;
-            font-size: 0.85rem;
-            line-height: 1.7;
-            margin-bottom: 1.25rem;
-        }
-        .dark .disaster-intro {
-            color: #a8a29e;
-        }
-        .disaster-tips {
-            color: #44403c;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            padding-left: 1.25rem;
-            list-style-type: decimal;
-            counter-reset: item;
-        }
-        .disaster-tips li {
-            position: relative;
-            padding-left: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
-        .disaster-tips li::marker {
-            color: #ef4444;
-            font-weight: 600;
-        }
-        .dark .disaster-tips {
-            color: #d6d3d1;
-        }
-        .dark .disaster-tips li::marker {
-            color: #f87171;
-        }
-        .disaster-warning {
-            color: #dc2626;
-            font-size: 1.05rem;
-            font-weight: 600;
-            line-height: 1.6;
+        /* ========== 倒计时模块 ========== */
+        .countdown-section {
             text-align: center;
+            padding: 2.5rem 1rem 2rem;
+            position: relative;
         }
-        .dark .disaster-warning {
-            color: #f87171;
+        .countdown-label {
+            font-size: 0.85rem;
+            color: #a8a29e;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.05em;
         }
-
-        /* ========== 灾害提示小模块 ========== */
-        .disaster-mini-module {
-            position: fixed;
-            top: 22px;
-            right: 1rem;
-            z-index: 95;
-            width: 140px;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            background: #dc2626;
-            color: #facc15;
-            font-size: 0.875rem;
-            font-weight: 600;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            cursor: pointer;
+        .dark .countdown-label {
+            color: #78716c;
+        }
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 4px;
         }
-        .disaster-mini-module .mini-icon {
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Inter', monospace;
+            line-height: 1;
+            color: #0ea5e9;
+            min-width: 3.5rem;
+            text-align: center;
+            position: relative;
+            transition: color 0.4s ease, transform 0.4s ease;
+        }
+        .countdown-number.flip {
+            animation: countFlip 0.6s ease;
+        }
+        .dark .countdown-number {
+            color: #38bdf8;
+        }
+        body[data-theme="forest"] .countdown-number {
+            color: #22d3ee;
+        }
+        body[data-theme="bamboo"] .countdown-number {
+            color: #0ea5e9;
+        }
+        body[data-theme="night"] .countdown-number {
+            color: #818cf8;
+        }
+        body[data-theme="dark-forest"] .countdown-number {
+            color: #34d399;
+        }
+        @keyframes countFlip {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 0.3; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        /* 倒计时容器渐变光晕 */
+        .countdown-section {
+            text-align: center;
+            padding: 2.5rem 1rem 2rem;
+            position: relative;
+        }
+        .countdown-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 100px;
+            background: radial-gradient(ellipse, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            animation: glowBreath 4s ease-in-out infinite;
+        }
+        @keyframes glowBreath {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        .countdown-launched {
+            display: none;
             font-size: 1.5rem;
-            color: #facc15 !important;
-            display: block;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            color: #0ea5e9;
+            padding: 1.5rem 0;
+            letter-spacing: 0.05em;
+            animation: launchedFadeIn 0.8s ease;
         }
-        .disaster-mini-module:hover {
-            background: #ef4444;
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+        .dark .countdown-launched {
+            color: #38bdf8;
         }
-        .disaster-mini-module.show {
-            opacity: 1;
-            visibility: visible;
+        body[data-theme="forest"] .countdown-launched {
+            color: #22d3ee;
+        }
+        body[data-theme="bamboo"] .countdown-launched {
+            color: #0ea5e9;
+        }
+        body[data-theme="night"] .countdown-launched {
+            color: #818cf8;
+        }
+        body[data-theme="dark-forest"] .countdown-launched {
+            color: #34d399;
+        }
+        @keyframes launchedFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .countdown-sep {
+            font-size: 2.5rem;
+            font-weight: 300;
+            line-height: 1;
+            color: #d6d3d1;
+            align-self: flex-start;
+            padding-top: 0.2rem;
+        }
+        .dark .countdown-sep {
+            color: #57534e;
+        }
+        .countdown-unit {
+            font-size: 0.75rem;
+            color: #a8a29e;
+            margin-top: 0.35rem;
+            letter-spacing: 0.04em;
+        }
+        .dark .countdown-unit {
+            color: #78716c;
+        }
+        .countdown-cta {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.6rem 2rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+            border: none;
+        }
+        .countdown-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(14, 165, 233, 0.45);
+        }
+        .dark .countdown-cta {
+            background: linear-gradient(135deg, #0284c7, #4f46e5);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.3);
+        }
+        .dark .countdown-cta:hover {
+            box-shadow: 0 6px 24px rgba(2, 132, 199, 0.5);
+        }
+        .countdown-cta:active {
+            transform: scale(0.97);
         }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-500 selection:text-white transition-colors duration-500">
-
-    <!-- ===== 自然灾害警惕提示弹窗 ===== -->
-    <div id="announcement-overlay" class="announcement-overlay">
-        <div class="announcement-card">
-            <button id="announcement-close" class="announcement-close" aria-label="关闭提示">
-                <i class="fa fa-times"></i>
-            </button>
-            <h2 class="disaster-title">台风巴威灾害将至，影响区居民做好防护</h2>
-            <p class="disaster-intro">最高可达十七级以上的台风，「巴威」，有很大概率将影响我国沿海地区，特别是江浙沪台闽。其降雨影响范围广大，影响区朋友们一定要做好应对，以下是几条建议参考。</p>
-            <ol class="disaster-tips">
-                <li>台风来临前，转移到地势高的地方，且定是空间内</li>
-                <li>备足至少三天的水粮与电量，切勿饮用自来水和吃过期食品维持生计</li>
-                <li>胶布呈米字或X字封窗，提防破碎导致渣子满地</li>
-                <li>若家有车，尽量从地下转移到地上安全地带，总比被完全浸泡好</li>
-                <li>非必要不外出，如若不想被台风吹来吹去，定要好好待在家中</li>
-            </ol>
-            <p class="disaster-warning">生命是第一本钱，各位一定要做好防护，注意安全！</p>
-        </div>
-    </div>
-
-    <!-- ===== 灾害提示小模块 ===== -->
-    <div id="disaster-mini-module" class="disaster-mini-module">
-        <span class="iconfont">&#xe651;</span>
-        <span>台风灾害应对</span>
-    </div>
 
     <!-- 背景音乐元素 -->
     <audio id="bgMusic" preload="auto" style="display: none;"></audio>
@@ -1021,6 +974,36 @@
                 </div>
             </div>
         </section>
+
+        <!-- 倒计时模块 -->
+        <div class="countdown-section animate-fade-in-up">
+            <div id="countdown-active">
+                <p class="countdown-label">距国内版群网站公测还有</p>
+                <div class="countdown-grid" id="countdown-grid">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="countdown-days">00</span>
+                        <span class="countdown-unit">天</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="countdown-hours">00</span>
+                        <span class="countdown-unit">时</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="countdown-mins">00</span>
+                        <span class="countdown-unit">分</span>
+                    </div>
+                    <span class="countdown-sep">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="countdown-secs">00</span>
+                        <span class="countdown-unit">秒</span>
+                    </div>
+                </div>
+                <button class="countdown-cta" id="countdown-cta">预前悉知</button>
+            </div>
+            <div class="countdown-launched" id="countdown-launched">国内版群网站现已公测！</div>
+        </div>
 
         <!-- 公告栏（访问注意 + 更新内容） -->
         <div class="grid md:grid-cols-2 gap-6 animate-fade-in-up">
@@ -1930,58 +1913,76 @@
                 });
             }
 
-            // ========== 自然灾害警惕提示弹窗 ==========
-            const announcementOverlay = document.getElementById('announcement-overlay');
-            const announcementClose = document.getElementById('announcement-close');
-            const disasterMiniModule = document.getElementById('disaster-mini-module');
+            // ========== 倒计时 ==========
+            (function() {
+                const targetDate = new Date('2026-07-19T00:00:00');
+                const daysEl = document.getElementById('countdown-days');
+                const hoursEl = document.getElementById('countdown-hours');
+                const minsEl = document.getElementById('countdown-mins');
+                const secsEl = document.getElementById('countdown-secs');
+                const cta = document.getElementById('countdown-cta');
+                const activeBlock = document.getElementById('countdown-active');
+                const launchedBlock = document.getElementById('countdown-launched');
+                const prev = { d: '', h: '', m: '', s: '' };
 
-            if (announcementOverlay) {
-                function showAnnouncement() {
-                    announcementOverlay.classList.add('show');
-                    if (disasterMiniModule) {
-                        disasterMiniModule.classList.remove('show');
+                function pad(n) {
+                    return n < 10 ? '0' + n : '' + n;
+                }
+
+                function flipIfChanged(el, oldVal, newVal) {
+                    if (oldVal !== '' && oldVal !== newVal) {
+                        el.classList.remove('flip');
+                        void el.offsetWidth;
+                        el.classList.add('flip');
                     }
                 }
 
-                function closeAnnouncement() {
-                    announcementOverlay.classList.remove('show');
-                    if (disasterMiniModule) {
-                        setTimeout(() => {
-                            disasterMiniModule.classList.add('show');
-                        }, 300);
-                    }
+                function showLaunched() {
+                    if (activeBlock) activeBlock.style.display = 'none';
+                    if (launchedBlock) launchedBlock.style.display = 'block';
                 }
 
-                // 延迟显示遮罩（等待DOM就绪）
-                setTimeout(() => {
-                    showAnnouncement();
-                }, 200);
+                function updateCountdown() {
+                    const now = new Date();
+                    const diff = targetDate - now;
+                    if (diff <= 0) {
+                        daysEl.textContent = '00';
+                        hoursEl.textContent = '00';
+                        minsEl.textContent = '00';
+                        secsEl.textContent = '00';
+                        showLaunched();
+                        return false;
+                    }
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-                // 点击叉子关闭
-                if (announcementClose) {
-                    announcementClose.addEventListener('click', closeAnnouncement);
+                    const nd = pad(days), nh = pad(hours), nm = pad(mins), ns = pad(secs);
+                    flipIfChanged(daysEl, prev.d, nd);
+                    flipIfChanged(hoursEl, prev.h, nh);
+                    flipIfChanged(minsEl, prev.m, nm);
+                    flipIfChanged(secsEl, prev.s, ns);
+
+                    daysEl.textContent = nd;
+                    hoursEl.textContent = nh;
+                    minsEl.textContent = nm;
+                    secsEl.textContent = ns;
+
+                    prev.d = nd; prev.h = nh; prev.m = nm; prev.s = ns;
+                    return true;
                 }
 
-                // 点击遮罩背景关闭
-                announcementOverlay.addEventListener('click', function(e) {
-                    if (e.target === announcementOverlay) {
-                        closeAnnouncement();
-                    }
-                });
-
-                // 按 ESC 键关闭
-                document.addEventListener('keydown', function escClose(e) {
-                    if (e.key === 'Escape' && announcementOverlay.classList.contains('show')) {
-                        closeAnnouncement();
-                        document.removeEventListener('keydown', escClose);
-                    }
-                });
-
-                // 点击小模块重新显示弹窗
-                if (disasterMiniModule) {
-                    disasterMiniModule.addEventListener('click', showAnnouncement);
+                if (updateCountdown()) {
+                    setInterval(updateCountdown, 1000);
                 }
-            }
+
+                if (cta) {
+                    cta.addEventListener('click', function() {
+                        window.open('https://266cccb774774a60a78612daf7318c84.app.codebuddy.work/', '_blank');
+                    });
+                }
+            })();
 
             // ========== 时段和时间显示 ==========
             const timePeriod = document.getElementById('time-period');
